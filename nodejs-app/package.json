@@ -1,0 +1,51 @@
+{
+	"name": "jest-tests",
+	"version": "1.0.0",
+	"author": "Azat satklichov",
+	"description": "Multithreading in Node.js",
+	"main": "index.js",
+	"keywords": [],
+	"license": "ISC",
+	"scripts": {
+		"test": "jest",
+		"coverage": "jest --coverage",
+		"compile": "tsc -p ./",
+		"start": "node server.js"
+	},
+	"devDependencies": {
+		"@types/jest": "^24.9.1",
+		"jest": "^26.4.2",
+		"ts-jest": "^24.3.0",
+		"ts-node": "^8.10.2",
+		"typescript": "^3.9.7",
+		"express": "^4.16.1",
+		"eslint": "^6.7.0",
+		"prettier": "^1.19.1"
+	},
+	"jest": {
+		"testEnvironment": "node",
+		"collectCoverage": true,
+		"testResultsProcessor": "jest-sonar-reporter",
+		"coveragePathIgnorePatterns": [
+			"/node_modules/",
+			"/node_modules/",
+			"/tests/"
+		]
+	},
+	"dependencies": {
+		"@octokit/rest": "^18.0.5",
+		"axios": "^0.19.2",
+		"cookie-parser": "^1.4.5",
+		"dotenv": "^8.2.0",
+		"express-handlebars": "^5.1.0",
+		"express-session": "^1.17.1",
+		"flatted": "^3.0.5",
+		"github": "^14.0.0",
+		"got": "^10.6.0",
+		"p-time": "^2.1.0",
+		"passport": "^0.4.1",
+		"passport-github": "^1.1.0",
+		"superagent": "^5.2.2",
+		"underscore": "^1.11.0"
+	}
+}
