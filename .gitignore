@@ -35,4 +35,4 @@ ref/**
 nodejs-app/coverage/**
 nodejs-app/node_modules/**
 nodejs-app/node_modules/**
-more/**
+nodejs-app/more/**
