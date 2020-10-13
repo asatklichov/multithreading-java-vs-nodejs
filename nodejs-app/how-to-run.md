@@ -1,4 +1,7 @@
-//install app
+//install all the dependencies:
+> npm ci 
+
+//if missing keep adding  
 npm i -D jest ts-jest typescript
 npm i -D @types/jest
 
