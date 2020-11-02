@@ -35,7 +35,7 @@ public class HttpClientAsyncronousInPrallelDemo {
 				.map(HttpClientAsyncronousInPrallelDemo::validateLink).collect(Collectors.toList());
 
 		completableFutureStringListResponse.stream().map(CompletableFuture::join).forEach(System.out::println);
-		//CPU intensive calc
+		//to enable CPU intensive calc, remove below comments
 //		completableFutureStringListResponse.stream().map(CompletableFuture::join).forEach(v -> {
 //			long s = (long) (Math.random() *10 + 1);
 //			Random generator = new Random(s);

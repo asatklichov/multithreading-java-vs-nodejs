@@ -28,16 +28,16 @@ public class HttpClientAsyncronousDemo {
 		List<CompletableFuture<String>> completableFutureStringListResponse = Files.lines(Path.of(DOMAINS_TXT2))
 				.map(HttpClientAsyncronousDemo::validateLink).collect(Collectors.toList());
 		completableFutureStringListResponse.stream().map(CompletableFuture::join).forEach(System.out::println);
-		//CPU intensive calc
-		completableFutureStringListResponse.stream().map(CompletableFuture::join).forEach(v -> {
-			long s = (long) (Math.random() *10 + 1);
-			Random generator = new Random(s);
-			heavySum(generator.nextInt());
-			System.out.println(v);
-		});
+		/* disable comment to include CPU intensive calculation */ 
+//		completableFutureStringListResponse.stream().map(CompletableFuture::join).forEach(v -> {
+//			long s = (long) (Math.random() *10 + 1);
+//			Random generator = new Random(s);
+//			heavySum(generator.nextInt());
+//			System.out.println(v);
+//		});
 
 		printElapsedTime(start);
-		System.out.println("Run this asynx tasks in parallel, and compare result");
+		System.out.println("Run this asynx tasks in parallel with HttpClientAsyncronousInPrallelDemo, and compare result");
 	}
 
 	private static CompletableFuture<String> validateLink(String link) {

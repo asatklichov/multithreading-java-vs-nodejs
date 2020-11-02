@@ -14,7 +14,7 @@ import java.util.concurrent.ExecutionException;
  * https://www.baeldung.com/java-9-completablefuture
  * 
  */
-public class CompletableFutureDemo {
+public class _CompletableFutureDemo {
 	public static void main(String[] args) throws InterruptedException, ExecutionException {
 		// by Parahat C.
 		CompletableFuture<String> cf = new CompletableFuture<String>();
@@ -22,6 +22,8 @@ public class CompletableFutureDemo {
 		System.out.println(complete);
 		System.out.println(cf.get());
 		System.out.println(cf.join());
+		
+		System.out.println();
 
 		// not completed future, some other thread should complete it
 		CompletableFuture<String> notCompletedF = new CompletableFuture<String>();

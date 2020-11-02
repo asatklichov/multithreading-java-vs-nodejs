@@ -34,4 +34,13 @@ public class Util {
 		}
 		System.out.println("Sum = " + sum);
 	}
+
+	public static long calcHeavySum(int s, int sleep) throws InterruptedException {
+		long sum = s;
+		for (int i = 0; i < Integer.MAX_VALUE; i++) {
+			sum += i;
+		}
+		Thread.currentThread().sleep(sleep);
+		return sum;
+	}
 }
