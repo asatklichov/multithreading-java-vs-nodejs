@@ -26,7 +26,7 @@ public class B_CompletableFutureWihEncapsulatedComputationLogic_runAsync_supplyA
 
 		Runnable r = () -> System.out.println("Hello");
 		CompletableFuture<Void> runAsync = CompletableFuture.runAsync(r);
-		CompletableFuture<Void> runAsync2 = CompletableFuture.runAsync(r, Executors.newCachedThreadPool());
+		CompletableFuture<Void> runAsync2 = CompletableFuture.runAsync(r, Executors.newCachedThreadPool());// ForkJoinPool.commonPool();
 		System.out.println(runAsync.get() + " " + runAsync2.get());
 		System.out.println();
 

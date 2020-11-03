@@ -2,6 +2,7 @@ package concurrency.completablefuture.api;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -80,6 +81,44 @@ public class E_CompletableFutureRunningMultipleFuturesInParallel_allOf_join {
 		for (CompletableFuture<User> completableFuture : completableFutures) {
 			System.out.println(completableFuture.get());
 		}
+
+		/// anyOf
+		/**
+		 * CompletableFuture.anyOf() takes a varargs of Futures and returns
+		 * CompletableFuture<Object>. The problem with CompletableFuture.anyOf() is that
+		 * if you have CompletableFutures that return results of different types, then
+		 * you won’t know the type of your final CompletableFuture.
+		 */
+		CompletableFuture<String> future1z = CompletableFuture.supplyAsync(() -> {
+			try {
+				TimeUnit.SECONDS.sleep(2);
+			} catch (InterruptedException e) {
+				throw new IllegalStateException(e);
+			}
+			return "Result of Future 1";
+		});
+
+		CompletableFuture<String> future2z = CompletableFuture.supplyAsync(() -> {
+			try {
+				TimeUnit.SECONDS.sleep(1);
+			} catch (InterruptedException e) {
+				throw new IllegalStateException(e);
+			}
+			return "Result of Future 2";
+		});
+
+		CompletableFuture<String> future3z = CompletableFuture.supplyAsync(() -> {
+			try {
+				TimeUnit.SECONDS.sleep(3);
+			} catch (InterruptedException e) {
+				throw new IllegalStateException(e);
+			}
+			return "Result of Future 3";
+		});
+
+		CompletableFuture<Object> anyOfFuture = CompletableFuture.anyOf(future1z, future2z, future3z);
+
+		System.out.println(anyOfFuture.get()); // Result of Future 2
 
 	}
 }

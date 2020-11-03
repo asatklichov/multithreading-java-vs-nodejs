@@ -18,7 +18,7 @@ import java.util.concurrent.ExecutionException;
  *
  *
  */
-public class D_CompletableFutureCombiningFuture_thenCompose_thenCompbine_thenAcceptBoth {
+public class D_CompletableFutureCombiningFuture_thenCompose_thenCompbine_thenAcceptBoth_acceptEither {
 	public static void main(String[] args) throws InterruptedException, ExecutionException {
 
 		/*
@@ -55,9 +55,22 @@ public class D_CompletableFutureCombiningFuture_thenCompose_thenCompbine_thenAcc
 		 * don't need to pass any resulting value down a Future chain. The
 		 * thenAcceptBoth method is there to help:
 		 */
-		CompletableFuture future = CompletableFuture.supplyAsync(() -> "Hello")
+		CompletableFuture<Void> thenAcceptBoth = CompletableFuture.supplyAsync(() -> "Hello")
 				.thenAcceptBoth(CompletableFuture.supplyAsync(() -> " World"), (s1, s2) -> System.out.println(s1 + s2));
-		System.out.println(future.get());
+		System.out.println(thenAcceptBoth.get());
+
+		// acceptEither
+		/**
+		 * when we just need the faster result of one of them.
+		 */
+		CompletableFuture<String> future = CompletableFuture.completedFuture("1");
+		CompletableFuture<String> newFuture = CompletableFuture.completedFuture("2");
+		future.acceptEither(newFuture, s -> {
+			System.out.println("the future which finishes first is: " + s);
+		});
+
+		// check results
+		System.out.println("Future result>> " + newFuture.get() + " and " + future.get());
 
 	}
 

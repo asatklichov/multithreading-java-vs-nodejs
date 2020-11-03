@@ -4,7 +4,6 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 import concurrency.completablefuture.java11.httpclient.Util;
@@ -57,80 +56,10 @@ completeOnTimeout()
  * </pre>
  */
 
-public class H_CompletableFutureJava9API {
+public class H_CompletableFutureJava9API_timeout_delay_fail {
 	public static void main(String[] args) throws InterruptedException, ExecutionException {
 
-		// defaultExecutor
-		/**
-		 * Returns the default Executor used for async methods that do not specify an
-		 * Executor
-		 */
 		CompletableFuture<String> completableFuture = CompletableFuture.supplyAsync(() -> "Hello");
-		Executor defaultExecutor = completableFuture.defaultExecutor();
-		System.out.println(defaultExecutor);
-
-		CompletableFuture<String> completableFuture2 = CompletableFuture.supplyAsync(() -> "Hello",
-				Executors.newCachedThreadPool());// ForkJoinPool.commonPool();
-		defaultExecutor = completableFuture2.defaultExecutor();
-		System.out.println(defaultExecutor);
-		System.out.println();
-
-		// Method newIncompleteFuture()
-		/**
-		 * it now has better support for subclassing, thanks to the newIncompleteFuture
-		 * virtual constructor
-		 * 
-		 * 
-		 * newIncompleteFuture, also known as the “virtual constructor”, is used to get
-		 * a new completable future instance of the same type. Especially useful when
-		 * subclassing CompletableFuture
-		 */
-		completableFuture = completableFuture.newIncompleteFuture();
-		// System.out.println(completableFuture.get());
-		completableFuture.complete("new");
-		System.out.println(completableFuture.get());
-
-		// copy()
-		/**
-		 * This method returns a new CompletableFuture which. This method may be useful
-		 * as a form of “defensive copying”, to prevent clients from completing, while
-		 * still being able to arrange dependent actions on a specific instance of
-		 * CompletableFuture.
-		 */
-		CompletableFuture<String> copyCompletableFuture2 = completableFuture2.copy();
-		System.out.println(copyCompletableFuture2.get());
-		System.out.println();
-
-		// minimalCompletionStage()
-		/**
-		 * returns a new CompletionStage which behaves in the exact same way as
-		 * described by the copy method, however, such new instance throws
-		 * UnsupportedOperationException in every attempt to retrieve or set the
-		 * resolved value
-		 * 
-		 * A new CompletableFuture with all methods available can be retrieved by using
-		 * the toCompletableFuture method available on the CompletionStage API.
-		 */
-		CompletionStage<String> minimalCompletionStage = completableFuture2.minimalCompletionStage();
-		CompletableFuture<String> completableFuture3 = minimalCompletionStage.toCompletableFuture();
-		System.out.println(completableFuture3.get());
-		System.out.println();
-
-		// Methods completeAsync()
-		/**
-		 * The completeAsync method should be used to complete the CompletableFuture
-		 * asynchronously using the value given by the Supplier provided.
-		 * 
-		 * The difference between this two overloaded methods is the existence of the
-		 * second argument, where the Executor running the task can be specified. If
-		 * none is provided, the default executor (returned by the defaultExecutor
-		 * method) will be used.
-		 */
-		CompletableFuture<String> completeAsync = new CompletableFuture().completeAsync(() -> "CompleteAsync");
-		// completableFuture4.completeAsync(() -> "CompleteAsync",
-		// Executors.newFixedThreadPool(2));
-		System.out.println(completeAsync.get());
-		System.out.println();
 
 		// orTimeout()
 		/**
@@ -143,7 +72,8 @@ public class H_CompletableFutureJava9API {
 		 * Resolves the CompletableFuture exceptionally with TimeoutException, unless it
 		 * is completed before the specified timeout.
 		 */
-		CompletableFuture<Long> orTimeout = new CompletableFuture().orTimeout(1, TimeUnit.SECONDS);
+		CompletableFuture<Long> orTimeout = new CompletableFuture()
+				.orTimeout(1, TimeUnit.SECONDS);
 		// orTimeout.complete(Util.calcHeavySum(8, 2000));
 		orTimeout.complete(Util.calcHeavySum(8, 0));
 		System.out.println(orTimeout.get());
@@ -157,7 +87,8 @@ public class H_CompletableFutureJava9API {
 		 * Other than delayedExecutor. Another way to achieve a delayed result is to use
 		 * the completeOnTimeout method.
 		 */
-		CompletableFuture completeOnTimeout = new CompletableFuture().completeOnTimeout("my Val", 1, TimeUnit.SECONDS);
+		CompletableFuture completeOnTimeout = new CompletableFuture()
+				.completeOnTimeout("my Val", 1, TimeUnit.SECONDS);
 		System.out.println(completeOnTimeout.get());
 		System.out.println();
 
@@ -201,9 +132,8 @@ public class H_CompletableFutureJava9API {
 		System.out.println();
 
 		// and failedStage
-		// CompletionStage<String> failedStage = copyCompletableFuture6.failedStage(new
-		// RuntimeException("failedStage error!"));
-		// System.out.println(failedStage.toCompletableFuture().get());
+		CompletionStage<String> failedStage = CompletableFuture.failedStage(new RuntimeException("failedStage error!"));
+		System.out.println(failedStage.toCompletableFuture().get());
 		System.out.println();
 
 		// failedFuture()
@@ -213,10 +143,128 @@ public class H_CompletableFutureJava9API {
 		 */
 		// completableFuture7.completeExceptionally(new RuntimeException("Calculation
 		// failed!"));
-		CompletableFuture<Object> failedFuture = CompletableFuture
-				.failedFuture(new RuntimeException("failedFuture error!"));
-		System.out.println(failedFuture.get());
-		System.out.println();
+//		CompletableFuture<Object> failedFuture = CompletableFuture
+//				.failedFuture(new RuntimeException("failedFuture error!"));
+//		System.out.println(failedFuture.get());
+//		System.out.println();
 
 	}
+}
+
+class DelayedExecutorTest {
+
+	// https://grokonez.com/java/java-9/java-9-completablefuture-api-improvements-delay-timeout-support
+	public static void main(String[] args) throws InterruptedException, ExecutionException {
+
+		CompletableFuture<String> future = new CompletableFuture<>();
+		future.completeAsync(() -> {
+			try {
+				System.out.println("inside future: processing data...");
+
+				return "grokonez.com";
+			} catch (Throwable e) {
+				return "not detected";
+			}
+		}, CompletableFuture.delayedExecutor(3, TimeUnit.SECONDS))
+				.thenAccept(result -> System.out.println("accept: " + result));
+
+		// other statements
+		for (int i = 1; i <= 5; i++) {
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			System.out.println("running outside... " + i + " s");
+		}
+
+	}
+}
+
+class OrTimeOutTest {
+
+	private static final int TIMEOUT = 3;
+
+	public static void main(String[] args) throws InterruptedException, ExecutionException {
+
+		/**
+		 * The method exceptionally completes current CompletableFuture by throwing a
+		 * TimeoutException if not otherwise completed before the timeout.
+		 * 
+		 * For example, we have a doWork() method that takes 5 seconds to return a
+		 * CompletableFuture. But we set TIMEOUT only 3 seconds.
+		 * 
+		 * 
+		 */
+		CompletableFuture<String> future = doWork("JavaSampleApproach").orTimeout(TIMEOUT, TimeUnit.SECONDS)
+				.whenComplete((result, error) -> {
+					if (error == null) {
+						System.out.println("The result is: " + result);
+					} else {
+						System.out.println("Sorry, timeout in " + TIMEOUT + " seconds.");
+					}
+				});
+
+		String content;
+		content = future.get();
+		System.out.println("Result >> " + content);
+
+	}
+
+	private static CompletableFuture<String> doWork(String s) {
+
+		return CompletableFuture.supplyAsync(() -> {
+			for (int i = 1; i <= 5; i++) {
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				System.out.println("running inside doWork()... " + i + " s");
+			}
+			return s + ".com";
+		});
+	}
+
+}
+
+class CompleteOnTimeoutTest {
+
+	private static final int TIMEOUT = 3;
+
+	public static void main(String[] args) throws InterruptedException, ExecutionException {
+
+		/**
+		 * The method completes current CompletableFuture by input value if not otherwise completed before the timeout.
+		 * 
+		 */
+		CompletableFuture<String> future = doWork("JavaSampleApproach")
+				.completeOnTimeout("JavaTechnology", TIMEOUT, TimeUnit.SECONDS).whenComplete((result, error) -> {
+					if (error == null) {
+						System.out.println("The result is: " + result);
+					} else {
+						// this statement will never run.
+						System.out.println("Sorry, timeout in " + TIMEOUT + " seconds.");
+					}
+				});
+
+		String content = future.get();
+		System.out.println("Result >> " + content);
+	}
+
+	private static CompletableFuture<String> doWork(String s) {
+
+		return CompletableFuture.supplyAsync(() -> {
+			for (int i = 1; i <= 7; i++) {
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				System.out.println("running inside doWork()... " + i + " s");
+			}
+			return s + ".com";
+		});
+	}
+
 }
