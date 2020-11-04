@@ -4,10 +4,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -139,6 +139,7 @@ public class G_CompletableFutureAsyncMethods_thenApplyAsync_completeAsync {
 	}
 }
 
+//
 class MyRunnable implements Runnable {
 
 	private boolean terminated;
@@ -333,7 +334,7 @@ class WhichThreadExecutes {
 	}
 }
 
-class HowToCancel {
+class HowTo {
 	/**
 	 * https://stackoverflow.com/questions/23320407/how-to-cancel-java-8-completable-future
 	 * 
@@ -406,3 +407,4 @@ class HowToCancel {
 
 	}
 }
+ 
