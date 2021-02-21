@@ -15,6 +15,8 @@ import java.util.concurrent.ExecutionException;
  * 
  */
 public class _CompletableFutureDemo {
+	
+ 
 	public static void main(String[] args) throws InterruptedException, ExecutionException {
 		// by Parahat C.
 		CompletableFuture<String> cf = new CompletableFuture<String>();

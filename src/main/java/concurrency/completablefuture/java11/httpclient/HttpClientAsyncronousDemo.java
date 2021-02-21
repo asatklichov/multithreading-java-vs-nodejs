@@ -1,7 +1,6 @@
 package concurrency.completablefuture.java11.httpclient;
 
 import static concurrency.completablefuture.java11.httpclient.Util.DOMAINS_TXT2;
-import static concurrency.completablefuture.java11.httpclient.Util.heavySum;
 import static concurrency.completablefuture.java11.httpclient.Util.printElapsedTime;
 
 import java.io.IOException;
@@ -13,7 +12,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.Instant;
 import java.util.List;
-import java.util.Random;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
@@ -28,7 +26,7 @@ public class HttpClientAsyncronousDemo {
 		List<CompletableFuture<String>> completableFutureStringListResponse = Files.lines(Path.of(DOMAINS_TXT2))
 				.map(HttpClientAsyncronousDemo::validateLink).collect(Collectors.toList());
 		completableFutureStringListResponse.stream().map(CompletableFuture::join).forEach(System.out::println);
-		/* disable comment to include CPU intensive calculation */ 
+		/* disable comment to include CPU intensive calculation */
 //		completableFutureStringListResponse.stream().map(CompletableFuture::join).forEach(v -> {
 //			long s = (long) (Math.random() *10 + 1);
 //			Random generator = new Random(s);
@@ -37,7 +35,8 @@ public class HttpClientAsyncronousDemo {
 //		});
 
 		printElapsedTime(start);
-		System.out.println("Run this asynx tasks in parallel with HttpClientAsyncronousInPrallelDemo, and compare result");
+		System.out.println(
+				"Run this asynx tasks in parallel with HttpClientAsyncronousInPrallelDemo, and compare result");
 	}
 
 	private static CompletableFuture<String> validateLink(String link) {
@@ -47,7 +46,7 @@ public class HttpClientAsyncronousDemo {
 		return httpClient.sendAsync(httpRequest, HttpResponse.BodyHandlers.discarding())
 				.thenApply(
 						asynResult -> 200 == asynResult.statusCode() ? link + " access OK  " : link + " access Failed")
-				//Resiliency 
+				// Resiliency
 				.exceptionally(e -> "Error occured once accessing to " + link + ", reson is: " + e.getMessage());
 
 	}

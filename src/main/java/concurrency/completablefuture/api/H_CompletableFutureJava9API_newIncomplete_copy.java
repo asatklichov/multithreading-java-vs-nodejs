@@ -73,7 +73,7 @@ public class H_CompletableFutureJava9API_newIncomplete_copy {
 		 */
 		completableFuture = completableFuture.newIncompleteFuture();
 		//BLOCKS
-		System.out.println(completableFuture.get());
+		//System.out.println(completableFuture.get());
 		completableFuture.complete("new");
 		System.out.println(completableFuture.get());
 
