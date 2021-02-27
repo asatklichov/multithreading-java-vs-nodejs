@@ -3,8 +3,8 @@
 This application is used to test multithreading aspects in Java and Node.js. 
 There are multiple examples, some of them solved in multiple ways in Java and in Node.js
 and as a result we have a measurement table with respective outputs for comparison in the multithreading-java-vs-nodejs.pdf. 
-Also there is a [medium article](https://medium.com/modern-mainframe/lsp-magic-mainframe-language-support-in-modern-ides-4ea3d81259b3) 
-which describes multithreading in Java and Node.js 
+Also there is a **medium article** [Multithreading in Java vs Node.JS](https://medium.com/modern-mainframe/multithreading-in-java-vs-node-js-c558d59050c9) 
+which describes multithreading  [in Java](https://docs.oracle.com/javase/8/docs/technotes/guides/concurrency/index.html )  and    [Node.js](https://medium.com/@mohllal/node-js-multithreading-a5cd74958a67 )  
 
 Examples
 - Then there are multiple Java-main applications, to test core and enhanced Java concurrency features
