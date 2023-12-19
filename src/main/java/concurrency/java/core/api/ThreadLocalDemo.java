@@ -1,56 +1,29 @@
 package concurrency.java.core.api;
 
-import java.util.Arrays;
-import java.util.List;
 
-/**
- * - We can easily create classes whose fields are thread-local by simply
- * defining private fields in Thread classes.
- * 
- * -or Similarly, we can create thread-local fields by
- * assigning ThreadLocal instances to a field.
- * 
- * In both implementations, the classes have their own state, but it's not
- * shared with other threads. Thus, the classes are thread-safe.
- *
- */
-class ThreadA extends Thread {
+public class ThreadLocalDemo {
 
-	private final List<Integer> numbers = List.of(1, 2, 3, 4, 5, 6);
+	// https://www.baeldung.com/java-threadlocal
+	public static void main(String[] args) {
 
-	@Override
-	public void run() {
-		numbers.forEach(System.out::println);
-	}
-}
+		ThreadLocal<Integer> threadLocalValue = new ThreadLocal<>();
+		threadLocalValue.set(1);
+		Integer result = threadLocalValue.get();
+		System.out.println(result);
 
-class ThreadB extends Thread {
-
-	private final List<String> letters = Arrays.asList("a", "b", "c", "d", "e", "f");
-
-	@Override
-	public void run() {
-		letters.forEach(System.out::println);
-	}
-}
-
-class MyRunnable2 implements Runnable {
-	/**
-	 * Each thread has its own independently initialized copy of the variable.
-	 */
-	private ThreadLocal<Integer> threadLocal = new ThreadLocal<>();
-
-	@Override
-	public void run() {
-		threadLocal.set((int) (Math.random() * 100));
+		// We can construct an instance of the ThreadLocal by using the withInitial()
+		// static method and passing a supplier to it:
+		ThreadLocal<Integer> threadLocal = ThreadLocal.withInitial(() -> 23);
 		System.out.println(threadLocal.get());
+		threadLocal.remove();
+		/**
+		 * Returns the value in the current thread's copy of thisthread-local variable.
+		 * If the variable has no value for thecurrent thread, it is first initialized
+		 * to the value returnedby an invocation of the initialValue method.
+		 */
+		System.out.println(threadLocal.get());//current thread so you see still 23
+		
+
 	}
 
-	public static void main(String args[]) {
-		MyRunnable2 shared = new MyRunnable2();
-		Thread thread1 = new Thread(shared);
-		Thread thread2 = new Thread(shared);
-		thread1.start();
-		thread2.start();
-	}
 }

@@ -49,7 +49,8 @@ class TempInfo {
 
 	public static final Random random = new Random();
 
-	private final String city;
+	private String city;
+	//trick not to use @Value
 	private final int temp;
 
 	public static TempInfo fetch(String town) {
@@ -58,6 +59,14 @@ class TempInfo {
 		}
 		return new TempInfo(town, random.nextInt(100));
 	}
+	
+//	public static void main(String[] args) {
+//		TempInfo tempInfo = new TempInfo("Nois", 23);
+//		
+//		tempInfo.setCity("Tejen");
+//		System.out.println(tempInfo.getCity());
+//		
+//	}
 
 }
 

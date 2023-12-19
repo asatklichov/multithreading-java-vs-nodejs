@@ -27,11 +27,13 @@
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 
+       <!-- Lombok and alternatives  -->
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<optional>true</optional>
 		</dependency>
+		
 
 		<dependency>
 			<groupId>io.reactivex.rxjava2</groupId>
