@@ -15,7 +15,7 @@ public class AnIntroThreadBasicsDemo {
 		t1.start();
 
 		/**
-		 * 1-way
+		 * 2-way
 		 * 
 		 * Better approach, implement Runnable Interface with your MyThread2 class.
 		 * Motivates to separate Task and Worker concepts
@@ -53,9 +53,10 @@ public class AnIntroThreadBasicsDemo {
 		 */
 		// t4.setDaemon(true); // behavior will be different, thread will be take to
 		// background
+
 		t4.start();
 
-		sleep(3000);
+		sleep(500);
 		System.out.println("Stop Thread-2");
 		myRunnable.terminate();// otherwise keeps running infinitively
 		System.out.println("--- END OF MAIN THREAD ----");
@@ -115,3 +116,5 @@ class MyRunnable implements Runnable {
 		this.terminated = true;
 	}
 }
+
+

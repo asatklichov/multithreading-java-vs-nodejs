@@ -1,5 +1,32 @@
 package concurrency.java.core.api;
 
+class RaceConditionDemo1 {
+
+	public static void main(String[] args) throws InterruptedException {
+
+		LongWrapper longWrapper = new LongWrapper(0L);
+
+		Runnable r = () -> {
+
+			for (int i = 0; i < 1_000; i++) {
+				longWrapper.incrementValue();
+			}
+		};
+
+		Thread[] threads = new Thread[1_000];
+		for (int i = 0; i < threads.length; i++) {
+			threads[i] = new Thread(r);
+			threads[i].start();
+		}
+
+		for (int i = 0; i < threads.length; i++) {
+			threads[i].join();
+		}
+
+		System.out.println("Value = " + longWrapper.getValue());
+	}
+}
+
 /**
  * Race condition and Visibility problems
  */
@@ -33,7 +60,7 @@ public class RaceConditionDemo {
 		 * 
 		 * Thread-1: 1892119
 		 */
-		  //MyRunnablz run = new MyRunnablz();
+		// MyRunnablz run = new MyRunnablz();
 
 		/**
 		 * Unpredictable
@@ -42,7 +69,7 @@ public class RaceConditionDemo {
 		 * 
 		 * Thread-0: 2000000
 		 */
-		//MyRunnablz2 run = new MyRunnablz2();
+		// MyRunnablz2 run = new MyRunnablz2();
 
 //		Thread t1 = new Thread(run);
 //		Thread t2 = new Thread(run);
@@ -75,11 +102,11 @@ class MyRunnablz2 implements Runnable {
 
 	@Override
 	public void run() {
-		 synchronized (this) {
+		synchronized (this) {
 			for (int i = 0; i < 1000000; i++) {
 				this.count++;
 			}
 			System.out.println(Thread.currentThread().getName() + ": " + count);
-		 }
+		}
 	}
 }

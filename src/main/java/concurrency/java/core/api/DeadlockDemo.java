@@ -8,9 +8,9 @@ package concurrency.java.core.api;
  * We can follow certain steps to avoid deadlock:
  * 
  * - If possible, avoid nested locks or unnecessary locks - Use Thread Join with
- * maximum-time that thread will take 
+ * maximum-time that thread will take
  * 
- * - Or use same Lock order 
+ * - Or use same Lock order
  * 
  *
  */
@@ -94,6 +94,53 @@ class Regard {
 		synchronized (monitor1) { //
 			System.out.println(Thread.currentThread().getName() + " uses cafee machine");
 		}
+	}
+
+}
+
+class DeadLock3 {
+
+	/**
+	 * monitor objects
+	 */
+	private Object lock1 = new Object();
+	private Object lock2 = new Object();
+
+	public void one() {
+		synchronized (lock1) {
+			System.out.println("[" + Thread.currentThread().getName() + "] in method one()");
+			two();
+		}
+	}
+
+	public void two() {
+		synchronized (lock2) {
+			System.out.println("[" + Thread.currentThread().getName() + "] in method two()");
+			three();
+		}
+	}
+
+	public void three() {
+		synchronized (lock1) {
+			System.out.println("[" + Thread.currentThread().getName() + "] in method three()");
+		}
+	}
+
+	public static void main(String[] args) throws InterruptedException {
+
+		DeadLock3 obj = new DeadLock3();
+
+		Runnable r1 = () -> obj.one();
+		Runnable r2 = () -> obj.two();
+
+		Thread t1 = new Thread(r1);
+		t1.start();
+
+		Thread t2 = new Thread(r2);
+		t2.start();
+
+		t1.join();
+		t2.join();
 	}
 
 }
