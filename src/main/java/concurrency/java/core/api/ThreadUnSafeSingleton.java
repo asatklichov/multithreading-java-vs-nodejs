@@ -14,7 +14,9 @@ package concurrency.java.core.api;
  * 
  * - Non thread safe for multi-threaded app.
  * 
- * - Difficult to unit test
+ * - Race condition happens 
+ * 
+ * - No Happens Before Link 
  * 
  * - Via reflection still you can create multiple instance of this class.
  * E.g. via invoking the private constructor reflectively  with help of 
@@ -25,33 +27,39 @@ package concurrency.java.core.api;
  * </code>
  * </pre>
  */
-public class ThreadNonSafeSingleton {
+public class ThreadUnSafeSingleton {
+
+	// static field loads only once
 
 	// makes eager initialization
 	// private static final ThreadNonSafeSingleton instance = new
 	// ThreadNonSafeSingleton();
 
-	// for lazy init
-	private static ThreadNonSafeSingleton instance;
+	// make lazy init
+	private static ThreadUnSafeSingleton instance;
 
 	/**
 	 * private constructor is not visible besides this class
 	 */
-	private ThreadNonSafeSingleton() {
+	private ThreadUnSafeSingleton() {
 
 	}
 
-	// for eagerly usage 
+	// for eagerly usage
 //	public static ThreadNonSafeSingleton getInstance() {
 //		return instance;
 //	}
 
-	public static ThreadNonSafeSingleton getInstance() {
-		if (instance == null) {
-			instance = new ThreadNonSafeSingleton();
+	public static ThreadUnSafeSingleton getInstance() {
+		// Here No "Happens Before Link" (no synchronization, no volatile, ... )
+
+		if (instance == null) { // causes race condition here ...
+			instance = new ThreadUnSafeSingleton();
 		}
 		return instance;
 	}
+
+	
 
 	@Override
 	public String toString() {

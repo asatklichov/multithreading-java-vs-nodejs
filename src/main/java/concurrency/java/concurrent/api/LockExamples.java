@@ -214,7 +214,7 @@ class SemaphoresDemo {
 	}
 }
 
-class Safelock {
+class Safelockz {
 	static class Friend {
 		private final String name;
 		private final Lock lock = new ReentrantLock();

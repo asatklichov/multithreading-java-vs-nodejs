@@ -2,9 +2,18 @@ package concurrency.java.core.api;
 
 public class AnIntroThreadBasicsDemo {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws InterruptedException {
 		Thread t = new Thread();
 		t.start();
+		
+		 t = new Thread() {
+			 @Override
+			public void run() {
+				 System.out.println("Kindle Gutly Bolsyn");
+				super.run();
+			}
+		 };
+			t.start();
 
 		/**
 		 * 1-way
@@ -40,8 +49,9 @@ public class AnIntroThreadBasicsDemo {
 		 */
 		Runnable r = () -> {
 			// printInfo();
-			while (true) {
-				System.out.println(getCurrentThreadName() + " is running");
+			int x = 0;
+			while (x++ < 10) { //true
+				System.out.println(x+ ". "+getCurrentThreadName() + " is running");
 				sleep(1000);
 			}
 			// System.out.println(getCurrentThreadName() + " finished");
@@ -59,6 +69,7 @@ public class AnIntroThreadBasicsDemo {
 		sleep(500);
 		System.out.println("Stop Thread-2");
 		myRunnable.terminate();// otherwise keeps running infinitively
+		t4.join(); 
 		System.out.println("--- END OF MAIN THREAD ----");
 	}
 

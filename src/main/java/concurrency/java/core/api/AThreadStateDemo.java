@@ -1,15 +1,40 @@
 package concurrency.java.core.api;
 
+/**
+ * A thread state. A thread can be in one of the following states:
+ * 
+ * NEW A thread that has not yet started is in this state.
+ * 
+ * RUNNABLE A thread executing in the Java virtual machine is in this state.
+ * 
+ * BLOCKED A thread that is blocked waiting for a monitor lock is in this state.
+ * 
+ * WAITING A thread that is waiting indefinitely for another thread to perform a
+ * particular action is in this state.
+ * 
+ * TIMED_WAITING A thread that is waiting for another thread to perform an
+ * action for up to a specified waiting time is in this state.
+ * 
+ * TERMINATED A thread that has exited is in this state. A thread can be in only
+ * one state at a given point in time. These states are virtual machine states
+ * which do not reflect any operating system thread states.
+ * 
+ * 
+ */
+class ThreadSTATES {
+
+}
+
 //https://www.geeksforgeeks.org/lifecycle-and-states-of-a-thread-in-java/
 
 //Java program to demonstrate thread states
 
-public class ThreadStateDemo implements Runnable {
-	public static ThreadStateDemo obj;
+public class AThreadStateDemo implements Runnable {
+	public static AThreadStateDemo obj;
 	public static Thread thread1;
 
 	public static void main(String[] args) {
-		obj = new ThreadStateDemo();
+		obj = new AThreadStateDemo();
 		thread1 = new Thread(obj);
 
 		// thread1 created and is currently in the NEW
@@ -76,7 +101,7 @@ class MiThread implements Runnable {
 		}
 
 		System.out.println(
-				"State of thread1 while it called join() method on thread2 -" + ThreadStateDemo.thread1.getState());
+				"State of thread1 while it called join() method on thread2 -" + AThreadStateDemo.thread1.getState());
 		try {
 			Thread.sleep(200);
 		} catch (InterruptedException e) {
@@ -84,5 +109,3 @@ class MiThread implements Runnable {
 		}
 	}
 }
-
-

@@ -1,8 +1,10 @@
 package concurrency.java.core.api;
 
-import java.util.Collections;
-
 /**
+ * 
+ * See also {@link LockMess } for interesting side of join()
+ * 
+ * 
  * Thread may run in different order (UNPREDICTABLE), it's up to the scheduler,
  * and we don't control the scheduler!
  * 
@@ -48,7 +50,6 @@ public class JoinDemo {
 		}
 
 		t2.start();
-		
 
 		// starts t3 after when thread t2 has died.
 		/**
@@ -111,7 +112,7 @@ class JoinPuzzle {
 //			e.printStackTrace();
 //		}
 
-		// here order may not be guaranteed, because t2 is not joined into main-thread 
+		// here order may not be guaranteed, because t2 is not joined into main-thread
 
 	}
 }
@@ -126,5 +127,100 @@ class MyWorkerThread extends Thread {
 			++i;
 		}
 		System.out.println(Thread.currentThread().getName() + ", i = " + i);
+	}
+}
+
+/**
+ * if we look only at the output from Lucy, or Ricky. Each one individually is
+ * behaving in a nice orderly manner. But together�chaos!
+ *
+ * <pre>
+ *   Why? Because
+*
+*
+it's up to the scheduler, and we don't control the scheduler! Which brings up
+another key point to remember: Just because a series of threads are started in a
+particular order doesn't mean they'll run in that order. For any group of started
+threads, order is not guaranteed by the scheduler. And duration is not guaranteed.
+You don't know, for example, if one thread will run to completion before the others
+have a chance to get in or whether they'll all take turns nicely, or whether they'll do
+a combination of both. 
+
+There is a way, however, to start a thread but tell it not to
+run until some other thread has finished.
+
+You can do this with the join() method, which we'll look at a little later.
+ * 
+ * 
+ * https://www.baeldung.com/java-thread-join
+ * </pre>
+ */
+class JoinExample2 {
+
+	/**
+	 * There is a way, however, to start a thread but tell it not to run until some
+	 * other thread has finished.
+	 * 
+	 * You can do this with the join() method, which we'll look at a little later.
+	 * 
+	 * @param args
+	 */
+	public static void main(String[] args) {
+
+		// creating two threads
+		ThreadJoining2 t1 = new ThreadJoining2();
+		t1.setName("Thread-A");
+		ThreadJoining2 t2 = new ThreadJoining2();
+		t2.setName("Thread-A");
+		ThreadJoining2 t3 = new ThreadJoining2();
+		t3.setName("Thread-A");
+
+		// thread t1 starts
+		t1.start();
+
+		/*
+		 * starts second thread after when first thread t1 has died.
+		 */
+		try {
+			System.out.println("Current Thread: " + Thread.currentThread().getName());
+			t1.join();
+		}
+
+		catch (Exception ex) {
+			System.out.println("Exception has " + "been caught" + ex);
+		}
+
+		// t2 starts
+		t2.start();
+
+		// starts t3 after when thread t2 has died.
+		try {
+			System.out.println("Current Thread: " + Thread.currentThread().getName());
+			t2.join();
+		}
+
+		catch (Exception ex) {
+			System.out.println("Exception has been" + " caught" + ex);
+		}
+
+		t3.start();
+	}
+
+}
+
+class ThreadJoining2 extends Thread {
+	@Override
+	public void run() {
+		for (int i = 0; i < 3; i++) {
+			try {
+				Thread.sleep(500);
+				System.out.println("Current Thread: " + Thread.currentThread().getName());
+			}
+
+			catch (Exception ex) {
+				System.out.println("Exception has" + " been caught" + ex);
+			}
+			System.out.println(i);
+		}
 	}
 }

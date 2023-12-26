@@ -1,4 +1,4 @@
-package concurrency.java.core.api;
+package concurrency.java.concurrent.api;
 
 
 import java.util.ArrayList;
