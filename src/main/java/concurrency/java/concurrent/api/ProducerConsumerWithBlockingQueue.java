@@ -1,4 +1,4 @@
-package org.paumard.collections;
+package concurrency.java.concurrent.api;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +10,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
-public class ProducerConsumer {
+public class ProducerConsumerWithBlockingQueue {
 
 	public static void main(String[] args) throws InterruptedException {
 
@@ -39,7 +39,7 @@ public class ProducerConsumer {
 		}
 
 		List<Callable<String>> producersAndConsumers = new ArrayList<>();
-		
+
 		for (int i = 0; i < 2; i++) {
 			producersAndConsumers.add(new Producer());
 		}

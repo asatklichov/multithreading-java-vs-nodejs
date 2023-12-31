@@ -1,13 +1,33 @@
 package concurrency.java.concurrent.api;
 
 /**
- AnatomyOfASynchronizer
- 
- 
- * see  {@link ExchangerDemo}
- * see  {@link SemaphoresDemo}
  * 
- 
+ * Java Concurrency – Synchronizers
+ * 
+ * 
+ * The java.util.concurrent package contains several classes that help manage a
+ * set of threads that collaborate with each other. Some of these include:
+ * 
+ * CyclicBarrier,
+ * 
+ * Phaser,
+ * 
+ * CountDownLatch,
+ * 
+ * Exchanger,
+ * 
+ * Semaphore,
+ * 
+ * SynchronousQueue
+ * 
+ * 
+ * 
+ * AnatomyOfASynchronizer
+ * 
+ * 
+ * see {@link ExchangerDemo} see {@link SemaphoresDemo}
+ * 
+ * 
  * https://jenkov.com/tutorials/java-concurrency/anatomy-of-a-synchronizer.html
  *
  * Even if many synchronizers (locks, semaphores, blocking queue etc.) are
