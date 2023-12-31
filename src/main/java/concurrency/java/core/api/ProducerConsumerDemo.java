@@ -1,5 +1,15 @@
 package concurrency.java.core.api;
 
+import concurrency.java.concurrent.api.ProducerConsumerWithReentrantLockDemo;
+
+/**
+ * See {@link ProducerConsumerWithReentrantLockDemo}
+ *
+ */
+public class ProducerConsumerDemo {
+
+}
+
 /**
  * Buffer causes Race Condition if shared among the multiple threads. Because
  * many threads can do read/write at the same time.
