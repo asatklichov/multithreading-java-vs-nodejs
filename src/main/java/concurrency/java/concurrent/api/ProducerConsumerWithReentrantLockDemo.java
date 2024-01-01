@@ -17,10 +17,11 @@ import java.util.concurrent.locks.ReentrantLock;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import concurrency.java.core.api.ProducerConsumerDemo;
+public class ProducerConsumerWithReentrantLockDemo {
+}
 
 /**
- * See {@link ProducerConsumerDemo }
+ * See {@link ProducerConsumerWithBlockingQueue } {@link ProducerConsumerWithReentrantLockAndConditionDemo}
  *
  */
 class ProducerConsumerWithReentrantLockAndConditionDemo {
@@ -41,7 +42,7 @@ class ProducerConsumerWithReentrantLockAndConditionDemo {
 					try {
 						lock.lock();
 						while (isEmpty(buffer)) {
-							// wait  isEmpty.await() - make blocked
+							// wait isEmpty.await() - make blocked
 							if (!isEmpty.await(10, TimeUnit.MILLISECONDS)) {
 								throw new TimeoutException("Consumer time out");
 							}
@@ -99,11 +100,11 @@ class ProducerConsumerWithReentrantLockAndConditionDemo {
 		producersAndConsumers.addAll(consumers);
 
 		/**
-		 * Here we use Threads from ExecutorService 	
+		 * Here we use Threads from ExecutorService
 		 */
 		ExecutorService executorService = Executors.newFixedThreadPool(8);
-		//try with 4, total number threads available be CARE, 
-		//ExecutorService executorService = Executors.newFixedThreadPool(4);
+		// try with 4, total number threads available be CARE,
+		// ExecutorService executorService = Executors.newFixedThreadPool(4);
 		try {
 			List<Future<String>> futures = executorService.invokeAll(producersAndConsumers);
 

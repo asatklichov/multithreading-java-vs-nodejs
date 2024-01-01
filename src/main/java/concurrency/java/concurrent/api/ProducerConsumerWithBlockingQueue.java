@@ -10,6 +10,14 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
+/**
+ * See {@link ProducerConsumerDemo,
+ * ProducerConsumerWithReentrantLockAndConditionDemo }
+ * 
+ * Below solution is done purely using Concurrent Collection No 1) synchronized
+ * way needed 2) No Lock/Condition mechanism needed
+ *
+ */
 public class ProducerConsumerWithBlockingQueue {
 
 	public static void main(String[] args) throws InterruptedException {

@@ -1,9 +1,10 @@
 package concurrency.java.core.api;
 
-import concurrency.java.concurrent.api.ProducerConsumerWithReentrantLockDemo;
+import concurrency.java.concurrent.api.ProducerConsumerWithBlockingQueue;
 
-/**
- * See {@link ProducerConsumerWithReentrantLockDemo}
+/** 
+ *  * See {@link ProducerConsumerWithBlockingQueue} {@link ProducerConsumerWithReentrantLockDe}
+ *
  *
  */
 public class ProducerConsumerDemo {
