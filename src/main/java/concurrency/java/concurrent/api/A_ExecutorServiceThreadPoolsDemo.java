@@ -6,6 +6,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -16,6 +17,7 @@ import java.util.concurrent.RecursiveAction;
 import java.util.concurrent.RecursiveTask;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 //references
@@ -323,5 +325,32 @@ class MyRecursiveTask extends RecursiveTask<Long> {
 		subtasks.add(subtask2);
 
 		return subtasks;
+	}
+}
+
+//https://www.baeldung.com/java-threadlocal
+/**
+ * beforeExecute() and afterExecute() methods. The thread pool will call the
+ * beforeExecute() method before running anything using the borrowed thread. On
+ * the other hand, it’ll call the afterExecute() method after executing our
+ * logic. 
+ * 
+ */
+class ThreadLocalAwareThreadPool extends ThreadPoolExecutor {
+
+	public ThreadLocalAwareThreadPool(int corePoolSize, int maximumPoolSize, long keepAliveTime, TimeUnit unit,
+			BlockingQueue<Runnable> workQueue) {
+		super(corePoolSize, maximumPoolSize, keepAliveTime, unit, workQueue);
+
+	}
+
+	@Override
+	protected void afterExecute(Runnable r, Throwable t) {
+		// Call remove on each ThreadLocal
+	}
+
+	@Override
+	protected void beforeExecute(Thread t, Runnable r) {
+		super.beforeExecute(t, r);
 	}
 }

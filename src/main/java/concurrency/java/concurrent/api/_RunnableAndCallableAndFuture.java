@@ -164,12 +164,18 @@ class ExecutorServiceAndCallableAndFuture2 {
 
 class ExecutorServiceAndCallableAndFutureCancellation {
 
-	public static void main(String[] args) throws ExecutionException, InterruptedException, TimeoutException {
+	public static void main(String[] args) {
 
 		ExecutorService executor = Executors.newSingleThreadExecutor();
 		Future future = executor.submit(new Fibonacci(23));
 		try {
-			future.get(2, TimeUnit.SECONDS);
+			if (future.isDone() && !future.isCancelled()) {
+				try {
+					future.get(2, TimeUnit.SECONDS);
+				} catch (InterruptedException | ExecutionException e) {
+					e.printStackTrace();
+				}
+			}
 		} catch (TimeoutException e) {
 			future.cancel(true);
 			System.out.println("Task Cancelled");

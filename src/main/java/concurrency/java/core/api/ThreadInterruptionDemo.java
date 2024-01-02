@@ -1,5 +1,7 @@
 package concurrency.java.core.api;
 
+import java.util.concurrent.atomic.AtomicBoolean;
+
 /**
  * Preventing Thread Execution
  * 
@@ -339,4 +341,4 @@ class SunSimpleSample {
 		}
 		threadMessage("Finally!");
 	}
-}
+} 

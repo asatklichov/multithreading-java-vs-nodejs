@@ -44,6 +44,9 @@ class SemaphoreExample {
 		// ...
 
 		semaphore.release();
+		
+		
+		
 	}
 
 }
