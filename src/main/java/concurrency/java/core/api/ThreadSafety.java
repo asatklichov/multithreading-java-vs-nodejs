@@ -56,3 +56,19 @@ class MathUtils {
     }
 }
 
+/**
+ * Even though we can use any Java object as an intrinsic lock, we should avoid
+ * using Strings for locking purposes:
+ * 
+ * However, because of string interning, these two �Lock� values may actually
+ * refer to the same object on the string pool.
+ * 
+ *
+ */
+class Class1 {
+	private static final String LOCK = "Lock";
+}
+
+class Class2 {
+	private static final String LOCK = "Lock";
+}
