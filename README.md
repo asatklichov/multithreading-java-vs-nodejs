@@ -30,7 +30,7 @@ core Java multithreading API examples e.g. deadlock, or race-condition examples,
 - Run main methods under 'concurrency.java.concurrent.api' package to see 
 Java concurrency API examples e.g. different locks, executors, producer-consumers, .. 
 
-### Java Enhanced Concurrency - CompletableFuture with Java 11 http2 client
+### Java Enhanced Concurrency - CompletableFuture with Java 11 http2 client, Reactive Programming and Virtual Threads
 
 - See concurrency.completablefuture.api package to understand CompletableFuture
 - Run main methods under 'concurrency.completablefuture.java11.httpclient' package to see 
