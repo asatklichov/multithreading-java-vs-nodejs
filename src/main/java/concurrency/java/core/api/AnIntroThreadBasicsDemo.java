@@ -9,7 +9,7 @@ public class AnIntroThreadBasicsDemo {
 		 t = new Thread() {
 			 @Override
 			public void run() {
-				 System.out.println("Kindle Gutly Bolsyn");
+				 System.out.println("Kindle GB");
 				super.run();
 			}
 		 };
