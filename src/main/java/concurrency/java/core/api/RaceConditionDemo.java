@@ -62,7 +62,7 @@ class RaceConditionHappens {
  * Here we fix the Race condition which is happened on WRITE operation. But,
  * there is a VISIBILITY problem existing on LongWrapperFixedRaceCondition, so
  * 
- * See improved version of {@link RaceConditionFixedDemoImproved}
+ * See improved version of {@link VisibilityImprovesRaceConditionFix}
  *
  */
 class RaceConditionFixedDemo {

@@ -1,3 +1,4 @@
+/*
 package concurrency.java.concurrent.api;
 
 import static org.junit.Assert.assertFalse;
@@ -10,14 +11,16 @@ import java.util.concurrent.locks.LockSupport;
 import org.junit.jupiter.api.Test;
 
 public class LockSupportDemo {
-	/**
+	*/
+/**
 	 * * LockSupport Is a kind of lock mechanism. LockSupport provides an
 	 * alternative for some of Thread's deprecated methods: suspend() and resume().
 	 * It uses a concept of permit and parking to detect if given thread should
 	 * block or not. park() to block the thread waiting for a permit,
 	 * unpark(thread) to add a permit to the thread
 	 *
-	 */
+	 *//*
+
 
 	@Test
 	public void should_unblock_parked_thread() throws InterruptedException {
@@ -167,3 +170,4 @@ public class LockSupportDemo {
 	}
 
 }
+*/

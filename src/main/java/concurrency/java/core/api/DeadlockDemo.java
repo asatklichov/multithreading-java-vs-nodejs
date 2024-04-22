@@ -11,8 +11,9 @@ package concurrency.java.core.api;
  * maximum-time that thread will take
  * 
  * - Or use same Lock order
- * 
- *
+ *  
+ *  
+  
  */
 class Deadlock {
 	public static Object lock1 = new Object();

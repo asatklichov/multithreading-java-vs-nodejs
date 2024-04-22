@@ -4,7 +4,7 @@ import concurrency.java.concurrent.api.ProducerConsumerWithBlockingQueue;
 
 /** 
  *  * See {@link ProducerConsumerWithBlockingQueue} {@link ProducerConsumerWithReentrantLockDe}
- *
+ *  
  *
  */
 public class ProducerConsumerDemo {
@@ -12,11 +12,13 @@ public class ProducerConsumerDemo {
 }
 
 /**
- * Buffer causes Race Condition if shared among the multiple threads. Because
+ * Buffer causes RACE CONDITION  if shared among the multiple threads. Because
  * many threads can do read/write at the same time.
  * 
  * Making method produce() and consume() synchronized can not help to much in
  * case we write it like e.g. buffer[count++] = 1;
+ * 
+ *  * race condition  
  */
 class UnsafeProducerConsumer {
 
@@ -99,13 +101,17 @@ class UnsafeProducerConsumer {
 
 //1-solution. What happens if we synchronize above produce() and consume() methods? 
 /**
+ * Try NAIVELY synchronize both methods. 
  * 
- * It will not fix the problem, because consumer() and produce() methods use
+ * It will NOT fix the problem (RACE CONDITION), because consumer() and produce() methods use
  * different LOCK object (each uses its instance as a monitor object). This code
  * change will work, if Consumer and Producer uses SAME lock object
  *
  * 
- * Produces LOCK issues
+ * Produces LOCK issues - try to RUN in DEBUG method (without breakpoints)
+ * 
+ * lock problem - different locks
+ *  
  * 
  */
 class ProducerConsumerFirstTry {
@@ -186,7 +192,7 @@ class ProducerConsumerFirstTry {
 }
 
 /**
- * Using common lock object
+ * Using common lock object (same KEY)
  *
  */
 class ProducerConsumerSecondTry {
@@ -207,7 +213,7 @@ class ProducerConsumerSecondTry {
 	static class Producer {
 
 		/**
-		 * It fixes the Race condition problem unless buffer is FULL.
+		 * It fixes the RACE CONDITION problem unless buffer is FULL.
 		 * 
 		 * Problem happens when buffer becomes FULL. while (isFull(buffer)) {} loop runs
 		 * infinitely, also THREAD (e.g. thread2) HOLDS the key, it does not release it,
@@ -233,7 +239,7 @@ class ProducerConsumerSecondTry {
 		 */
 		public void produce() {
 			synchronized (monitor) {
-				while (isFull(buffer)) { // causes DEADLOCK
+				while (isFull(buffer)) {// waiting key from thread on consumer method  // causes DEADLOCK
 				}
 				buffer[count++] = 1;
 			}
@@ -267,7 +273,7 @@ class ProducerConsumerSecondTry {
 		 */
 		public void consume() {
 			synchronized (monitor) {
-				while (isEmpty(buffer)) { // causes DEADLOCK
+				while (isEmpty(buffer)) { // thread runs this method infinitely -  causes DEADLOCK
 				}
 				buffer[--count] = 0;
 			}
@@ -324,7 +330,9 @@ class ProducerConsumerSecondTry {
 /**
  * 3-try solves all the issues (race condition and deadlock)
  * 
- * - use dedicated lock object - use wait/notify pattern
+ * - use dedicated lock object AND use wait/notify pattern
+ * 
+ * wait/notify pattern HELPs to RELEASE a KEY once PARKED (waiting)
  *
  */
 class ProducerConsumerThirdTryFixedAllIssues {
@@ -335,7 +343,7 @@ class ProducerConsumerThirdTryFixedAllIssues {
 	 */
 	private static int[] buffer;
 	private static int count;
-
+ 
 	/**
 	 * This LOCK object will be common to all threads, and helps us to solve the
 	 * RACE condition once used by multiple threads

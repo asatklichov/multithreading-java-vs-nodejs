@@ -54,7 +54,7 @@ public class SingletonSerializable implements Serializable {
             // Checking if the state is preserved.
             System.out.println(s1.getState().equals(s2.getState())); //true
             // Checking if s1 and s2 are not the same instance.
-            System.out.println(s1 == s2); //false, different instances
+            System.out.println(s1 == s2); //false, different instances - ISSUE 
             System.out.println(s1 == s1); //false, different instances
         } catch (Exception e) {
             System.err.println("Error " + e.getMessage());

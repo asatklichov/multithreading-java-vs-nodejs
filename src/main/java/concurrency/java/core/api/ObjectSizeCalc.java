@@ -1,16 +1,11 @@
 package concurrency.java.core.api;
 
-
 import java.lang.instrument.Instrumentation;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ObjectSizeCalc {
 	// https://www.baeldung.com/java-size-of-object#:~:text=References%20have%20a%20typical%20size,%2D50%25%20more%20heap%20space.
-	public static void printObjectSize(Object object) {
-		System.out.println("Object type: " + object.getClass() + ", size: " + InstrumentationAgent.getObjectSize(object)
-				+ " bytes");
-	}
 
 	public static void main(String[] arguments) {
 		String emptyString = "";
@@ -58,6 +53,11 @@ public class ObjectSizeCalc {
 
 	public enum Day {
 		MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY
+	}
+
+	public static void printObjectSize(Object object) {
+		System.out.println("Object type: " + object.getClass() + ", size: " + InstrumentationAgent.getObjectSize(object)
+				+ " bytes");
 	}
 
 }

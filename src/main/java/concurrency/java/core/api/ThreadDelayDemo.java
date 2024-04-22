@@ -18,7 +18,7 @@ public class ThreadDelayDemo extends Thread {
 
 		Runnable r = () -> {
 			try {
-				Thread.sleep(3000);
+				Thread.sleep(2000);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
@@ -31,13 +31,13 @@ public class ThreadDelayDemo extends Thread {
 		t.join();
 
 		try {
-			int secondsToSleep = 4;
+			int secondsToSleep = 2;
 			Thread.sleep(secondsToSleep * 1000);
 		} catch (InterruptedException ie) {
 			Thread.currentThread().interrupt();
 		}
 
-		System.out.println("2. Using TimeUnit.sleep");
+		System.out.println("\n2. Using TimeUnit.sleep");
 		/*
 		 * For better readability, we can use TimeUnit.XXX.sleep(y), where XXX is the
 		 * time unit to sleep for (SECONDS, MINUTES, etc.), and y is the number of that
@@ -51,14 +51,14 @@ public class ThreadDelayDemo extends Thread {
 		 * the execution time could get imprecise after many iterations
 		 */
 		try {
-			int secondsToSleep = 4;
+			int secondsToSleep = 2;
 			TimeUnit.SECONDS.sleep(secondsToSleep);
 			System.out.println("I slept " + secondsToSleep + " TimeUnit.SECONDS");
 		} catch (InterruptedException ie) {
 			Thread.currentThread().interrupt();
 		}
 
-		System.out.println("3. An ExecutorService-Based Approach");
+		System.out.println("\n3. An ExecutorService-Based Approach");
 		/**
 		 * Java provides the ScheduledExecutorService interface, which is a more robust
 		 * and precise solution. This interface can schedule code to run once after a
@@ -66,9 +66,10 @@ public class ThreadDelayDemo extends Thread {
 		 */
 		ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
 
-		int delayInSeconds = 3;
+		int delayInSeconds = 2;
 		executorService.schedule(r, delayInSeconds, TimeUnit.SECONDS);
 		System.out.println("I delayed " + delayInSeconds + " TimeUnit.SECONDS");
+		executorService.shutdown();
 
 	}
 }

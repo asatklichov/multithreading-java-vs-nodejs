@@ -13,26 +13,31 @@ class LockMess extends Thread {
 	private volatile boolean quittingTime = false;
 
 	public void run() {
-		while (!quittingTime) {
+		while (!quittingTime) { // issue is quittingTime never set to true
 			working();
 			System.out.println("Still working...");
 		}
 
+		// once the work completed
 		System.out.println("Coffee is good !");
 	}
 
 	private void working() {
 		try {
+			// Nicest work is - SLEEPing ;) ;)
 			Thread.sleep(300);
 		} catch (InterruptedException e) {
 		}
 	}
 
+	//// quit() synchronized with same KEY as keepWorking()
 	synchronized void quit() throws InterruptedException {
 		quittingTime = true;
-		System.out.println("Calling join() ... ");
-		// LOCK MESS happens
-		join();// wait thread completes its work
+		System.out.println("Calling join() ...  ");
+		// LOCK MESS happens here - RUN in DEBUG mode to SIMULATE (no breakpoint usage)
+		join();// THREAD is BLOCKED here, actually KEY is LOST (normally join() keeps KEY, BUT
+				// here LOST) .. (wait() release it... )
+		// join() [not synchronized] --> join(0) [synchronized] method --> calls WAIT()
 		System.out.println("Thread completed its work");
 
 		/**
@@ -40,14 +45,15 @@ class LockMess extends Thread {
 		 * let other thread execute keepWorking() method.
 		 * 
 		 * 
-		 * Open join() to investigate deeply (uses wait/notify pattern). 
-		 * join() calls join(0) which is SYNCHRONIZED, and 
-		 * since Java is RE-ENTRANT, JAVA can call this join(0) method with current KEY. 
-		 * And join(0) calls wait() which releases the KEY.
+		 * Open join() to investigate deeply (uses wait/notify pattern). join() calls
+		 * join(0) which is SYNCHRONIZED, and since Java is RE-ENTRANT, JAVA can call
+		 * this join(0) method with current KEY. And join(0) calls wait() which releases
+		 * the KEY.
 		 * 
-		 *  So, above JOIN method release the KEY to let other thread to continue run. 
+		 * So, above JOIN method release the KEY to let other thread to continue run.
 		 * 
 		 * 
+		 * wait() - release key
 		 * 
 		 * I guess that the reason to this is that join() method does releases the
 		 * lock/s obtained on the thread(if any) as it can be seen from the code below
@@ -96,17 +102,27 @@ class LockMess extends Thread {
 			public void run() {
 				worker.keepWorking();
 			}
-		}, 500);
+		}, 500);// TimerTask is as Runnable but executes after 500 ms. to set quittingTime =
+				// false;
+
+		// as you see: keepWorking() is not called, BUT worker.quit() called, where
+		// LOCK-MESS happens
+		// if you use less than 400 not 500 - code is OK
+
+		// keepWorking() synchronized with same KEY as quit()
 
 		Thread.sleep(400);
-		// to stop thread - but never stops ;)
+		// set quittingTime = true; to stop thread - but never stops ;)
+		// quit() synchronized with same KEY as keepWorking()
 		worker.quit();
+
 	}
 }
 
 class LockMessFixed extends Thread {
 
 	// helps to fix LOCK mess done by join()
+	// so join(0)->wait() can not use this - no REENTRANT allowed here
 	private Object lock = new Object();
 	private volatile boolean quittingTime = false;
 
@@ -130,13 +146,16 @@ class LockMessFixed extends Thread {
 		/**
 		 * LOCK MESS FIX, via change a KEY using special lock
 		 * 
+		 * So, here we HAVE DOUBLE SYNCHRONIZATION, and lock object is hidden and not
+		 * visible to outside (join(0)-->wait())
+		 * 
 		 * 
 		 * Actually, if you use a different object to lock on, you would see that the
 		 * join() method will not release the lock, and the program will wait forever.
 		 * But if not uses then it appears that the join() method is releasing the lock.
 		 * 
 		 */
-		synchronized (lock) { //this lock object is hidden and not visible to outside
+		synchronized (lock) { // this lock object is hidden and not visible to outside
 			quittingTime = true;
 			System.out.println("Calling join");
 			join();// wait thread completes its work
@@ -168,5 +187,31 @@ class LockMessFixed extends Thread {
 
 		Thread.sleep(400);
 		worker.quit();
+	}
+}
+
+//does invocation of join release the locks on objects the current holds?
+//https://coderanch.com/t/242419/certification/invocation-join-release-locks-objects
+class A extends Thread {
+	static A a;
+
+	public void run() {
+		try {
+			synchronized (a) {
+				System.out.println(Thread.currentThread().getName() + " acquired a lock on A");
+				Thread.sleep(1000);
+			}
+		} catch (InterruptedException e) {
+		}
+	}
+
+	public static void main(String[] ar) throws Exception {
+		a = new A();
+		a.start();
+		synchronized (a) {
+			System.out.println(Thread.currentThread().getName() + " acquired a lock on a");
+			a.join();
+			System.out.println(Thread.holdsLock(a));
+		}
 	}
 }

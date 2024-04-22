@@ -1,5 +1,11 @@
 package concurrency.java.core.api;
 
+/**
+ * Same with {@link LongWrapperFixedRaceConditionAndVisbility}
+ * 
+ * to using different terminology to explain
+ *
+ */
 public class LongWrapperForHappensBeforeGuarantee {
 
 	private Object lock = new Object();

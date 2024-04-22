@@ -1,7 +1,5 @@
 package concurrency.java.core.api;
 
-import java.util.concurrent.atomic.AtomicBoolean;
-
 /**
  * Preventing Thread Execution
  * 
@@ -192,7 +190,7 @@ public class ThreadInterruptionDemo extends Thread {
 			t1.interrupt();
 		} catch (Exception e) {
 			if (Thread.currentThread().isInterrupted()) {
-				System.out.println("Yes, thread intrrupted, " + Thread.currentThread().getState());
+				System.out.println("Yes, thread interrupted, " + Thread.currentThread().getState());
 			}
 			System.out.println("Thread Interrupted and Exception handled " + e);
 		}
@@ -221,7 +219,7 @@ class ThreadNotStopRunningDemo extends Thread {
 		if (Thread.currentThread().isInterrupted()) {
 			System.out.println("Yes, thread interrupted, " + Thread.currentThread().getState());
 		} else {
-			System.out.println("No, thread state is" + Thread.currentThread().getState());
+			System.out.println("No, thread state is " + Thread.currentThread().getState());
 		}
 		;
 	}
@@ -341,4 +339,4 @@ class SunSimpleSample {
 		}
 		threadMessage("Finally!");
 	}
-} 
+}

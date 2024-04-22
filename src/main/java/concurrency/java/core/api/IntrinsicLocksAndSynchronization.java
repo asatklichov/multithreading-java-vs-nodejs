@@ -10,7 +10,7 @@ public class IntrinsicLocksAndSynchronization {
 		 * synchronization: enforcing exclusive access to an object's state and
 		 * establishing happens-before relationships that are essential to visibility.
 		 * 
-		 * Intrinsic[yaradılıştan, hakiki, ] 
+		 * Intrinsic [natural, real, yaradylyşdan, hakyky] 
 		 */
 		System.out.println("     Intrinsic[natural, real ] lock or monitor lock    ");
 		System.out.println(

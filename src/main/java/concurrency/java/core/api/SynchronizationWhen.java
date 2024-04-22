@@ -70,6 +70,13 @@ public class SynchronizationWhen {
  * Access to non-static fields should be done from non-static synchronized
  * methods. For example:
  * 
+ * 
+ * In case you mix-up things, it can introduce unpredictable results.
+ * One way to AVOID it is using static dedicated LOCK and
+ * use it in all methods (static and instance). But, still it may not solve all the issues. 
+ * Best is, to keep thing separated, and follow the above rules. 
+ * 
+ * 
  */
 class Things {
 	private static int staticField;

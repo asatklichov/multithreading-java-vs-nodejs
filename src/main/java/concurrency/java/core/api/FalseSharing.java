@@ -25,7 +25,10 @@ public class FalseSharing {
 	 * As same as above, BUT to be sure, not to come across FALSE SHARING, we just
 	 * use some PADDINGs (before and after).
 	 * 
-	 * So 13 long variables. This help, it will not SHARE same line of CACHE in CPU
+	 * So 13 long variables. This help, it will not SHARE same line of CACHE in CPU. 
+	 * 
+	 * This idea is similar to HASH algorithm.
+	 * Try to make different hash KEYs, so buckets will be containing less values.
 	 */
 	public final static class VolatileLongPadded {
 		public long q1, q2, q3, q4, q5, q6;
@@ -46,6 +49,7 @@ public class FalseSharing {
 	}
 
 	public static void main(final String[] args) throws Exception {
+		System.out.println("See the PERFORMANCE once # of threads increases");
 		runBenchmark();
 	}
 
@@ -92,6 +96,8 @@ public class FalseSharing {
 		return () -> {
 			long i = ITERATIONS + 1;
 			while (0 != --i) {
+				//possibly shares same cache line 
+				//modified value
 				unPaddedLongs[k].value = i;
 			}
 		};

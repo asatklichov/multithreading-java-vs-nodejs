@@ -1,3 +1,4 @@
+
 package concurrency.java.core.api;
 
 import static org.junit.Assert.assertFalse;
@@ -30,7 +31,8 @@ You can do this with the join() method, which we'll look at a little later.
  * https://www.baeldung.com/java-thread-join
  * </pre>
  */
-public class JoinExample {
+
+public class JoinTests {
 
 	/**
 	 * There is a way, however, to start a thread but tell it not to run until some
@@ -46,8 +48,8 @@ public class JoinExample {
 		Thread t2 = new SampleThread(1);
 		t2.start();
 		System.out.println("Invoking join");
-		t2.join(); // main(current) thread must wait until t2 finishes
-		System.out.println("Returned from join");
+		t2.join(); // main(current) thread must
+		// wait until t2 finishes System.out.println("Returned from join");
 		assertFalse(t2.isAlive());
 	}
 
@@ -60,6 +62,7 @@ public class JoinExample {
 	 * 
 	 * @throws InterruptedException
 	 */
+
 	@Test
 	public void givenStartedThread_whenTimedJoinCalled_waitsUntilTimedout() throws InterruptedException {
 		Thread t3 = new SampleThread(10);

@@ -1,25 +1,5 @@
 package concurrency.java.core.api;
 
-public class StopAThread {
-	// https://jenkov.com/tutorials/java-concurrency/creating-and-starting-threads.html
-	public static void main(String[] args) {
-		MyZRunnable myRunnable = new MyZRunnable();
-
-		Thread thread = new Thread(myRunnable);
-
-		thread.start();
-
-		try {
-			Thread.sleep(5L * 1000L);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-
-		myRunnable.doStop();
-	}
-
-}
-
 /**
  * <pre>
  * Stop a Thread
@@ -29,7 +9,8 @@ public class StopAThread {
 	method would not provide any guarantees about in what state the thread was stopped. That means, 
 	that all Java objects the thread had access to during execution would be left in an unknown state. 
 	If other threads in your application also has access to the same objects, your application 
-	could fail unexpectedly and unpredictably.
+	could fail unexpectedly and unpredictably.	
+	https://jenkov.com/tutorials/java-concurrency/creating-and-starting-threads.html
  * </pre>
  *
  */
@@ -59,4 +40,23 @@ class MyZRunnable implements Runnable {
 
 		}
 	}
+}
+
+public class StopAThread {
+	public static void main(String[] args) {
+		MyZRunnable myRunnable = new MyZRunnable();
+
+		Thread thread = new Thread(myRunnable);
+
+		thread.start();
+
+		try {
+			Thread.sleep(5L * 1000L);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+
+		myRunnable.doStop();
+	}
+
 }

@@ -13,18 +13,18 @@ public class LongWrapperRaceCondition {
 	}
 
 	/**
-	 * Causes Race Condition. 
+	 * Causes Race Condition.
 	 * 
 	 */
 	public void incrementValue() {
 		/**
-		 * 1. Value l is read and copied locally
-		 * 2. Then write operation followed 
+		 * 1. Value l is read and copied locally 2. Then write operation followed
 		 * 
-		 * So, it is a Read/Write operation for different threads. 
+		 * So, it is a Read/Write operation for different threads.
 		 * 
-		 *  Value updated by other thread is not read by another thread, because other thread can not see it. 
-		 *  Value is not updated yet in Main memory of the hardware  
+		 * Value updated by other thread is not read by another thread, because other
+		 * thread can not see it. Value is not updated yet in Main memory of the
+		 * hardware
 		 */
 		l = l + 1;
 	}

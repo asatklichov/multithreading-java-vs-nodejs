@@ -1,6 +1,9 @@
 package concurrency.java.core.api;
 
 
+/*
+ * Simulates, with singleton you can create multiple instances 
+ */
 class UnsafeSingleton {
     //https://stackoverflow.com/questions/11072262/singleton-multithreading-in-java
     /*

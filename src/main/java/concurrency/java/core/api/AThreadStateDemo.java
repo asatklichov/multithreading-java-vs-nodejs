@@ -30,20 +30,20 @@ class ThreadSTATES {
 //Java program to demonstrate thread states
 
 public class AThreadStateDemo implements Runnable {
-	public static AThreadStateDemo obj;
+	public static AThreadStateDemo job;
 	public static Thread thread1;
 
 	public static void main(String[] args) {
-		obj = new AThreadStateDemo();
-		thread1 = new Thread(obj);
+		job = new AThreadStateDemo();
+		thread1 = new Thread(job); //thread1 uses AThreadStateDemo as a TASK
 
-		// thread1 created and is currently in the NEW
-		// state.
+		// thread1 created and is currently in the NEW  state.
 		System.out.println("State of thread1 after creating it - " + thread1.getState());
 		thread1.start();
 
 		// thread1 moved to Runnable state
 		System.out.println("State of thread1 after calling .start() method on it - " + thread1.getState());
+		System.out.println();
 		try {
 			// main thread joins after thread1
 			// waiting for thread1 to die/terminate
@@ -60,8 +60,8 @@ public class AThreadStateDemo implements Runnable {
 	 */
 	@Override
 	public void run() {
-		MiThread myThread = new MiThread();
-		Thread thread2 = new Thread(myThread);
+		MiThread myJob = new MiThread();
+		Thread thread2 = new Thread(myJob);
 
 		// thread1 created and is currently in the NEW
 		// state.
@@ -70,6 +70,7 @@ public class AThreadStateDemo implements Runnable {
 
 		// thread2 moved to Runnable state
 		System.out.println("State of thread2 after calling .start() method on it - " + thread2.getState());
+		System.out.println();
 
 		// moving thread1 to timed waiting state
 		try {

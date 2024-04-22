@@ -78,23 +78,9 @@ public class AFirstThreadDemo {
 					// java.lang.IllegalThreadStateException
 	}
 }
+ 
 
-class FooRunnable implements Runnable {
-	public void run() {
-		for (int x = 1; x < 6; x++) {
-			System.out.println("Runnable running" + Thread.currentThread().getName());
-			try {
-				Thread.sleep(5 * 1000);// 5 * 60 * 1000 Sleep for 5 minutes
-			} catch (InterruptedException e) {
-				// Auto-generated catch block
-				e.printStackTrace();
-			}
-
-		}
-	}
-}
-
-class TestThreads {
+class SunThreads {
 	public static void main(String[] args) {
 		FooRunnable r = new FooRunnable();
 		Thread t = new Thread(r, " tapdym");
@@ -112,5 +98,21 @@ class TestThreads {
 		one.start();
 		two.start();
 		three.start();
+	}
+}
+
+class FooRunnable implements Runnable {
+	public void run() {
+		for (int x = 1; x < 6; x++) {
+			System.out.println("Runnable running" + Thread.currentThread().getName());
+			
+			try {
+				Thread.sleep(2 * 1000); 
+				System.out.println();
+			} catch (InterruptedException e) {
+				// Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 }
