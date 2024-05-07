@@ -4,7 +4,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 /**
- * See from CORE API {@link concurrency.java.core.thread.api.ThreadInterruptionDemo }
+ * See from CORE API {@link concurrency.java.thread.core.api.ThreadInterruptionDemo }
  * 
  * Java Thread interrupt() method
  * 
