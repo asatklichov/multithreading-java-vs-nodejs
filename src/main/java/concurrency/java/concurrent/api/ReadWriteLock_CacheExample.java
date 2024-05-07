@@ -63,7 +63,7 @@ public class ReadWriteLock_CacheExample {
 			public String call() throws Exception {
 				while (true) {
 					long key = rand.nextInt(1_000);
-					//make a check at WHILE if you want to finish adding
+					// make a check at WHILE if you want to finish adding
 					cache.put(key, Long.toString(key));
 					if (cache.get(key) == null) {
 						System.out.println("Key " + key + " has not been put in the map");
@@ -82,6 +82,57 @@ public class ReadWriteLock_CacheExample {
 			}
 		} finally {
 			executorService.shutdown();
+		}
+	}
+}
+
+
+
+//other example
+class SynchronizedHashMapWithReadWriteLock {
+
+	Map<String, String> syncHashMap = new HashMap<>();
+	ReadWriteLock lock = new ReentrantReadWriteLock(); 
+	// ...
+	Lock writeLock = lock.writeLock(); 
+	Lock readLock = lock.readLock();
+
+	public void put(String key, String value) {
+		try {
+			writeLock.lock();
+			syncHashMap.put(key, value);
+		} finally {
+			writeLock.unlock();
+		}
+	}
+
+	public String remove(String key) {
+		try {
+			writeLock.lock();
+			return syncHashMap.remove(key);
+		} finally {
+			writeLock.unlock();
+		}
+	}
+	// ...
+
+
+	// ...
+	public String get(String key) {
+		try {
+			readLock.lock();
+			return syncHashMap.get(key);
+		} finally {
+			readLock.unlock();
+		}
+	}
+
+	public boolean containsKey(String key) {
+		try {
+			readLock.lock();
+			return syncHashMap.containsKey(key);
+		} finally {
+			readLock.unlock();
 		}
 	}
 }

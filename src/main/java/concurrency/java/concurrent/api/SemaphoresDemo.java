@@ -6,6 +6,25 @@ import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.IntStream;
 
+
+
+class OwnSemaphore {
+	private boolean signal = false;
+
+	public synchronized void take() {
+		this.signal = true;
+		this.notify();
+	}
+
+	public synchronized void release() throws InterruptedException {
+		while (!this.signal)
+			wait();
+		this.signal = false;
+	}
+
+}
+
+
 /**
  * Desc
  *
@@ -31,7 +50,7 @@ If you use a semaphore to guard a critical section, the thread trying to enter
 the critical section will typically first try to acquire a permit, enter the critical section, and then release the permit again after. Like this:
  * </pre>
  */
-class SemaphoreExample {
+class SemaphoreIntro {
 
 	// https://jenkov.com/tutorials/java-util-concurrent/semaphore.html
 	public static void main(String[] args) throws InterruptedException {
@@ -44,34 +63,8 @@ class SemaphoreExample {
 		// ...
 
 		semaphore.release();
-		
-		
-		
+
 	}
-
-}
-
-/**
- * 
- * Fairness
- *
- * <pre>
-No guarantees are made about fairness of the threads acquiring permits from the Semaphore. 
-That is, there is no guarantee that the first thread to call acquire() is also the first 
-thread to obtain a permit. If the first thread is blocked waiting for a permit, then a 
-second thread checking for a permit just as a permit is released, may actually obtain the 
-permit ahead of thread 1.
-
-If you want to enforce fairness, the Semaphore class has a constructor that takes a boolean 
-telling if the semaphore should enforce fairness. Enforcing fairness comes at a 
-performance / concurrency penalty, so don't enable it unless you need it.
-
-Here is how to create a Semaphore in fair mode:
-
-Semaphore semaphore = new Semaphore(1, true);
- * </pre>
- */
-class FairnessExample {
 
 }
 
@@ -107,4 +100,31 @@ public class SemaphoresDemo {
 
 		// stop(executor);
 	}
+}
+
+
+
+
+/**
+ * 
+ * Fairness
+ *
+ * <pre>
+No guarantees are made about fairness of the threads acquiring permits from the Semaphore. 
+That is, there is no guarantee that the first thread to call acquire() is also the first 
+thread to obtain a permit. If the first thread is blocked waiting for a permit, then a 
+second thread checking for a permit just as a permit is released, may actually obtain the 
+permit ahead of thread 1.
+
+If you want to enforce fairness, the Semaphore class has a constructor that takes a boolean 
+telling if the semaphore should enforce fairness. Enforcing fairness comes at a 
+performance / concurrency penalty, so don't enable it unless you need it.
+
+Here is how to create a Semaphore in fair mode:
+
+Semaphore semaphore = new Semaphore(1, true);
+ * </pre>
+ */
+class FairnessExample {
+
 }
