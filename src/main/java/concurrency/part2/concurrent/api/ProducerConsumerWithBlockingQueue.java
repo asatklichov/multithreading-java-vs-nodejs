@@ -10,9 +10,30 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
+import concurrency.part1.thread.core.api.ProducerConsumerDemo;
+
+class ProducesConsumerPattern {
+	/**
+	 * <pre>
+	 * Use Cases
+	There are several different kinds of use cases for the producer consumer design pattern. Some of the most common are:
+	
+	
+	 * https://jenkov.com/tutorials/java-concurrency/producer-consumer.html
+	
+	Reduce foreground thread latency.
+	Load balance work between different threads.
+	Backpressure management.
+	 * </pre>
+	 */
+	public static void main(String[] args) {
+
+	}
+}
+
 /**
- * See {@link ProducerConsumerDemo,
- * ProducerConsumerWithReentrantLockAndConditionDemo }
+ * See {@link ProducerConsumerWithReentrantLockAndConditionDemo }
+ * {@link ProducerConsumerDemo}
  * 
  * Below solution is done purely using Concurrent Collection No 1) synchronized
  * way needed 2) No Lock/Condition mechanism needed

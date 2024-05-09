@@ -1,4 +1,4 @@
-package concurrency.part2.concurrent.api;
+package concurrency.part1.thread.core.api;
 
 import java.util.function.Consumer;
 
@@ -30,6 +30,7 @@ public class SynchronizedBlocksInLambdaExpressions {
 
 				System.out.println(Thread.currentThread().getName() + " step 2: " + param);
 			}
+
 		};
 
 		Thread thread1 = new Thread(() -> {

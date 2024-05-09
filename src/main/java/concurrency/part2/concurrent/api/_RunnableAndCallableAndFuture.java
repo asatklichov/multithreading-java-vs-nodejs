@@ -13,6 +13,8 @@ class RunnablePattern {
 
 	public static void main(String[] args) {
 
+		System.out.println("Classic way");
+
 		Runnable task = () -> System.out.println("I am in thread " + Thread.currentThread().getName());
 		for (int i = 0; i < 10; i++) {
 			// 10 new created
@@ -45,6 +47,55 @@ class ExecutorAndRunnable {
 
 		service.shutdown();
 
+	}
+}
+
+class Runnablesz {
+
+	public static void main(String[] args) {
+		System.out.println(
+				"Difference between Runnable (has abstract RUN method) and Callable (has abstract  CALL method) - both are Functional Interfaces and represent a TASK to be executed by a THREAD");
+		System.out.println(
+				"Runnable - has no return value-void, can not throw Exception, submit FUTURE with null once successfull.");
+		System.out.println(
+				"Callable has return value - specified Type, can throw Exception and submit FUTURE with generic type");
+
+		Runnable task = () -> System.out.println("I am in thread " + Thread.currentThread().getName());
+		// ExecutorService service = Executors.newSingleThreadExecutor();
+		ExecutorService service = Executors.newFixedThreadPool(4);
+		for (int i = 0; i < 10; i++) {
+			// new Thread(task).start();
+			service.execute(task);
+		}
+		service.shutdown();
+	}
+}
+
+class Callablez {
+
+	public static void main(String[] args) throws ExecutionException, InterruptedException {
+		System.out.println(
+				"Difference between Runnable (has abstract RUN method) and Callable (has abstract  CALL method) - both are Functional Interfaces and represent a TASK to be executed by a THREAD");
+		System.out.println(
+				"Runnable - has no return value-void, can not throw Exception, submit FUTURE with null once successfull.");
+		System.out.println(
+				"Callable has return value - specified Type, can throw Exception and submit FUTURE with generic type");
+
+		Callable<String> task = () -> {
+			// return "sasas";
+			throw new IllegalStateException("I throw an exception in thread " + Thread.currentThread().getName());
+		};
+
+		ExecutorService executor = Executors.newFixedThreadPool(4);
+
+		try {
+			for (int i = 0; i < 10; i++) {
+				Future<String> future = executor.submit(task);
+				System.out.println("I get: " + future.get());
+			}
+		} finally {
+			executor.shutdown();
+		}
 	}
 }
 
@@ -171,7 +222,8 @@ class ExecutorServiceAndCallableAndFutureCancellation {
 		try {
 			if (future.isDone() && !future.isCancelled()) {
 				try {
-					future.get(2, TimeUnit.SECONDS);
+					Object object = future.get(5, TimeUnit.SECONDS);
+					System.out.println(object);
 				} catch (InterruptedException | ExecutionException e) {
 					e.printStackTrace();
 				}
@@ -197,7 +249,7 @@ class Fibonacci implements Callable<Integer>, Serializable {
 	}
 
 	public Integer call() throws InterruptedException {
-		Thread.sleep(2000);
+		Thread.sleep(3000);
 		return calculate(input);
 	}
 

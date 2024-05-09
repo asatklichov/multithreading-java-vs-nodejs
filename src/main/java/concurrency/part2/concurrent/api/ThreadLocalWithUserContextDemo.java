@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class AThreadLocalWithUserContextDemo {
+public class ThreadLocalWithUserContextDemo {
 
 	public void whenStoringUserDataInAMap_thenCorrect() throws IOException {
 		/**
@@ -98,7 +98,4 @@ class Context {
 		return userName;
 	}
 }
-
-class ThreadLocalRandomDemo {
-	// see https://www.baeldung.com/java-thread-local-random
-}
+ 

@@ -2,7 +2,6 @@ package concurrency.part2.concurrent.api;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.BrokenBarrierException;
@@ -25,6 +24,135 @@ import java.util.concurrent.TimeoutException;
  * that:
  *
  */
+
+/**
+ * Group of people want to go to cinema and gathered in one place
+ *
+ * See also {@code BarrierDemoz}
+ */
+class BarrierInAction {
+
+	public static void main(String[] args) {
+
+		class Friend implements Callable<String> {
+
+			private CyclicBarrier barrier;
+
+			public Friend(CyclicBarrier barrier) {
+				this.barrier = barrier;
+			}
+
+			public String call() throws Exception {
+
+				try {
+					Random random = new Random();
+					Thread.sleep((random.nextInt(20) * 100 + 100));
+					System.out.println("I just arrived, waiting for the others...");
+
+					barrier.await();
+
+					System.out.println("Let's go to the cinema!");
+					return "OK";
+				} catch (InterruptedException e) {
+					System.out.println("Interrupted");
+				}
+				return "KO";
+			}
+		}
+
+		ExecutorService executorService = Executors.newFixedThreadPool(4); // 2
+
+		CyclicBarrier barrier = new CyclicBarrier(4, () -> System.out.println("Barrier openning"));
+		List<Future<String>> futures = new ArrayList<>();
+
+		try {
+			for (int i = 0; i < 4; i++) {
+				Friend friend = new Friend(barrier);
+				futures.add(executorService.submit(friend));
+			}
+
+			futures.forEach(future -> {
+				try {
+					// future.get(200, TimeUnit.MILLISECONDS);
+					future.get();
+				} catch (InterruptedException | ExecutionException e) {
+					System.out.println(e.getMessage());
+				}
+				/*
+				 * catch (TimeoutException e) { System.out.println("Timed out"); // interrup
+				 * running tasks and the waiting ones future.cancel(true); }
+				 */
+			});
+
+		} finally {
+			executorService.shutdown();
+		}
+	}
+}
+
+/**
+ * See also {@code BarrierInAction}
+ *
+ */
+class BarrierDemoz {
+
+	public static void main(String[] args) {
+
+		class Friend implements Callable<String> {
+
+			private CyclicBarrier barrier;
+
+			public Friend(CyclicBarrier barrier) {
+				this.barrier = barrier;
+			}
+
+			public String call() throws Exception {
+
+				try {
+					Random random = new Random();
+					Thread.sleep((random.nextInt(20) * 100 + 100));
+					System.out.println("I just arrived, waiting for the others...");
+
+					barrier.await();// blocks
+
+					System.out.println("Let's go to the cinema!");
+					return "ok";
+				} catch (InterruptedException e) {
+					System.out.println("Interrupted");
+				}
+				return "nok";
+			}
+		}
+
+		ExecutorService executorService = Executors.newFixedThreadPool(2);// 4
+
+		CyclicBarrier barrier = new CyclicBarrier(4, () -> System.out.println("Barrier openning"));
+		List<Future<String>> futures = new ArrayList<>();
+
+		try {
+			for (int i = 0; i < 4; i++) {
+				Friend friend = new Friend(barrier);
+				futures.add(executorService.submit(friend));
+			}
+
+			futures.forEach(future -> {
+				try {
+					// future.get();
+					future.get(200, TimeUnit.MILLISECONDS);
+				} catch (InterruptedException | ExecutionException e) {
+					System.out.println(e.getMessage());
+				} catch (TimeoutException e) {
+					System.out.println("Timed out");
+					future.cancel(true);
+				}
+			});
+
+		} finally {
+			executorService.shutdown();
+		}
+	}
+}
+
 public class Barrier_CyclicBarrierDemo {
 
 	// https://jenkov.com/tutorials/java-util-concurrent/cyclicbarrier.html
@@ -41,7 +169,7 @@ public class Barrier_CyclicBarrierDemo {
 		 * When you create a CyclicBarrier you specify how many threads are to wait at
 		 * it, before releasing them. Here is how you create a CyclicBarrier:
 		 */
-		//CyclicBarrier barrier = new CyclicBarrier(2);
+		// CyclicBarrier barrier = new CyclicBarrier(2);
 
 		Runnable barrier1Action = new Runnable() {
 			public void run() {
@@ -58,13 +186,11 @@ public class Barrier_CyclicBarrierDemo {
 		CyclicBarrier barrier2 = new CyclicBarrier(2, barrier2Action);
 
 		CyclicBarrierRunnable barrierRunnable1 = new CyclicBarrierRunnable(barrier1, barrier2);
-
 		CyclicBarrierRunnable barrierRunnable2 = new CyclicBarrierRunnable(barrier1, barrier2);
 
 		new Thread(barrierRunnable1).start();
 		new Thread(barrierRunnable2).start();
 	}
-
 }
 
 class CyclicBarrierRunnable implements Runnable {
@@ -98,69 +224,6 @@ class CyclicBarrierRunnable implements Runnable {
 	}
 }
 
-/**
- * Group of people want to go to cinema and gathered in one place
- *
- */
-class BarrierInAction {
-
-	public static void main(String[] args) {
-
-		class Friend implements Callable<String> {
-
-			private CyclicBarrier barrier;
-
-			public Friend(CyclicBarrier barrier) {
-				this.barrier = barrier;
-			}
-
-			public String call() throws Exception {
-
-				try {
-					Random random = new Random();
-					Thread.sleep((random.nextInt(20) * 100 + 100));
-					System.out.println("I just arrived, waiting for the others...");
-
-					barrier.await();
-
-					System.out.println("Let's go to the cinema!");
-					return "ok";
-				} catch (InterruptedException e) {
-					System.out.println("Interrupted");
-				}
-				return "nok";
-			}
-		}
-
-		ExecutorService executorService = Executors.newFixedThreadPool(2);
-
-		CyclicBarrier barrier = new CyclicBarrier(4, () -> System.out.println("Barrier openning"));
-		List<Future<String>> futures = new ArrayList<>();
-
-		try {
-			for (int i = 0; i < 4; i++) {
-				Friend friend = new Friend(barrier);
-				futures.add(executorService.submit(friend));
-			}
-
-			futures.forEach(future -> {
-				try {
-					future.get(200, TimeUnit.MILLISECONDS);
-				} catch (InterruptedException | ExecutionException e) {
-					System.out.println(e.getMessage());
-				} catch (TimeoutException e) {
-					System.out.println("Timed out");
-					// interrup running tasks and the waiting ones
-					future.cancel(true);
-				}
-			});
-
-		} finally {
-			executorService.shutdown();
-		}
-	}
-}
-
 class Worker implements Callable<List<Integer>> {
 	private CyclicBarrier barrier;
 	private List<Integer> inputList;
@@ -188,28 +251,29 @@ class Worker implements Callable<List<Integer>> {
 	private List<Integer> findPrimes(List<Integer> inputList) {
 		List<Integer> primeNumbersList = new ArrayList<>();
 		for (Integer integer : inputList) {
-			List<Integer> primeNumbersBruteForce = primeNumbersBruteForce(integer);			
+			List<Integer> primeNumbersBruteForce = primeNumbersBruteForce(integer);
 			Collections.copy(primeNumbersList, primeNumbersBruteForce);
 		}
 		return primeNumbersList;
 	}
-	
+
 	public static List<Integer> primeNumbersBruteForce(int n) {
-	    List<Integer> primeNumbers = new ArrayList<>();
-	    for (int i = 2; i <= n; i++) {
-	        if (isPrimeBruteForce(i)) {
-	            primeNumbers.add(i);
-	        }
-	    }
-	    return primeNumbers;
+		List<Integer> primeNumbers = new ArrayList<>();
+		for (int i = 2; i <= n; i++) {
+			if (isPrimeBruteForce(i)) {
+				primeNumbers.add(i);
+			}
+		}
+		return primeNumbers;
 	}
+
 	public static boolean isPrimeBruteForce(int number) {
-	    for (int i = 2; i < number; i++) {
-	        if (number % i == 0) {
-	            return false;
-	        }
-	    }
-	    return true;
+		for (int i = 2; i < number; i++) {
+			if (number % i == 0) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	public static void main(String[] args) throws InterruptedException, ExecutionException {

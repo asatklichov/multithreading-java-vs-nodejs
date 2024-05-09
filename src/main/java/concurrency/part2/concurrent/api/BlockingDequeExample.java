@@ -25,10 +25,11 @@ public class BlockingDequeExample {
 	// https://jenkov.com/tutorials/java-util-concurrent/blockingdeque.html
 	public static void main(String[] args) throws InterruptedException {
 		BlockingDeque<String> deque = new LinkedBlockingDeque<String>();
-
-		deque.addFirst("1");
-		deque.addLast("2");
-		deque.addLast("3");
+ 
+		deque.addLast("melo");
+		deque.addLast("amo");
+		deque.addFirst("alo");
+		deque.addLast("ramo");
 
 		String two = deque.takeLast();
 		String one = deque.takeFirst();
@@ -36,23 +37,4 @@ public class BlockingDequeExample {
 		System.out.println(two + "; " + one);
 	}
 }
-
-class PriorityBlockingDequeExample {
-
-	// https://jenkov.com/tutorials/java-util-concurrent/linkedblockingdeque.html
-	public static void main(String[] args) throws Exception {
-
-		BlockingDeque<String> deque = new LinkedBlockingDeque<String>();
-
-		deque.addFirst("1");
-		deque.addLast("2");
-
-		String two = deque.takeLast();
-		System.out.println(two);
-		String one = deque.takeFirst();
-		System.out.println(one);
-
-		System.out.println("PriorityBlockingQueueExample done");
-
-	}
-}
+ 

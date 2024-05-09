@@ -1,6 +1,6 @@
 package concurrency.part2.concurrent.api;
 
-public class PCUCacheCoherenceInJavaConcurrency {
+public class CacheCoherenceInJavaConcurrency {
 	// https://jenkov.com/tutorials/java-concurrency/cache-coherence-in-java-concurrency.html
 	// https://jenkov.com/tutorials/java-concurrency/false-sharing.html
 	/**

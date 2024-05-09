@@ -3,7 +3,13 @@ package concurrency.part1.thread.core.api;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import concurrency.part2.concurrent.api.ThreadLocalRandomDemo;
+
 /**
+ * 
+/**
+ * See also {@link ThreadLocalRandomDemo } 
+
  * Java ThreadLocal
  * 
  * <pre>

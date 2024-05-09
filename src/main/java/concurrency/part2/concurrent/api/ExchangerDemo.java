@@ -4,7 +4,7 @@ import java.util.concurrent.Exchanger;
 
 //https://jenkov.com/tutorials/java-util-concurrent/exchanger.html
 /**
- * see  {@link Synchronizers}
+ * see  {@link Synchronizers, SynchronousQueueExample}
  *
  */
 public class ExchangerDemo {

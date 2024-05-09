@@ -26,7 +26,7 @@ public class ACustomizableThreadPools {
 		// to customize with any values
 		threadPoolExecutor.setCorePoolSize(4);
 
-		Callable<String> c = () -> "Nesibe Istanbul";
+		Callable<String> c = () -> "Gowy";
 		Future<String> future = threadPoolExecutor.submit(c);
 		System.out.println(future.get());
 		invokeAllExample(threadPoolExecutor);

@@ -1,31 +1,16 @@
 package concurrency.part2.concurrent.api;
 
-import java.util.Date;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.DelayQueue;
 import java.util.concurrent.Delayed;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.PriorityBlockingQueue;
-
-class ProducesConsumerPattern {
-	/**
-	 * <pre>
-	 * Use Cases
-	There are several different kinds of use cases for the producer consumer design pattern. Some of the most common are:
-	
-	
-	 * https://jenkov.com/tutorials/java-concurrency/producer-consumer.html
-	
-	Reduce foreground thread latency.
-	Load balance work between different threads.
-	Backpressure management.
-	 * </pre>
-	 */
-	public static void main(String[] args) {
-
-	}
-}
+import java.util.concurrent.SynchronousQueue;
+import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 
@@ -81,13 +66,10 @@ class ArrayBlockingQueueExample {
 		System.out.println("ArrayBlockingQueue done");
 
 		queue = new ArrayBlockingQueue(1024);
-		queue.put("1");
-
-		Object object = queue.take();
+		queue.put("11");
+		System.out.println(queue.take());
 	}
 }
-
-
 
 /**
  * The LinkedBlockingQueue keeps the elements internally in a linked structure
@@ -122,9 +104,7 @@ class LinkedBlockingQueueExample {
 		BlockingQueue<String> bounded = new LinkedBlockingQueue<String>(1024);
 
 		bounded.put("Value");
-
-		String value = bounded.take();
-
+		System.out.println(bounded.take());
 	}
 }
 
@@ -154,6 +134,8 @@ class PriorityBlockingQueueExample {
 
 		// String implements java.lang.Comparable
 		queue.put("Value");
+		queue.put("Malue");
+		queue.put("Walue");
 
 		String value = (String) queue.take();
 		System.out.println(value);
@@ -169,19 +151,59 @@ class PriorityBlockingQueueExample {
  * another thread takes that element from the queue. Likewise, if a thread tries
  * to take an element and no element is currently present, that thread is
  * blocked until a thread insert an element into the queue.
+ * 
  *
+ *
+ * The SynchronousQueue only has two supported operations: take() and put(), and
+ * both of them are blocking.
+ * 
+ * For example, when we want to add an element to the queue, we need to call the
+ * put() method. That method will block until some other thread calls the take()
+ * method, signaling that it is ready to take an element.
+ * 
+ * Although the SynchronousQueue has an interface of a queue, we should think
+ * about it as an exchange point for a single element between two threads, in
+ * which one thread is handing off an element, and another thread is taking that
+ * element.
+ * 
+ * see  {@link ExchangerDemo}
  */
 class SynchronousQueueExample {
 
 	public static void main(String[] args) throws Exception {
 
 		// https://jenkov.com/tutorials/java-util-concurrent/synchronousqueue.html
+		// https://www.baeldung.com/java-synchronous-queue
 		/**
 		 * The SynchronousQueue is a queue that can be used to exchange a single element
 		 * with another thread.
 		 */
-		System.out.println("SynchronousQueueExample done");
 
+		ExecutorService executor = Executors.newFixedThreadPool(2);
+		SynchronousQueue<Integer> queue = new SynchronousQueue<>();
+		Runnable producer = () -> {
+			Integer producedElement = ThreadLocalRandom.current().nextInt();
+			try {
+				queue.put(producedElement);
+			} catch (InterruptedException ex) {
+				ex.printStackTrace();
+			}
+		};
+		Runnable consumer = () -> {
+			try {
+				Integer consumedElement = queue.take();
+				System.out.println(consumedElement);
+			} catch (InterruptedException ex) {
+				ex.printStackTrace();
+			}
+		};
+
+		executor.execute(producer);
+		executor.execute(consumer);
+		executor.awaitTermination(500, TimeUnit.MILLISECONDS);
+		executor.shutdown();
+		System.out.println(queue.size() == 0);
+		System.out.println("SynchronousQueueExample done");
 	}
 }
 
@@ -200,25 +222,83 @@ class SynchronousQueueExample {
 class DelayQueue_Example {
 
 	public static void main(String[] args) throws Exception {
-		DelayQueue queue = new DelayQueue();
 
+		// https://jenkov.com/tutorials/java-util-concurrent/delayqueue.html
+		// https://www.baeldung.com/java-delay-queue
+		/*
+		 * The DelayQueue blocks the elements internally until a certain delay has
+		 * expired
+		 * 
+		 * when the consumer wants to take an element from the queue, they can take it
+		 * only when the delay for that particular element has expired.
+		 * 
+		 * https://www.geeksforgeeks.org/delayqueue-class-in-java-with-example/
+		 */
 
-		//https://jenkov.com/tutorials/java-util-concurrent/delayqueue.html
-		// The DelayQueue blocks the elements internally until a certain delay has
-				// expired.
-		Delayed element1 = new DelayObject("Kuzey Yildiz", (new Date()).getTime());
+		// create object of DelayQueue
+		// using DelayQueue() constructor
+		BlockingQueue<DelayObject2> DQ = new DelayQueue<DelayObject2>();
 
-		queue.put(element1);
+		// Add numbers to end of DelayQueue
+		DQ.add(new DelayObject2("A", 1));
+		DQ.add(new DelayObject2("B", 2));
+		DQ.add(new DelayObject2("C", 3));
+		DQ.add(new DelayObject2("D", 4));
 
-		Delayed element2 = queue.take();
-		System.out.println(element2);
+		// print DelayQueue
+		System.out.println("DelayQueue: " + DQ);
 
+		// create object of DelayQueue
+		// using DelayQueue(Collection c)
+		// constructor
+		BlockingQueue<DelayObject2> DQ2 = new DelayQueue<DelayObject2>(DQ);
+
+		// print DelayQueue
+		System.out.println("DelayQueue: " + DQ2);
 		System.out.println("DelayQueueExample done");
 
 	}
 }
 
- 
+//The DelayObject for DelayQueue
+//It must implement Delayed and
+//its getDelay() and compareTo() method
+class DelayObject2 implements Delayed {
+
+	private String name;
+	private long time;
+
+	// Constructor of DelayObject
+	public DelayObject2(String name, long delayTime) {
+		this.name = name;
+		this.time = System.currentTimeMillis() + delayTime;
+	}
+
+	// Implementing getDelay() method of Delayed
+	@Override
+	public long getDelay(TimeUnit unit) {
+		long diff = time - System.currentTimeMillis();
+		return unit.convert(diff, TimeUnit.MILLISECONDS);
+	}
+
+	// Implementing compareTo() method of Delayed
+	@Override
+	public int compareTo(Delayed obj) {
+		if (this.time < ((DelayObject2) obj).time) {
+			return -1;
+		}
+		if (this.time > ((DelayObject2) obj).time) {
+			return 1;
+		}
+		return 0;
+	}
+
+	// Implementing toString() method of Delayed
+	@Override
+	public String toString() {
+		return "\n{" + "name=" + name + ", time=" + time + "}";
+	}
+}
 
 class Producer implements Runnable {
 

@@ -1,9 +1,10 @@
 package concurrency.part1.thread.core.api;
 
-import concurrency.part2.concurrent.api.ProducerConsumerWithBlockingQueue;
+import concurrency.part2.concurrent.api.ProducerConsumerWithBlockingQueue; 
 
 /** 
- *  * See {@link ProducerConsumerWithBlockingQueue} {@link ProducerConsumerWithReentrantLockDe}
+ *  * See {@link ProducerConsumerWithBlockingQueue, 
+ *  ProducerConsumerWithReentrantLockAndConditionDemo}
  *  
  *
  */

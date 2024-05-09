@@ -17,11 +17,13 @@ import java.util.concurrent.locks.ReentrantLock;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import concurrency.part1.thread.core.api.ProducerConsumerDemo;
+
 public class ProducerConsumerWithReentrantLockDemo {
 }
 
 /**
- * See {@link ProducerConsumerWithBlockingQueue } {@link ProducerConsumerWithReentrantLockAndConditionDemo}
+ * See {@link ProducerConsumerWithBlockingQueue } {@link ProducerConsumerDemo}
  *
  */
 class ProducerConsumerWithReentrantLockAndConditionDemo {
