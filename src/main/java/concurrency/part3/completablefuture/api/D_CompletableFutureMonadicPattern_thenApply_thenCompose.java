@@ -1,4 +1,4 @@
-package concurrency.part3.completablefuture.api;
+	package concurrency.part3.completablefuture.api;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
@@ -100,6 +100,8 @@ public class D_CompletableFutureMonadicPattern_thenApply_thenCompose {
 				.println("So if the idea is to chain CompletableFuture methods then it’s better to use thenCompose().");
 
 	}
+	
+	
 
 	static CompletableFuture<Integer> computeAnother(Integer i) {
 		return CompletableFuture.supplyAsync(() -> i + 1);

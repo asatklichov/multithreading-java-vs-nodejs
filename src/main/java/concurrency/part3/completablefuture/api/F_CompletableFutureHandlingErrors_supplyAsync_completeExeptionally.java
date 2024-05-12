@@ -31,8 +31,7 @@ public class F_CompletableFutureHandlingErrors_supplyAsync_completeExeptionally 
 		 * thenApply() callbacks will be called and future will be resolved with the
 		 * exception occurred. If an error occurs in first thenApply() callback then 2nd
 		 * and 3rd callbacks won’t be called and the future will be resolved with the
-		 * exception occurred, and so on.
-		 * 
+		 * exception occurred, and so on.  
 		 */
 		CompletableFuture.supplyAsync(() -> {
 			// Code which might throw an exception

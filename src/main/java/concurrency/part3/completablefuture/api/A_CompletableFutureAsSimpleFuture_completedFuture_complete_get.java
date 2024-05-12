@@ -19,10 +19,17 @@ public class A_CompletableFutureAsSimpleFuture_completedFuture_complete_get {
 		 * ExecutionException (encapsulating an exception that occurred during a
 		 * computation) and InterruptedException (an exception signifying that a thread
 		 * executing a method was interrupted):
+		 * 
+		 * For example, we can create an instance of this class with a no-arg
+		 * constructor to represent some future result, hand it out to the consumers,
+		 * and complete it at some time in the future using the complete method. The
+		 * consumers may use the get method to block the current thread until this
+		 * result is provided.
 		 */
 		Future<String> completableFuture = calculateAsync();
 		// BLOCKED
 		String result = completableFuture.get();
+		System.out.println(result);
 		System.out.println("Hello".equalsIgnoreCase(result));
 
 		/**
