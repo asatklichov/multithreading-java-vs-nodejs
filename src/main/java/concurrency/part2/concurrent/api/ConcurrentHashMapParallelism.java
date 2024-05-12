@@ -48,7 +48,7 @@ ConcurrentModificationException if the ConcurrentHashMap is changed while being 
 The Iterator is not designed to be used by more than one thread though.
  * </pre>
  */
-public class ConcurrentMapExample {
+class ConcurrentMapExample {
 
 	// https://jenkov.com/tutorials/java-util-concurrent/concurrentmap.html
 	public static void main(String[] args) {
