@@ -11,47 +11,70 @@ import java.util.concurrent.Executors;
 import java.util.function.Supplier;
 
 //https://forums.oracle.com/ords/apexds/post/completablefuture-for-asynchronous-programming-in-java-8-8539
-class IlkiCompletableFutures {
+ 
+
+class CompletableFutureNotRun {
+
+	public static void main(String[] args) {
+ 
+
+		// task is launched by ForkJoin thread - which is DAEMON, so not prevents 
+		CompletableFuture.runAsync(() -> System.out.println("I am running async way "));
+		//you do not see anything, problem is
+		//once we finish async-call, main-thread dies already, jvm even not gives a chance to run it 
+	}
+}
+
+class CompletableFutureRun {
 
 	public static void main(String[] args) throws InterruptedException {
-		Runnable task = () -> {
-			System.out.println("I am an async task in the thread " + Thread.currentThread().getName());
-		};
-
-		CompletableFuture.runAsync(task);
+ 
 		// task is launched by ForkJoin thread - which is DAEMON, so not prevents
-		// JVM exiting, like ExecutorService, so add SLEEP
-		// Thread.sleep(100);
-		// executor.shutdown();
+		// JVM exiting, so add a SLEEP to able to give a chance 
+		CompletableFuture.runAsync(() -> System.out.println("I am running async way "));
+		Thread.sleep(2000);
 	}
-
 }
 
-class IkinjiCompletableFutures {
+class CompletableFutureBlocks {
 
 	public static void main(String[] args) throws InterruptedException {
+ 
 		ExecutorService es = Executors.newSingleThreadExecutor();
-		Runnable task = () -> {
-			System.out.println("I am an async task in the thread " + Thread.currentThread().getName());
-		};
-
+		Runnable task = () -> System.out.println("I am running async way ");
 		CompletableFuture.runAsync(task, es);
-
-		// enable to shutdown
-		// es.shutdown();
+		Thread.sleep(2000);	
+		
+		//as you see, main-thread is done
+		//but JVM is still blocked
+		//because ExecutorService threads are still living, blocking 
 	}
-
 }
 
-class SadaCompletableFuture {
+class CompletableFutureNotBlocks {
+
+	public static void main(String[] args) throws InterruptedException {
+ 
+		ExecutorService es = Executors.newSingleThreadExecutor();
+		Runnable task = () -> System.out.println("I am running async way ");
+		CompletableFuture.runAsync(task, es);
+		Thread.sleep(2000);
+		
+		es.shutdown(); 
+	}
+}
+
+
+class SadaCompletableFuture1 {
 
 	public static void main(String[] args) {
 
-		// not makes itself sense, it is empty
+		//create CompletableFuture, not makes itself sense, it is empty
 		CompletableFuture<Void> cf = new CompletableFuture<>();
 		Void nil = cf.join(); // JVM blocks
 
-		// see below how to complete this task
+		//you can complete CF by complete() or 
+		// see below how to complete this task asyncronously 
 	}
 }
 
@@ -59,7 +82,7 @@ class SadaCompletableFuture2 {
 
 	public static void main(String[] args) {
 
-		// not makes itself sense, it is empty
+		//CompletableFuture is empty
 		CompletableFuture<Void> cf = new CompletableFuture<>();
 
 		Runnable task = () -> {
