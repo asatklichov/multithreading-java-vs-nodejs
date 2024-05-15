@@ -14,7 +14,7 @@ import java.nio.file.Path;
 import java.time.Instant;
 import java.util.Random;
 
-public class HttpClientSynchronousDemo {
+class HttpClientSynchronousDemo {
 
 	private static HttpClient httpClient;
 

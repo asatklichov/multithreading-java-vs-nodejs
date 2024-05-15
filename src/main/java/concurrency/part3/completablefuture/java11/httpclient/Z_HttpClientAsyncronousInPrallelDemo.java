@@ -20,7 +20,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
 
-public class HttpClientAsyncronousInPrallelDemo {
+class HttpClientAsyncronousInPrallelDemo {
 
 	private static HttpClient httpClient;
 
@@ -35,13 +35,13 @@ public class HttpClientAsyncronousInPrallelDemo {
 				.map(HttpClientAsyncronousInPrallelDemo::validateLink).collect(Collectors.toList());
 
 		completableFutureStringListResponse.stream().map(CompletableFuture::join).forEach(System.out::println);
-		//to enable CPU intensive calc, remove below comments
-//		completableFutureStringListResponse.stream().map(CompletableFuture::join).forEach(v -> {
-//			long s = (long) (Math.random() *10 + 1);
-//			Random generator = new Random(s);
-//			heavySum(generator.nextInt());
-//			System.out.println(v);
-//		});
+		//disable not to enable CPU intensive calc 
+		completableFutureStringListResponse.stream().map(CompletableFuture::join).forEach(v -> {
+			long s = (long) (Math.random() * 10 + 1);
+			Random generator = new Random(s);
+			heavySum(generator.nextInt());
+			System.out.println(v);
+		});
 
 		printElapsedTime(start);
 	}
@@ -50,6 +50,11 @@ public class HttpClientAsyncronousInPrallelDemo {
 		HttpRequest httpRequest = HttpRequest.newBuilder(URI.create(link)).GET().build();
 
 		// including exception handling
+		/*
+		 * ASYNC methods does not throw exception – CompleteableFuture have a
+		 * completeExceptionally and then handled by 3-methods….
+		 * 
+		 */
 		return httpClient.sendAsync(httpRequest, HttpResponse.BodyHandlers.discarding())
 				.thenApply(
 						asynResult -> 200 == asynResult.statusCode() ? link + " access OK  " : link + " access Failed")

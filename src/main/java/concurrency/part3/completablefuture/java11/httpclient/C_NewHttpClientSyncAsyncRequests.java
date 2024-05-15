@@ -32,10 +32,27 @@ class HttpClientSendAsync {
 		var httpClient = HttpClient.newHttpClient();
 		var httpRequest = HttpRequest.newBuilder().uri(URI.create("https://github.com/eclipse/che-che4z-lsp-for-cobol"))
 				.build();
-		httpClient.sendAsync(httpRequest, HttpResponse.BodyHandlers.ofString()).thenApply(HttpResponse::body)
-				.thenAccept(System.out::println).join();
+		httpClient.sendAsync(httpRequest, HttpResponse.BodyHandlers.ofString())
+		.thenApply(HttpResponse::body)
+		.thenAccept(System.out::println).join();
 
 		printElapsedTime(start);
+
+	}
+}
+
+class HttpClientSendAsync2 {
+	public static void main(String[] args) {
+
+		var client = HttpClient.newHttpClient();
+		var request = HttpRequest.newBuilder().uri(URI.create("https://www.baeldung.com/java-flight-recorder-monitoring")).build();
+		
+		var request2Way = HttpRequest.newBuilder().
+				uri(URI.create("https://www.baeldung.com/java-flight-recorder-monitoring")).build();
+
+		client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
+				.thenApply(HttpResponse::body)
+				.thenAccept(System.out::println).join();
 
 	}
 }

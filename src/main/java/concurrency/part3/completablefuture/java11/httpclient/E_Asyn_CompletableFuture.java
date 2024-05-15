@@ -1,6 +1,5 @@
 package concurrency.part3.completablefuture.java11.httpclient;
 
- 
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -8,18 +7,18 @@ import java.net.http.HttpResponse;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
-public class SendAsyncCompletableFuture {
+public class E_Asyn_CompletableFuture {
 
 	public static void main(String[] args) {
 
 		var client = HttpClient.newHttpClient();
-		var request = HttpRequest.newBuilder().uri(URI.create("https://github.com/eclipse/che-che4z-lsp-for-cobol"))
-				.build();
+		var request = HttpRequest.newBuilder()
+				.uri(URI.create("https://www.baeldung.com/java-flight-recorder-monitoring")).build();
 
 		/**
 		 * Difference of Async than Sync is, return TYPE
 		 * 
-		 * - Async not throws any Exception, it handled by CompletableFuture
+		 * - Also Async not throw any Exception, it handled by CompletableFuture
 		 * 
 		 * - CompletableFuture holds a task (Future value) that is yet to be completed
 		 */
@@ -28,13 +27,14 @@ public class SendAsyncCompletableFuture {
 
 		/**
 		 * Non blocking, it gets result via Callbacks, result is again
-		 * CompletableFuture<String> thenApply transforms Future to another Future //
+		 * CompletableFuture<String>
+		 * 
+		 * thenApply transforms Future to another Future //
 		 */
 		CompletableFuture<String> completableFutureStringResponse = completableFutureHttpResponse
 				.thenApply(HttpResponse::body);
 
-		// to get result use thenAccept which accepts Lambda and executed once
-		// ResponseFuture completed
+		// to get result use thenAccept which accepts Lambda and executed once ResponseFuture completed
 		completableFutureStringResponse.thenAccept(System.out::println).join();
 
 		// or you can continue again asynchronously
@@ -42,8 +42,7 @@ public class SendAsyncCompletableFuture {
 				.thenApply(String::length);
 		System.out.println();
 
-		// and get result via thenAccept which accepts Lambda and executed once
-		// ResponseFuture completed
+		// and get result via thenAccept which accepts Lambda and executed once ResponseFuture completed
 		completableFutureIntegerResponse.thenAccept(System.out::println).join();
 
 		System.out.println();

@@ -10,7 +10,7 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
-public class ZCompletionStageAsyncExampleMultiBranchEither {
+class MultiBranch1 {
 
 	public static void main(String[] args) {
 
@@ -21,15 +21,15 @@ public class ZCompletionStageAsyncExampleMultiBranchEither {
 			return Arrays.asList(1L, 2L, 3L);
 		};
 
-		Function<List<Long>, CompletableFuture<List<User>>> fetchUsers1 = ids -> {
-			sleep(150);
+		Function<List<Long>, CompletableFuture<List<User>>> fetchUsers = ids -> {
+			sleep(250); // 250
 			Supplier<List<User>> userSupplier = () -> ids.stream().map(User::new).collect(Collectors.toList());
 			return CompletableFuture.supplyAsync(userSupplier);
 		};
 
-		Function<List<Long>, CompletableFuture<List<User>>> fetchUsers2 = ids -> {
-			sleep(5000);
-			Supplier<List<User>> userSupplier = () -> ids.stream().map(User::new).collect(Collectors.toList());
+		Function<List<Long>, CompletableFuture<List<Email>>> fetchEmails = ids -> {
+			sleep(350); // 350
+			Supplier<List<Email>> userSupplier = () -> ids.stream().map(Email::new).collect(Collectors.toList());
 			return CompletableFuture.supplyAsync(userSupplier);
 		};
 
@@ -37,15 +37,22 @@ public class ZCompletionStageAsyncExampleMultiBranchEither {
 
 		CompletableFuture<List<Long>> completableFuture = CompletableFuture.supplyAsync(supplyIDs);
 
-		CompletableFuture<List<User>> users1 = completableFuture.thenComposeAsync(fetchUsers1);
-		CompletableFuture<List<User>> users2 = completableFuture.thenComposeAsync(fetchUsers2);
+		CompletableFuture<List<User>> userFuture = completableFuture.thenCompose(fetchUsers);
+		// do not use below, you will get
+		// CompletableFuture<CompletableFuture<List<Email>>>
+		// CompletableFuture<CompletableFuture<List<Email>>> emailFuture =
+		// completableFuture.thenApply(fetchEmails);
+		CompletableFuture<List<Email>> emailFuture = completableFuture.thenCompose(fetchEmails);
 
-		users1.thenRun(() -> System.out.println("Users 1"));
-		users2.thenRun(() -> System.out.println("Users 2"));
+		System.out.println("third completablefuture executer once executed both above completablefuture");
 
-		users1.acceptEither(users2, displayer);
+		// The two combined completable futures can return objects of different types
+		// bi-consumer
+		userFuture.thenAcceptBoth(emailFuture, (users, emails) -> {
+			System.out.println(users.size() + " - " + emails.size());
+		});
 
-		sleep(6_000);
+		sleep(1_000);
 		executor1.shutdown();
 	}
 

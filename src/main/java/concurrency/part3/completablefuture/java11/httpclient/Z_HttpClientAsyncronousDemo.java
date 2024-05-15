@@ -1,6 +1,7 @@
 package concurrency.part3.completablefuture.java11.httpclient;
 
 import static concurrency.part3.completablefuture.java11.httpclient.Util.DOMAINS_TXT2;
+import static concurrency.part3.completablefuture.java11.httpclient.Util.heavySum;
 import static concurrency.part3.completablefuture.java11.httpclient.Util.printElapsedTime;
 
 import java.io.IOException;
@@ -12,10 +13,11 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.Instant;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
-public class HttpClientAsyncronousDemo {
+class HttpClientAsyncronousDemo {
 
 	private static HttpClient httpClient;
 
@@ -26,13 +28,13 @@ public class HttpClientAsyncronousDemo {
 		List<CompletableFuture<String>> completableFutureStringListResponse = Files.lines(Path.of(DOMAINS_TXT2))
 				.map(HttpClientAsyncronousDemo::validateLink).collect(Collectors.toList());
 		completableFutureStringListResponse.stream().map(CompletableFuture::join).forEach(System.out::println);
-		/* disable comment to include CPU intensive calculation */
-//		completableFutureStringListResponse.stream().map(CompletableFuture::join).forEach(v -> {
-//			long s = (long) (Math.random() *10 + 1);
-//			Random generator = new Random(s);
-//			heavySum(generator.nextInt());
-//			System.out.println(v);
-//		});
+		/* disable comment not to include CPU intensive calculation */
+		completableFutureStringListResponse.stream().map(CompletableFuture::join).forEach(v -> {
+			long s = (long) (Math.random() * 10 + 1);
+			Random generator = new Random(s);
+			heavySum(generator.nextInt());
+			System.out.println(v);
+		});
 
 		printElapsedTime(start);
 		System.out.println(
@@ -42,11 +44,16 @@ public class HttpClientAsyncronousDemo {
 	private static CompletableFuture<String> validateLink(String link) {
 		HttpRequest httpRequest = HttpRequest.newBuilder(URI.create(link)).GET().build();
 
-		// including exception handling
+		// including exception handling, also discarding body
 		return httpClient.sendAsync(httpRequest, HttpResponse.BodyHandlers.discarding())
 				.thenApply(
 						asynResult -> 200 == asynResult.statusCode() ? link + " access OK  " : link + " access Failed")
 				// Resiliency
+				/*
+				 * ASYNC methods does not throw exception – CompleteableFuture have a
+				 * completeExceptionally and then handled by 3-methods….
+				 * 
+				 */
 				.exceptionally(e -> "Error occured once accessing to " + link + ", reson is: " + e.getMessage());
 
 	}
