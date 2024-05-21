@@ -29,11 +29,19 @@ class ExecutorAndRunnable {
 
 	public static void main(String[] args) {
 
-		Runnable task = () -> System.out.println(Thread.currentThread().getName()
-				+ "I am a Runnable by Executor, can do task but can't return a value ");
+		Runnable task = () -> {
+			try {
+				iAmVoid();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		};
+		// System.out.println(Thread.currentThread().getName()+ "I am a Runnable by
+		// Executor, can do task but can't return a value ");
 
 		// ExecutorService service = Executors.newSingleThreadExecutor();
 
+		// why not use Executor
 		// Executor service = Executors.newFixedThreadPool(4); //can not call shutdown()
 		ExecutorService service = Executors.newFixedThreadPool(4);
 
@@ -48,17 +56,33 @@ class ExecutorAndRunnable {
 		service.shutdown();
 
 	}
+
+	private static void iAmVoid() throws Exception {
+		boolean tryNow = false; //try true to see cause
+		if (tryNow) {
+			// throw new AssertionError("Just try .. "); //runtime exception, full stack
+			// shown
+			throw new Exception("Try throwing an exception in thread " + Thread.currentThread().getName());
+		}
+		System.out.println(Thread.currentThread().getName()
+				+ "I am a Runnable by Executor, can do task but can't return a value ");
+
+	}
 }
+
+//interface MyRunnable {
+	//void myRun() throws MyException;
+//}
 
 class Runnablesz {
 
 	public static void main(String[] args) {
 		System.out.println(
-				"Difference between Runnable (has abstract RUN method) and Callable (has abstract  CALL method) - both are Functional Interfaces and represent a TASK to be executed by a THREAD");
+				"1. Difference between Runnable (has abstract RUN method) and Callable (has abstract  CALL method) - both are Functional Interfaces and represent a TASK to be executed by a THREAD");
 		System.out.println(
-				"Runnable - has no return value-void, can not throw Exception, submit FUTURE with null once successfull.");
+				"2. Runnable - has no return value-void, can not throw Exception, submit FUTURE with null once successfull.");
 		System.out.println(
-				"Callable has return value - specified Type, can throw Exception and submit FUTURE with generic type");
+				"2. Callable has return value - specified Type, can throw Exception and submit FUTURE with generic type");
 
 		Runnable task = () -> System.out.println("I am in thread " + Thread.currentThread().getName());
 		// ExecutorService service = Executors.newSingleThreadExecutor();
@@ -75,11 +99,11 @@ class Callablez {
 
 	public static void main(String[] args) throws ExecutionException, InterruptedException {
 		System.out.println(
-				"Difference between Runnable (has abstract RUN method) and Callable (has abstract  CALL method) - both are Functional Interfaces and represent a TASK to be executed by a THREAD");
+				"1. Difference between Runnable (has abstract RUN method) and Callable (has abstract  CALL method) - both are Functional Interfaces and represent a TASK to be executed by a THREAD");
 		System.out.println(
-				"Runnable - has no return value-void, can not throw Exception, submit FUTURE with null once successfull.");
+				"2. Runnable - has no return value-void, can not throw Exception, submit FUTURE with null once successfull.");
 		System.out.println(
-				"Callable has return value - specified Type, can throw Exception and submit FUTURE with generic type");
+				"3. Callable has return value - specified Type, can throw Exception and submit FUTURE with generic type");
 
 		Callable<String> task = () -> {
 			// return "sasas";
@@ -91,9 +115,10 @@ class Callablez {
 		try {
 			for (int i = 0; i < 10; i++) {
 				Future<String> future = executor.submit(task);
-				System.out.println("I get: " + future.get());
+				System.out.println("I get result : " + future.get());
 			}
 		} finally {
+			System.out.println("I get --- :( ");
 			executor.shutdown();
 		}
 	}
@@ -218,11 +243,11 @@ class ExecutorServiceAndCallableAndFutureCancellation {
 	public static void main(String[] args) {
 
 		ExecutorService executor = Executors.newSingleThreadExecutor();
-		Future future = executor.submit(new Fibonacci(23));
+		Future<?> future = executor.submit(new Fibonacci(23));
 		try {
 			if (future.isDone() && !future.isCancelled()) {
 				try {
-					Object object = future.get(5, TimeUnit.SECONDS);
+					Object object = future.get(5, TimeUnit.SECONDS); //5
 					System.out.println(object);
 				} catch (InterruptedException | ExecutionException e) {
 					e.printStackTrace();
@@ -239,6 +264,10 @@ class ExecutorServiceAndCallableAndFutureCancellation {
 }
 
 class Fibonacci implements Callable<Integer>, Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	int input = 0;
 
 	public Fibonacci() {
@@ -249,8 +278,9 @@ class Fibonacci implements Callable<Integer>, Serializable {
 	}
 
 	public Integer call() throws InterruptedException {
-		Thread.sleep(3000);
-		return calculate(input);
+		Thread.sleep(1000);
+		int res = calculate(input);
+		return res;
 	}
 
 	private int calculate(int n) {

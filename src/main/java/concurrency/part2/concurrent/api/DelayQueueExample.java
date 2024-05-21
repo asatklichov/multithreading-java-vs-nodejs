@@ -18,7 +18,7 @@ public class DelayQueueExample {
     public static void main(String[] args) throws InterruptedException {
         DelayQueue queue = new DelayQueue();
 
-        Delayed element1 = new DelayObject("Kuzey Yildiz", (new Date()).getTime());
+        Delayed element1 = new DelayObject("Yildiz", (new Date()).getTime());
 
         queue.put(element1);
 

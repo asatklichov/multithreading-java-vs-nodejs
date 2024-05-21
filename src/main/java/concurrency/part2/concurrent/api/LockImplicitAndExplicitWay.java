@@ -91,7 +91,7 @@ class CounterNew {
 	public int inc() throws InterruptedException {
 		lock.lock();
 		int newCount = ++count;
-		lock.unlock(); // he exception would interrupt the program flow, and the call to lock.unlock()
+		lock.unlock(); // The exception would interrupt the program flow, and the call to lock.unlock()
 						// would never be executed.
 		return newCount;
 	}

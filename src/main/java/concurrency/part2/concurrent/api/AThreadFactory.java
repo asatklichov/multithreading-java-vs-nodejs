@@ -28,7 +28,7 @@ public class AThreadFactory implements ThreadFactory {
 	public static void main(String[] args) {
 		AThreadFactory factory = new AThreadFactory("E_ThreadFactory");
 		for (int i = 0; i < 10; i++) {
-			Runnable task = () -> System.out.println("Taze yylynyz gutly mubarek bolsyn, ayagy dusumli bolsyn!");
+			Runnable task = () -> System.out.println("Congratulations!");
 			Thread t = factory.newThread(task);
 			t.start();
 		}

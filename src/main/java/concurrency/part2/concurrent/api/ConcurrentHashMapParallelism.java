@@ -17,7 +17,7 @@ class ConcurrentHashMapParallelism {
 
 		System.out.println("# Actors = " + map.size());
 
-		int maxMoviesForOneActor = map.reduce(63, (actor, movies) -> movies.size(), Integer::max);
+		int maxMoviesForOneActor = map.reduce(1000, (actor, movies) -> movies.size(), Integer::max);
 		System.out.println("Max movies for one actor = " + maxMoviesForOneActor);
 
 		Actor mostSeenActor = map.search(63, (actor, movies) -> movies.size() == maxMoviesForOneActor ? actor : null);

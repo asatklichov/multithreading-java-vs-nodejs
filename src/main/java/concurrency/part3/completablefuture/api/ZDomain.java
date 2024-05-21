@@ -48,4 +48,19 @@ class User {
 	public String toString() {
 		return "User [id=" + id + "]";
 	}
+
+}
+
+class Quotation {
+	private String serverName;
+	private int amount;
+
+	public Quotation(String name, int amount) {
+		this.serverName = name;
+		this.amount = amount;
+	}
+
+	public int amount() {
+		return amount;
+	}
 }
