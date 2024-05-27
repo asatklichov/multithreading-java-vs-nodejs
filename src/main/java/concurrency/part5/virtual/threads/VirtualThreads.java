@@ -1,4 +1,4 @@
-package concurrency.part3.virtual.threads;
+package concurrency.part5.virtual.threads;
 
 public class VirtualThreads {
 

@@ -35,35 +35,43 @@ import java.util.stream.Stream;
  * 
  * </pre>
  * 
- * /**
-		 * client with default settings <code>
-		 * The default settings include:
-				prefer HTTP/2
-				no connection timeout - Don't confuse with request timeout!
-				redirection policy of NEVER
-				no cookie handler
-				no authenticator
-				default thread pool executor
-				default proxy selector
-				default SSL context
-		 * </code>
-		 * 
-		 * 
-		 * To configure yourself, use Otherwise use
-		 * HttpClient.newBuilder().version(Version.HTTP_1_1) ..
-		 */ 
+ * /** client with default settings <code>
+ * The default settings include:
+		prefer HTTP/2
+		no connection timeout - Don't confuse with request timeout!
+		redirection policy of NEVER
+		no cookie handler
+		no authenticator
+		default thread pool executor
+		default proxy selector
+		default SSL context
+ * </code>
+ * 
+ * 
+ * To configure yourself, use Otherwise use
+ * HttpClient.newBuilder().version(Version.HTTP_1_1) ..
+ */
 class Hello {
 	public static void main(String[] args) throws IOException, InterruptedException {
 		HttpClient client = HttpClient.newHttpClient();
 		HttpRequest httpRequest = HttpRequest.newBuilder(URI.create("http://sahet.net")).build();
 
 		ofString(client, httpRequest);
-		discarding(client, httpRequest);
 		ofLines(client, httpRequest);
 		ofFile(client, httpRequest);
+		discarding(client, httpRequest);
 
 	}
 
+	/**
+	 * Returns a BodyHandler<String> that returns a BodySubscriber<String> obtained
+	 * from BodySubscribers.ofString(Charset).
+	 * 
+	 * @param client
+	 * @param httpRequest
+	 * @throws IOException
+	 * @throws InterruptedException
+	 */
 	private static void ofString(HttpClient client, HttpRequest httpRequest) throws IOException, InterruptedException {
 		HttpResponse<String> response = client.send(httpRequest, BodyHandlers.ofString());
 		System.out.println(response);
@@ -75,6 +83,14 @@ class Hello {
 		System.out.println(headers);
 	}
 
+	/**
+	 * Returns a response body handler that discards the response body.
+	 * 
+	 * @param client
+	 * @param httpRequest
+	 * @throws IOException
+	 * @throws InterruptedException
+	 */
 	private static void discarding(HttpClient client, HttpRequest httpRequest)
 			throws IOException, InterruptedException {
 		HttpResponse<Void> voidObj = client.send(httpRequest, HttpResponse.BodyHandlers.discarding());
@@ -91,6 +107,19 @@ class Hello {
 		System.out.println(voidObj.statusCode());
 	}
 
+	/**
+	 * Returns a BodyHandler<Stream<String>> that returns a
+	 * BodySubscriber<Stream<String>> obtainedfrom
+	 * BodySubscribers.ofLines(charset).The charset used to decode the response body
+	 * bytes isobtained from the HTTP response headers as specified by
+	 * ofString(),and lines are delimited in the manner of
+	 * BufferedReader.readLine().
+	 * 
+	 * @param client
+	 * @param httpRequest
+	 * @throws IOException
+	 * @throws InterruptedException
+	 */
 	private static void ofLines(HttpClient client, HttpRequest httpRequest) throws IOException, InterruptedException {
 		HttpResponse<Stream<String>> response = client.send(httpRequest, BodyHandlers.ofLines());
 		Stream<String> lines = response.body();
@@ -100,6 +129,17 @@ class Hello {
 		System.out.println(response.headers());
 	}
 
+	/**
+	 * Returns a BodyHandler<Path> that returns a BodySubscriber<Path>.
+	 * 
+	 * Equivalent to: ofFile(file, CREATE, WRITE)
+	 * 
+	 * 
+	 * @param client
+	 * @param httpRequest
+	 * @throws IOException
+	 * @throws InterruptedException
+	 */
 	private static void ofFile(HttpClient client, HttpRequest httpRequest) throws IOException, InterruptedException {
 		HttpResponse<Path> response = client.send(httpRequest, BodyHandlers.ofFile(Path.of("sahet-body.txt")));
 		Path path = response.body();

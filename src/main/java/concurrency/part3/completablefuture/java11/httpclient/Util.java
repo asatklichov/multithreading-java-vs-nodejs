@@ -5,9 +5,8 @@ import java.time.Instant;
 
 public class Util {
 
-	
-	public static final String DOMAINS_TXT = "C:/workspace-17/Java-Features/src\\main/java/features/in/java11/httpclient/domains.txt";
-	public static final String DOMAINS_TXT2 = "C:/workspace-17/Java-Features/src\\main/java/features/in/java11/httpclient/domains_list500.txt";
+	public static final String DOMAINS_TXT = "C:\\workspace-17\\multithreading-java-vs-nodejs\\src\\main\\java\\concurrency\\part3\\completablefuture\\java11\\httpclient\\domains_list100.txt";// domains.txt
+	public static final String DOMAINS_TXT2 = "C:\\workspace-17\\multithreading-java-vs-nodejs\\src\\main\\java\\concurrency\\part3\\completablefuture\\java11\\httpclient\\domains_list500.txt";
 
 	public static void printElapsedTime(Instant start) {
 		Instant finish = Instant.now();

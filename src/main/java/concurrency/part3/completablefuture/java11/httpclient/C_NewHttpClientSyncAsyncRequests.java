@@ -15,7 +15,7 @@ class HttpClientSendSync {
 
 		Instant start = Instant.now();
 		var httpClient = HttpClient.newHttpClient();
-		var httpRequest = HttpRequest.newBuilder(URI.create("https://github.com/eclipse/che-che4z-lsp-for-cobol"))
+		var httpRequest = HttpRequest.newBuilder(URI.create("https://www.baeldung.com/java-flight-recorder-monitoring"))
 				.build();
 		HttpResponse<String> httpResponse = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
 		System.out.println(httpResponse.body());
@@ -30,7 +30,7 @@ class HttpClientSendAsync {
 
 		Instant start = Instant.now();
 		var httpClient = HttpClient.newHttpClient();
-		var httpRequest = HttpRequest.newBuilder().uri(URI.create("https://github.com/eclipse/che-che4z-lsp-for-cobol"))
+		var httpRequest = HttpRequest.newBuilder().uri(URI.create("https://www.baeldung.com/java-flight-recorder-monitoring"))
 				.build();
 		httpClient.sendAsync(httpRequest, HttpResponse.BodyHandlers.ofString())
 		.thenApply(HttpResponse::body)

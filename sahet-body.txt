@@ -1,0 +1,456 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- XHTML 1.0 Transitional -->
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<!--  <link rel="alternate" type="application/rss+xml" title="sahet.net" href="http://sahet.net/rss.xml" /> -->
+<title>Sahet.NET - A Web Guide in Action</title>
+
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+<meta http-equiv="window-target" content="_top" />
+<meta http-equiv="content-language" content="en-us" />
+<meta name="language" content="english" />
+<meta name="description"
+  content="A definitive web guide in action, aims to categorize some 
+useful-revisited links into specific groups" />
+<meta name="keywords"
+  content="sahet, sahet.net, Azat Satklichov,  miskin, obam,  software development,  kids cartoon, java programmer, linked links, aggregated links" />
+
+<meta name="author" content="Azat Satklichov" />
+<meta name="owner" content="Azat Satklichov" />
+<meta name="designer" content="Azat Satklichov" />
+<meta name="copyright" content="&#169; Sahet.NET" />
+<meta name="robots" content="index, follow" />
+<meta name="googlebot" content="code" />
+<meta name="date" content="2018-01-19" />
+<meta name="revised" content="Azat Satklichov, 04.07.2018" />
+<meta name="revisit-after" content="15 days" />
+
+<!-- just for some specific pages-->
+<meta name="page-topic" content="Sahet Home Page" />
+<meta name="page-type" content="Web Guide Support" />
+
+<link rel="shortcut icon" href="src/sahet-logo/sahet.bmp" />
+<link href="css/layout.css" rel="stylesheet" type="text/css" />
+<link href="css/maincontent.css" rel="stylesheet" type="text/css" />
+
+<style type="text/css">
+@import url(css/calendar-win2k-cold-1.css);
+</style>
+<link rel="stylesheet" type="text/css"
+  href="css/calendar-win2k-cold-1.css" />
+
+<script type="text/javascript" src="a_js/calendar.js"></script>
+<script type="text/javascript" src="a_js/lang/calendar-en.js"></script>
+<script type="text/javascript" src="a_js/calendar-setup.js"></script>
+<script type="text/javascript" src="a_js/services.js"></script>
+<script type="text/javascript" src="a_js/time.js"></script>
+<script type="text/javascript" src="a_js/sahet-search.js"></script>
+<!-- type="text/javascript" src="a_js/browser-tester.js"  compatibility test-->
+
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body onload="detectBrowser(); startTime();">
+  <table  align="center">
+    <tr>
+      <td>
+        <div id="pagewidth">
+
+          <!-- design-headers -->
+          <div id="darkblue">
+            <div id="topleft">
+              <embed src="src/flash/sahet.swf" autostart="true"
+                height="100" width="140" />
+            </div>
+            <div id="topright"
+              style="background-image: url(src/header-graphics/sahet-header7.JPG)" />
+          </div>
+
+          <div id="clear"></div>
+          <div id="cyzzyk"></div>
+
+          <!-- navigation bars  -->
+          <div id="topnav">
+            <ul id="navbar">
+              <li><a class="x">About</a></li>
+              <li><a href="htm/swdev.html">Developer's Handbook</a></li>
+              <li><a href="htm/java.html">JAVA Guide</a></li>
+              <li><a href="htm/tm.html">Turkmenistan</a></li>
+              <li><a href="htm/uz.html">Uzbekistan</a></li>
+              <li><a href="htm/prj.html">4Me</a></li>
+              <li><a href="htm/kids.html">Kids</a></li>
+              <li><a href="htm/fun.html">Leisure</a></li>
+              <li><a href="htm/it.html">Daily Links</a></li>
+
+            </ul>
+          </div>
+
+          <div id="clear" />
+
+          <!-- begin left div -->
+          <div id="links_main1">
+
+            <!--  search in Google  -->
+            <form
+              style="font-size: 10px; margin-top: 10px; margin-left: 30px;"
+              method="get" name="searchform"
+              action="http://www.google.com/search?" target="_blank"
+              onsubmit="return;">
+              <input onfocus="searchfield_focus(this)"
+                style="width: 128px; color: #808080; font-style: italic;"
+                alt="search" type="text" id="googlesearch" name="q"
+                size="20" value=" Search in Google" /> <input
+                class="render3" type="submit" value=""
+                title=" Search in Google" />
+
+            </form>
+
+            <!-- <legend  >Web Gadgets </legend>     -->
+            <p class="gadget"
+              style="padding-top: 5px; padding-left: 30px">
+              <a href="https://developers.google.com/" target="_blank">Google</a>,
+              <a href="https://developers.google.com/" target="_blank">Dev</a>,
+              <a href="https://www.udacity.com/google" target="_blank">Udacity</a>,
+              <a href="https://www.udemy.com/" target="_blank">Udemy</a>,
+                 <a href="http://www.whatsmyip.org" target="_blank">my
+                ip</a>  <a href="http://whatismyipaddress.com"
+                target="_blank">is what</a>, <a href="https://who.is/"
+                target="_blank">who is</a>, <a href="http://itools.com/"
+                target="_blank" title="google video search">iTools V</a>, 
+              <a href="http://keepvid.com/" target="_blank">keepvid</a>, 
+                <a href="htm/converters.html" target="_blank">Converters</a> 
+              <a href="htm/it.html#convertors" target="_blank"><i
+                class="fa fa-link" style="font-size: 12px"></i>
+              </a>, <a href="http://easycalculation.com/" target="_blank"><b>Easy-Calc</b></a>, 
+                <a href="http://www.compileonline.com/" target="_blank"><b>Online
+                terminals</b></a>, <a href="https://translate.google.com/"
+                target="_blank">Google Translate</a>, 
+                <a href="https://www.flightradar24.com"
+                target="_blank">Flight</a>, 
+                <a
+                href="http://www.ademgunes.com/" target="_blank">Psikoloji
+                Danisman</a>, <a href="htm/it.html#dictionaries"
+                target="_blank">S&#246;zl&#252k</a>, 
+                <a href="http://www.terjime.com/" target="_blank">terjime.com</a>,   
+                <a href="htm/it.html#forme" target="_blank"> <b>
+                  Frequently </b> - Daily</a> 
+                <a href="htm/it.html#onlinenews" target="_blank"><b>news</b></a>, 
+                <a href="htm/kids2.html" target="_blank">&Ccedil;agalar</a>,
+              <a href="https://www.kiddle.co/" target="_blank">Google powered kids <b>search</b>
+              </a>
+            </p>
+
+            <p class="gadget"
+              style="padding-left: 30px">
+              <a href="htm/keyboard.html" target="_blank">7
+                keyboards</a>, <a href="htm/html-gen.html"
+                target="_blank">generate html</a>, <a href="htm/pwd-gen.htm"
+                target="_blank">gen-pwd</a>, <a target="_blank"
+                onclick="window.print()">print</a>, <a
+                href="src/media/player/" target="_blank">player</a>, 
+                <a href="htm/tm.html#prominent" target="_blank">Remembrance</a>,  
+                <a
+                href="htm/tm.html#photo" target="_blank">tm-albums</a>, 
+              <a href="htm/uz.html#photo" target="_blank">uz-albums</a>,
+              <a href="htm/it.html#maps" target="_blank">maps</a>, <a
+                href="htm/swdev3.html#basics" target="_blank">Wingdings</a>, 
+              <a href="htm/java_d.html" target="_blank"> <b>Frameworks</b>
+              </a>, <a href="htm/java_f.html" target="_blank">Java Essentilas</a>,
+              <a href="htm/tm.html#edebiyat" target="_blank">Library - Okalga</a>,
+              <a href="htm/kids.html#coloring" target="_blank">Kids corner</a>, 
+              <a href="sitemap.html" target="_blank">sahet.net sitemap</a>,
+              <a
+                href=" https://who.is/whois/sahet.net"
+                target="_blank">who.is</a>, 
+              <a
+                href="http://www.statsnode.com/www/www.sahet.net/"
+                target="_blank">sahet.net statistics</a>, 
+               
+                <a
+                href="http://www.microsofttranslator.com/bv.aspx?from=en&to=cs&a=http%3A%2F%2Fsahet.net"
+                target="_blank">site translation</a>, <a
+                href="http://www.mojeip.cz" target="_blank">my IP</a>, 
+                
+                 <a
+                href="http://www.google.com/submityourcontent/website-owner/"
+                target="_blank">Submit your site</a>, <a
+                href="http://www.bing.com/toolbox/submit-site-url"
+                target="_blank">bing</a>,   
+                <a
+                href="htm/swdev01.html#algorithms_datastructures"
+                target="_blank">Algorithms and Data Structures </a>,  <a
+                href="http://en.wikipedia.org/wiki/Divisibility_rule"
+                target="_blank">div rules</a>, <a
+                href="https://en.wikipedia.org/wiki/C3_linearization"
+                target="_blank">C3 linearization</a>, <a href="htm/it.html#forme"
+                target="_blank">My Daily</a>, <a
+                href="http://sahet.net/htm/it.html#healthcare" target="_blank"> <b>Sa&#x3F1;lyk</b>
+              </a> <a
+                href="http://www.saglyk.info/" target="_blank">Salamatlyk</a>
+              
+            </p>
+
+            <p class="gadget"
+              style="padding-left: 30px">
+              <a href="" onclick="alert('No public availability ')"
+                target="_blank">Suratlar</a> <a
+                href="http://sahet.net/yatlamalar/suratlar/"
+                target="_blank">,</a> <a
+                href="htm/java.html#roadmap_from_ovice_to_professional"
+                target="_blank">Novice to Professional</a>, <a
+                href="htm/kids.html#parents" target="_blank">Parents
+                and</a> <a href="htm/kids2.html#parent" target="_blank">Teachers</a>,
+              <a href="htm/java.html#javatools" target="_blank">Java Corner</a>, 
+              <a href="htm/kids.html#mykids" target="_blank"><b>Mekdep</b></a>,
+              <a href="htm/tm.html#prominent" target="_blank">Kitaplar-Books &nbsp; <i style="font-size: 16px"
+                  class="fa">&#xf1c1;</i>
+              </a> 
+              <a href="htm/swdev3.html" target="_blank">&nbsp; Web Corner</a>,
+              <a href="htm/java_e.html" target="_blank">Scripting on JVM, Python</a> 
+            </p>
+
+            <!-- end left div -->
+          </div>
+
+
+          <!-- main content -->
+          <div id="maincontent_main">
+
+            <!-- central part -->
+            <div class="forms_main">
+
+              <p>
+                <b>Dear Users!</b>
+              </p>
+              <p>
+                Welcome to visit my site. Sahet (s&auml;hetli g&uuml;n)
+                means &quot; <i>right day for intended good deed</i>&quot;
+                or shortly &quot;<i>good day</i>&quot; in T&uuml;rkmen
+                language. Sahet.NET is a web guide in action, aims to
+                categorize some useful-revisited links into specific
+                groups.
+              </p>
+              <p>Every minute of every day new materials are joined
+                to the Internet. Sahet.NET is a &quot;definitive web
+                guide&quot; which groups some high quality Internet
+                materials and sites that can be helpful for pre-school
+                kids, students, parents, or any other users. Also, some
+                information is aggregated via referenced links, in a
+                coherent and easily accessible way. This will be useful to
+                software developers especially for beginners. It shows very organized way of self-studying and improving.</p>
+
+
+              <script type="text/javascript">
+              function writeText( txt) {
+                  document.getElementById("sahet_part").innerHTML = txt;
+              }
+                                                        </script>
+              <img src="src/collected/sahet-pattern.jpg"
+                alt="flower patterns" usemap="#sahetmap" width="142"
+                height="139" style="float: left; margin: 10px;" />
+              <!-- describe  sahet -->
+              <p id="sahet_part" style="float: none; padding-top: 8px;">
+                <b>Please</b>, <u>hover</u> the mouse on each picture
+                separately for getting short description, or <u>click</u>
+                the picture to access the specified page. <img
+                  src="src/icons/nv (26).gif" alt="cyzyk" />
+              </p>
+
+              <map id="sahetmap" name="sahetmap">
+
+                <area shape="rect" coords="13,17,63,60"
+                  onmouseover="writeText('Software quote: More computing sins are committed in the name of efficiency (without necessarily achieving it) than for any other single reason - including blind stupidity. --W.A. Wulf ')"
+                  href="htm/java.html" target="_blank"
+                  alt="Java Software Developmet" />
+
+                <area shape="rect" coords="87,15,129,58"
+                  onmouseover="writeText('The magical cities <b>Samarkand, Bukhara and Khiva</b> conjure up wonderful images of the ancient caravan routes and the monumental architecture of the cities of Central Asia.')"
+                  href="htm/uz.html#history" target="_blank"
+                  alt="Bukhara" />
+
+
+                <area shape="circle" coords="33,106,28"
+                  onmouseover="writeText('One of the most ancient cultural centers of Asia. The <b>legendary Nisa</b> - the residence of Parthian kings,  ancient city of <b>Merv</b> (Maru Shahu Jahan), <b>Kone Urgenc</b>... . <b>Margiana</b> is a historical region centred on the oasis of Merv')"
+                  href="htm/tm.html#history" target="_blank" alt="Merv" />
+
+                <area shape="circle" coords="103,106,28"
+                  onmouseover="writeText('Children can add immensely to our lives: they help us to enjoy the moment, relive our own childhood, ... <br/> <b>Kids Corner</b> part has many useful links: games, disneyland parks, funny puzzles, coloring-nature, songs, self-improvement, competitions and etc.')"
+                  href="htm/kids.html" target="_blank" alt="kids" />
+              </map>
+
+              <p style="clear: both;">
+                <b> Note:</b>
+              </p>
+              <p>Please, note that, this site is non profitable. It
+                can be used freely by any internet user. Used materials,
+                resources, redirected links in this site are used only
+                for being a guide or being helpful for users. Especially
+                for kids and students. I aim to enlarge this project by
+                the time <i class="material-icons" style="font-size: 18px;">tag_faces</i>, yours Sahet.NET  </p> 
+ 
+              <!-- end central part -->
+            </div>
+
+            <!-- begin right div -->
+            <div class="forms_main2">
+              <!-- <div  class="forms_main3"> </div> -->
+
+
+
+
+              <!-- sahet search begin -->
+              <form
+                style="font-size: 10px; margin-top: 10px; margin-left: 30px;"
+                method="get" name="searchform"
+                action="http://www.google.com/search?" target="_blank"
+                onsubmit="return consolidateValue();">
+
+                <input onfocus="searchfield_focus(this)"
+                  style="width: 128px; color: #808080; font-style: italic;"
+                  alt="search" type="text" id="sahetsearch" name="q"
+                  size="20" value="Search in Sahet" /> <input
+                  class="render2" type="submit" value=""
+                  title="Search in Sahet.NET" />
+
+              </form>
+              <!-- sahet search end -->
+
+              <!-- mail service begin -->
+              <form name="passwordform"
+                action="https://lc1.law5.hotmail.passport.com/cgi-bin/dologin"
+                method="post" target="_top">
+                <input type="hidden" name="login" /> <input
+                  type="hidden" name="passwd" /> <input type="hidden"
+                  name="svc" value="mail" /> <input type="hidden"
+                  name="RemoteDAPost"
+                  value="https://login.msnia.passport.com/ppsecure/post.asp" />
+              </form>
+
+              <form
+                action="http://login.yahoo.com/config/login?f9p32lgm8eokn"
+                method="post" name="a">
+                <input type="hidden" name="login" /> <input
+                  type="hidden" name="passwd" /> <input name=".tries"
+                  type="hidden" /> <input name=".src" type="hidden"
+                  value="ym" /> <input name=".last" type="hidden" /> <input
+                  name="promo" type="hidden" /> <input name=".intl"
+                  type="hidden" /> <input name=".bypass" type="hidden" />
+                <input name=".partner" type="hidden" /> <input
+                  name=".chkP" type="hidden" value="Y" /> <input
+                  name=".done" type="hidden" />
+              </form>
+
+              <form name="genlogin"
+                style="padding-top: 30px; padding-left: 3px; font-size: 12px"
+                method="post" action="javascript:send_form()">
+                <table width="200">
+                  <tr>
+                    <td>Host:</td>
+                    <td><select name="mailaccount">
+                        <option value="kun.uz/">kun.uz</option>
+                        <option value="seznam.cz">seznam.cz</option>
+                        <option value="hotmail.com">hotmail.com</option>
+                        <option value="mail.ru" >mail.ru</option>
+                        <option value="yahoo.com" title="sklycho_mskMn97yedi">yahoo.com</option>
+                        <option value="mbank.cz" title="ok">mbank.cz</option>
+                        <option value="rb.cz">rb</option>
+                        <option value="http://sahet.net/htm/it.html#convertors">g&#252ndelikli</option>                        
+                        <option value="https://www.servis24.cz/ebanking-s24">servis24.cz</option>
+                        <option value="seznam.cz"  title="xBs80Segsen,mrdno-dnzaygiNoBr">seznam.cz</option>
+                        <option value="svethostingu.cz">svethosting</option>
+                        <option value="http://www.ajapsozluk.com/">ajapsozluk</option>                        
+                        <option value="svethostingu.cz">mailsahet</option>
+                        <option value="https://www.gopas.cz" title="azatsZainacSeznam">gopas</option>
+                    </select></td>
+                  </tr>
+                  <tr>
+                    <td>Mail ID:</td>
+                    <td><input type="text" name="login" size="15"
+                      maxlength="50" onfocus="this.select();" /></td>
+                  </tr>
+                  <tr>
+                    <td>Pwd:</td>
+                    <td><input type="password" name="passwd"
+                      size="15" maxlength="16" /></td>
+                  </tr>
+                  <tr>
+                    <td></td>
+                    <td><input class="render3" type="button"
+                      value="Login" name="B1"
+                      onclick="javascript:send_form()" /></td>
+                  </tr>
+                </table>
+              </form>
+              <!-- mail service end -->
+
+
+              <!-- calendar -->
+              <div id="calendar-container"
+                style="font-size: 10px; margin: 40px 10px 10px 10px;"></div>
+              <br />
+              <script type="text/javascript">
+                                                            function dateChanged(
+                                                                    calendar) {
+                                                                if (calendar.dateClicked) {
+                                                                    var y = calendar.date
+                                                                            .getFullYear();
+                                                                    var m = calendar.date
+                                                                            .getMonth();
+                                                                    var d = calendar.date
+                                                                            .getDate();
+                                                                }
+                                                            };
+                                                            Calendar
+                                                                    .setup({
+                                                                        flat : "calendar-container",
+                                                                        flatCallback : dateChanged
+                                                                    });
+                                                        </script>
+
+              <!-- Local time and Server time -->
+              <div id="txt"
+                style="margin-left: 40px; margin-bottom: 10px"></div>
+              <p class="gadget">
+                <a href="http://www.kalendar-online.cz/" target="_blank">Kalenda&#769;r</a>,
+                <a
+                  href="http://www.kalendar-online.cz/planovaci-kalendar"
+                  target="_blank">Pla&#769;novaci&#769;</a>, <a
+                  href="http://www.kalendar-online.cz/lunarni-kalendar"
+                  target="_blank">Luna&#769;rni&#769;</a>, <a
+                  href="http://www.kalendar-online.cz/jmena-a-svatky/statni-svatky"
+                  target="_blank">Sva&#769;tky</a>
+
+              </p>
+              <p>
+                Send us your comments about this site  
+                <!-- <a href="a_php/service.php" target="_blank"> -->
+                <a
+                  href="mailto:azats@seznam.cz?subject=Hello!&body=Thank%20you,%20for%20your%20opinion%20about%20this%20site,%20in%20advance."
+                  target="_blank">here</a> and read more info about this site admin <a href="htm/info.html" target="_blank">there</a>.
+              </p>
+            </div>
+            <!-- end of right div -->
+
+
+            <!-- end of main content -->
+          </div>
+
+          <!-- footer -->
+          <div id="footer" align="center">
+            &#160; <a href="htm/sitemap.html">Site Map</a> | <a
+              href="mailto:azats@seznam.cz?subject=Hello!&body=Thank%20you,%20for%20your%20opinion%20about%20this%20site,%20in%20advance."
+              target="_blank">Contact Me</a> | <a href="">Terms of
+              Use</a> | <a href="htm/info.html" >About Me</a>
+            <span> copyright &copy; Since 2008 Sahet.NET, Azat
+              Satklichov </span>
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</body>
+
+</html>
