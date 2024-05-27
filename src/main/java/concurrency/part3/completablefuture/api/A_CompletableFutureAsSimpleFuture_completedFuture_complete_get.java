@@ -2,6 +2,7 @@ package concurrency.part3.completablefuture.api;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
@@ -28,9 +29,10 @@ public class A_CompletableFutureAsSimpleFuture_completedFuture_complete_get {
 		 */
 		Future<String> completableFuture = calculateAsync();
 		// BLOCKED
+		System.out.println("Use the get method to block the current thread until result is provided");
 		String result = completableFuture.get();
 		System.out.println(result);
-		System.out.println("Hello".equalsIgnoreCase(result));
+		System.out.println("Hellooo".equalsIgnoreCase(result));
 
 		/**
 		 * If we already know the result of a computation, we can use the static
@@ -40,10 +42,13 @@ public class A_CompletableFutureAsSimpleFuture_completedFuture_complete_get {
 		 */
 		Future<String> completableFuture2 = CompletableFuture.completedFuture("Hello");
 		// NEVER BLOCKED
+		System.out.println(
+				"\nNEVER blocks - immediately returning this result instead, If we already know (via completedFuture()) the result of a computation in advance");
 		String result2 = completableFuture2.get();
 		System.out.println("Hello".equalsIgnoreCase(result2));
 
 		// As an alternative scenario, we may want to cancel the execution of a Future.
+ 
 
 	}
 
@@ -63,12 +68,49 @@ public class A_CompletableFutureAsSimpleFuture_completedFuture_complete_get {
 		 * method on it when we're ready to block for the result.
 		 * 
 		 */
-		Executors.newCachedThreadPool().submit(() -> {
+		ExecutorService exec = Executors.newCachedThreadPool();
+		exec.submit(() -> {
 			Thread.sleep(500);
-			completableFuture.complete("Hello");
+			completableFuture.complete("Hellooo");
 			return null;
 		});
+		exec.shutdown();
 
 		return completableFuture;
+	}
+}
+
+class GetNowDemo {
+
+	private static String process() {
+		sleep(2000);
+		System.out.println(
+				"Current Execution thread where the supplier is executed - " + Thread.currentThread().getName());
+		return "Hello Man";
+	}
+
+	private static CompletableFuture<String> createFuture() {
+		return CompletableFuture.supplyAsync(GetNowDemo::process);
+	}
+
+	private static void sleep(int millis) {
+		try {
+			Thread.sleep(millis);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static void main(String[] args) {
+		CompletableFuture<String> stringCompletableFuture = createFuture();
+
+		String valueToReturn = "Result not yet available";
+
+		String value = stringCompletableFuture.getNow(valueToReturn);
+
+		sleep(1000);
+
+		System.out.println("Completed, result = " + value);
+
 	}
 }

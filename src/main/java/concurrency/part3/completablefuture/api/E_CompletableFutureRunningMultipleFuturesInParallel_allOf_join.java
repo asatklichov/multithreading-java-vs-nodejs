@@ -46,6 +46,34 @@ public class E_CompletableFutureRunningMultipleFuturesInParallel_allOf_join {
 		 * return the combined results of all Futures. Instead, we have to manually get
 		 * results from Futures. Fortunately, CompletableFuture.join() method and Java 8
 		 * Streams API makes it simple:
+		 *
+		 * 
+		 * <pre>
+		join()
+		CompletableFuture API exposes the join() method as a way of retrieving the value of the 
+		Future object by blocking the thread until the execution is completed. 
+		We should notice that the caller thread will be blocked even if the execution 
+		of the CompletableFuture is happening on a different thread:
+		
+				
+		CompletableFuture<String> future = waitAndReturn(1_000, "Harry"); 
+		assertEquals("Harry", future.join());
+		
+		Furthermore, if the CompletableFuture completes with an error,  
+		join() will throw it as a RuntimeException: 
+		
+		The static method allOff() allows us to combine multiple CompletableFuture 
+		instances and returns a CompletableFuture<Void>
+		
+		The completion of the resulting objects is dependent on the completion of all subsequent Futures.
+		
+		Moreover, if any of the subsequent Futures completes exceptionally, 
+		the overall result will also be considered a failure. It’s important to understand that allOf() is not a blocking method, which means that it will be executed instantly:
+		
+		
+		
+		 * 
+		 * </pre>
 		 */
 
 		String combined = Stream.of(future1, future2, future3).map(CompletableFuture::join)
@@ -91,7 +119,7 @@ public class E_CompletableFutureRunningMultipleFuturesInParallel_allOf_join {
 		 */
 		CompletableFuture<String> future1z = CompletableFuture.supplyAsync(() -> {
 			try {
-				TimeUnit.SECONDS.sleep(2);
+				TimeUnit.SECONDS.sleep(4);
 			} catch (InterruptedException e) {
 				throw new IllegalStateException(e);
 			}
@@ -100,7 +128,7 @@ public class E_CompletableFutureRunningMultipleFuturesInParallel_allOf_join {
 
 		CompletableFuture<String> future2z = CompletableFuture.supplyAsync(() -> {
 			try {
-				TimeUnit.SECONDS.sleep(1);
+				TimeUnit.SECONDS.sleep(5);
 			} catch (InterruptedException e) {
 				throw new IllegalStateException(e);
 			}

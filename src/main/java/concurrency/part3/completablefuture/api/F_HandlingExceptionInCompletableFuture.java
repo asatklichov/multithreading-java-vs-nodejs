@@ -80,13 +80,38 @@ class YesExceptionExample {
 
 		// chain and compose
 		// CompletableFuture<List<Long>> exception = supply.exceptionally(e ->
-		// List.of()); // no exception, returns normal
+		// List.of());  
 		// CompletableFuture<List<User>> fetch = exception.thenApply(fetchUsers);
 		CompletableFuture<List<User>> fetch = supply.thenApply(fetchUsers);
 		CompletableFuture<Void> display = fetch.thenAccept(displayer);
 
 		// List<Long> resultWithJoin = supply.join(); // YES exception
 		// System.out.println("resultWithJoin = " + resultWithJoin);
+
+		/**
+		 *
+		 * <pre>
+		When a CompletableFuture completes "normally", it means that the associated computation has completed successfully and a result is available. 
+		The isDone() method will return true in this case, and the get() method can be used to retrieve the result.
+		
+		On the other hand, when a CompletableFuture completes "exceptionally", it means that the associated computation has completed with an exception. This can happen, for example, if an exception is thrown 
+		during the computation, or if the computation is cancelled. The isDone() method will return true in this case, but the get() method will throw an ExecutionException wrapping the exception that caused the future to complete exceptionally.
+		
+		For example, if you have a future that represents a task that could throw an exception during its execution:
+		CompletableFuture<Integer> future = 
+		CompletableFuture.supplyAsync(() -> {
+		    if (someCondition) {
+		       throw new IllegalArgumentException("some error");
+		    } 
+		    return 5;
+		    });
+
+		
+		In this case, if the someCondition is true, the future will complete exceptionally, throwing an IllegalArgumentException. 
+		The isDone() method will return TRUE, but the get() method will throw an ExecutionException wrapping the IllegalArgumentException.
+		 * 
+		 * </pre>
+		 */
 
 		Sleep.sleep(1_000);
 		System.out.println("Supply  : isDone=" + supply.isDone() + ", isCompletedExceptionally="
@@ -104,7 +129,7 @@ class YesExceptionExample {
 		 * <pre>
 		Supply  : isDone=true, isCompletedExceptionally=true
 		Fetch   : isDone=true, isCompletedExceptionally=true
-		Display : isDone=true, isCompletedExceptionally=true		*
+		Display : isDone=true, isCompletedExceptionally=true		 
 		 * </pre>
 		 */
 
@@ -260,7 +285,7 @@ class ExceptionExampleWhenComplete {
 
 }
 
-class ExceptionExampleHanle {
+class ExceptionExampleHandle {
 
 	public static void main(String[] args) {
 		handle(args);
@@ -322,7 +347,7 @@ class ExceptionExampleHanle {
 		 *
 		 * <pre>
 		* 
-		* actually handle() swallows Exception, just for demo we printed it out.
+		* actually handle() SWALLOWs Exception, just for demo we printed it out.
 		* 
 		* 
 		.. 

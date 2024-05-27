@@ -52,7 +52,7 @@ public class C_CompletableFutureProcessingResultsAttachCallbacks_thenApply_thenA
 		 * thenApply() method is passed to the next in the series -
 		 */
 		CompletableFuture<String> future = completableFuture.thenApply(s -> s + " World")
-				.thenApply(s -> s + ", Welcome to the CalliCoder Blog");
+				.thenApply(s -> s + " of Physics, Sep. Nukus 1994 ");
 
 		System.out.println("Hello World".equalsIgnoreCase(future.get()));
 		System.out.println(future.get());
@@ -70,7 +70,7 @@ public class C_CompletableFutureProcessingResultsAttachCallbacks_thenApply_thenA
 		 */
 		CompletableFuture<Void> future2 = completableFuture
 				.thenAccept(s -> System.out.println("Computation returned: " + s));
-		// System.out.println("null".equalsIgnoreCase(future2.get()));
+		// System.out.println("null".equalsIgnoreCase(future2.get()));//complains VOID
 		System.out.println(future2.get());
 		System.out.println();
 
