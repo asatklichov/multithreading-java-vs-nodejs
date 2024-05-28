@@ -19,7 +19,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
 
-class HttpClientAsyncronousDemo2 {
+public class Z_HttpClientAsyncronousDemoUsingCachedThreadPoolAndParallelCF {
 
 	private static HttpClient httpClient;
 
@@ -50,7 +50,7 @@ class HttpClientAsyncronousDemo2 {
 		httpClient = HttpClient.newHttpClient();
 
 		List<CompletableFuture<String>> completableFutureStringListResponse = Files.lines(Path.of(DOMAINS_TXT2))
-				.map(HttpClientAsyncronousDemo2::validateLink).collect(Collectors.toList());
+				.map(Z_HttpClientAsyncronousDemoUsingCachedThreadPoolAndParallelCF::validateLink).collect(Collectors.toList());
 
 		/*
 		 * By default Async tasks run via CompletableFuture using ForkJoin pool -

@@ -20,7 +20,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
 
-class HttpClientAsyncronousInPrallelDemo {
+public class Z_HttpClientAsyncronousInPrallelDemoUsingFixedThreadPool {
 
 	private static HttpClient httpClient;
 
@@ -43,7 +43,8 @@ class HttpClientAsyncronousInPrallelDemo {
 		 * uses work stealing alg. Has threads be default equals to
 		 * Runtime.getRuntime().availableProcessors()
 		 */
-		//in our case, Cached Thread Pool creates more threads - heavy resource, and our task is not a short lived task
+		// in our case, Cached Thread Pool creates more threads - heavy resource, and
+		// our task is not a short lived task
 		System.out.println(
 				"[custom] HttpClient uses newFixedThreadPool(5) good for tasks with unpredictable execution times - 5 threads to be used by asynchronous calls");
 
@@ -71,7 +72,7 @@ class HttpClientAsyncronousInPrallelDemo {
 				.executor(Executors.newFixedThreadPool(5)).build();
 
 		List<CompletableFuture<String>> completableFutureStringListResponse = Files.lines(Path.of(DOMAINS_TXT2))
-				.map(HttpClientAsyncronousInPrallelDemo::validateLink).collect(Collectors.toList());
+				.map(Z_HttpClientAsyncronousInPrallelDemoUsingFixedThreadPool::validateLink).collect(Collectors.toList());
 
 		// completableFutureStringListResponse.stream().map(CompletableFuture::join).forEach(System.out::println);
 		// disable not to enable CPU intensive calc
@@ -83,7 +84,7 @@ class HttpClientAsyncronousInPrallelDemo {
 		completableFutureStringListResponse.stream().map(CompletableFuture::join).forEach(v -> {
 			long s = (long) (Math.random() * 10 + 1);
 			Random generator = new Random(s);
-			heavySum(generator.nextInt());// run within same thread 
+			heavySum(generator.nextInt());// run within same thread
 			System.out.println(v);
 		});
 

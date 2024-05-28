@@ -15,9 +15,11 @@ import java.time.Instant;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
 
-public class Z_HttpClientAsyncronousDemoUsingCachedThreadPool{
+public class Z_HttpClientAsyncronousDemoUsingCachedThreadPoolAndParallelCF2 {
 
 	private static HttpClient httpClient;
 
@@ -39,20 +41,28 @@ public class Z_HttpClientAsyncronousDemoUsingCachedThreadPool{
 		 * Runtime.getRuntime().availableProcessors()
 		 */
 		System.out.println(
-				"By default, the HttpClient uses executor java.util.concurrent.Executors.newCachedThreadPool() - 0 and max to 2³¹-1 threads to be used by asynchronous calls");
+				"By default, the HttpClient uses executor java.util.concurrent.Executors.newCachedThreadPool() - threads to be used by asynchronous calls");
+
+		ExecutorService executor = Executors.newFixedThreadPool(5);
 
 		Instant start = Instant.now();
+
 		httpClient = HttpClient.newHttpClient();
+
 		List<CompletableFuture<String>> completableFutureStringListResponse = Files.lines(Path.of(DOMAINS_TXT2))
-				.map(Z_HttpClientAsyncronousDemoUsingCachedThreadPool::validateLink).collect(Collectors.toList());
-		// completableFutureStringListResponse.stream().map(CompletableFuture::join).forEach(System.out::println);
-		/* disable comment not to include CPU intensive calculation */
-		completableFutureStringListResponse.stream().map(CompletableFuture::join).forEach(v -> {
-			long s = (long) (Math.random() * 10 + 1);
-			Random generator = new Random(s);
-			heavySum(generator.nextInt()); // run within same thread
-			System.out.println(v);
-		});
+				.map(Z_HttpClientAsyncronousDemoUsingCachedThreadPoolAndParallelCF2::validateLink)
+				.collect(Collectors.toList());
+
+		System.out.println(
+				"By default Async tasks run via CompletableFuture using ForkJoin pool Runtime.getRuntime().availableProcessors() threads - to run heavySum() parallely on different thread");
+		for (CompletableFuture<String> completableFuture : completableFutureStringListResponse) {
+			completableFuture.thenAcceptAsync(response -> {
+				long s = (long) (Math.random() * 10 + 1);
+				Random generator = new Random(s);
+				heavySum(generator.nextInt()); // run on different thread asynchronously
+				System.out.println(response);
+			}).thenRun(() -> System.out.println(""));// done
+		}
 
 		printElapsedTime(start);
 		System.out.println(

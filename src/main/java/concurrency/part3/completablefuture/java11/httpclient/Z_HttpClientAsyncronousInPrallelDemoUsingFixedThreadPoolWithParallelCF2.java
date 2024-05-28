@@ -1,6 +1,6 @@
 package concurrency.part3.completablefuture.java11.httpclient;
 
-import static concurrency.part3.completablefuture.java11.httpclient.Util.DOMAINS_TXT;
+import static concurrency.part3.completablefuture.java11.httpclient.Util.DOMAINS_TXT2;
 import static concurrency.part3.completablefuture.java11.httpclient.Util.heavySum;
 import static concurrency.part3.completablefuture.java11.httpclient.Util.printElapsedTime;
 
@@ -17,16 +17,39 @@ import java.time.Instant;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
 
-class HttpClientAsyncronousInPrallelDemo {
+public class Z_HttpClientAsyncronousInPrallelDemoUsingFixedThreadPoolWithParallelCF2 {
 
 	private static HttpClient httpClient;
 
 	public static void main(String[] args) throws IOException, InterruptedException {
 
 		Instant start = Instant.now();
+		/**
+		 * Cached Thread Pool — keeps creating threads starting with 0 and max to 2³¹-1.
+		 * Idea behind is, the task should not wait (SynchronousQueue) for execution.
+		 * Only limitation is system resources may not be available. Removes idle
+		 * threads after 1-min. Good for short-lived tasks.
+		 * 
+		 * Fixed Thread Pool — keeps adding more tasks to the queue
+		 * (LinkedBlockingQueue) in case all threads (fixed number) are busy. Good to
+		 * control resource consumption, stack size, and tasks with unpredictable
+		 * execution times.
+		 * 
+		 * ForkJoinPool — ForkJoin provides parallel mechanism for CPU intensive tasks,
+		 * uses work stealing alg. Has threads be default equals to
+		 * Runtime.getRuntime().availableProcessors()
+		 */
+
+		ExecutorService executor = Executors.newFixedThreadPool(5);
+		// in our case, Cached Thread Pool creates more threads - heavy resource, and
+		// our task is not a short lived task
+		System.out.println(
+				"[custom] HttpClient uses newFixedThreadPool(5) good for tasks with unpredictable execution times - 5 threads to be used by asynchronous calls");
+
 		/**
 		 * 
 		 * Java 11 Http Client default thread pool size
@@ -47,21 +70,24 @@ class HttpClientAsyncronousInPrallelDemo {
 		 * may be created using ThreadPoolExecutor constructors.
 		 * 
 		 */
-		System.out.println("Async tasks run in parallel by 4 threads .. ");
 		httpClient = HttpClient.newBuilder().followRedirects(Redirect.NORMAL).connectTimeout(Duration.ofSeconds(5))
-				.executor(Executors.newFixedThreadPool(4)).build();
+				.executor(Executors.newFixedThreadPool(5)).build();
 
-		List<CompletableFuture<String>> completableFutureStringListResponse = Files.lines(Path.of(DOMAINS_TXT))
-				.map(HttpClientAsyncronousInPrallelDemo::validateLink).collect(Collectors.toList());
+		List<CompletableFuture<String>> completableFutureStringListResponse = Files.lines(Path.of(DOMAINS_TXT2))
+				.map(Z_HttpClientAsyncronousInPrallelDemoUsingFixedThreadPoolWithParallelCF2::validateLink)
+				.collect(Collectors.toList());
 
-		completableFutureStringListResponse.stream().map(CompletableFuture::join).forEach(System.out::println);
-		// disable not to enable CPU intensive calc
-		completableFutureStringListResponse.stream().map(CompletableFuture::join).forEach(v -> {
-			long s = (long) (Math.random() * 10 + 1);
-			Random generator = new Random(s);
-			heavySum(generator.nextInt());
-			System.out.println(v);
-		});
+	 
+		System.out.println(
+				"By default Async tasks run via CompletableFuture using ForkJoin pool Runtime.getRuntime().availableProcessors() threads - to run heavySum() parallely on different thread");
+		for (CompletableFuture<String> completableFuture : completableFutureStringListResponse) {
+			completableFuture.thenAcceptAsync(response -> {
+				long s = (long) (Math.random() * 10 + 1);
+				Random generator = new Random(s);
+				heavySum(generator.nextInt()); // run on different thread asynchronously
+				System.out.println(response);
+			}).thenRun(() -> System.out.println(""));// done
+		}
 
 		printElapsedTime(start);
 	}
