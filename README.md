@@ -55,8 +55,8 @@ or request it via browser: http://localhost:8000/serve
 ### Node.js 
 After you have installed the dependencies, described as above, just run like below examples. 
 Also you can change the parameters or input file accordingly. 
-- Sync:  multithreading-java-vs-nodejs\nodejs-app\src>node validate-domain-sync.js
 - Async: multithreading-java-vs-nodejs\nodejs-app\src>node validate-domain-async3.js
 - Async Axios: multithreading-java-vs-nodejs\nodejs-app\src>node validate-domain-axios.js
 - Async Got: multithreading-java-vs-nodejs\nodejs-app\src>node validate-domain-got.js
+- Sync:  multithreading-java-vs-nodejs\nodejs-app\src>node validate-domain-sync.js
 - Worker: multithreading-java-vs-nodejs\nodejs-app\src>node worker-parent.js
