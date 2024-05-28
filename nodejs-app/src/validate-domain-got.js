@@ -18,8 +18,8 @@ myInterface.on('line', function(line) {
 			const val = line.trim()
 			const result = 200 === resp.statusCode ? val + " access OK" : val + " access Failed"
 			console.log(result + " " + lineno);
-	/*		let x = Math.floor(Math.random() * 10) + 1;
-			heavySum(x);*/
+			let x = Math.floor(Math.random() * 10) + 1;
+			heavySum(x);
 			if (++lineno == 85) {
 				printElapseTime(start);
 			}
