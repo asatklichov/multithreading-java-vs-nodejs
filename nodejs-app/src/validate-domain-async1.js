@@ -4,7 +4,7 @@ const http = require('http');
 const fs = require('fs');
 
 let myInterface = readline.createInterface({
-	input: fs.createReadStream('files/domains_list.txt')
+	input: fs.createReadStream('./domains_list.txt')
 });
 
 const start = new Date()

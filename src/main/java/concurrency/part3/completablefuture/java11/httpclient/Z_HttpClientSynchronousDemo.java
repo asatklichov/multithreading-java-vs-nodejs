@@ -1,6 +1,6 @@
 package concurrency.part3.completablefuture.java11.httpclient;
 
-import static concurrency.part3.completablefuture.java11.httpclient.Util.DOMAINS_TXT;
+import static concurrency.part3.completablefuture.java11.httpclient.Util.DOMAINS_TXT2;
 import static concurrency.part3.completablefuture.java11.httpclient.Util.heavySum;
 import static concurrency.part3.completablefuture.java11.httpclient.Util.printElapsedTime;
 
@@ -21,9 +21,9 @@ class HttpClientSynchronousDemo {
 	public static void main(String[] args) throws IOException, InterruptedException {
 		Instant start = Instant.now();
 		httpClient = HttpClient.newHttpClient();
-		Files.lines(Path.of(DOMAINS_TXT)).map(HttpClientSynchronousDemo::validateLink).forEach(System.out::println);
+		//Files.lines(Path.of(DOMAINS_TXT)).map(HttpClientSynchronousDemo::validateLink).forEach(System.out::println);
 		// CPU intensive calc
-		Files.lines(Path.of(DOMAINS_TXT)).map(HttpClientSynchronousDemo::validateLink).forEach(v -> {
+		Files.lines(Path.of(DOMAINS_TXT2)).map(HttpClientSynchronousDemo::validateLink).forEach(v -> {
 			long s = (long) (Math.random() * 10 + 1);
 			Random generator = new Random(s);
 			heavySum(generator.nextInt());

@@ -48,7 +48,6 @@ public class A_CompletableFutureAsSimpleFuture_completedFuture_complete_get {
 		System.out.println("Hello".equalsIgnoreCase(result2));
 
 		// As an alternative scenario, we may want to cancel the execution of a Future.
- 
 
 	}
 
@@ -68,6 +67,38 @@ public class A_CompletableFutureAsSimpleFuture_completedFuture_complete_get {
 		 * method on it when we're ready to block for the result.
 		 * 
 		 */
+
+		/**
+		 * Alternative solution to TT ...
+		 * 
+		 * 
+		 * <pre>
+		 *
+		 * public class SyncCompletableFuture extends CompletableFuture {
+		 * 
+		 * 	public static <U> CompletableFuture<U> supplySync(Supplier<U> supplier) {
+		 * 		CompletableFuture future = CompletableFuture.supplyAsync(supplier);
+		 * 		return syncFuture(future);
+		 * 	}
+		 * 
+		 * 	public static CompletableFuture<Void> runSync(Runnable runnable) {
+		 * 		CompletableFuture future = CompletableFuture.runAsync(runnable);
+		 * 		return syncFuture(future);
+		 * 	}
+		 * 
+		 * 	private static CompletableFuture syncFuture(CompletableFuture future) {
+		 * 		try {
+		 * 			future.get();
+		 * 		} catch (InterruptedException | ExecutionException e) {
+		 * 			future.cancel(true);
+		 * 		}
+		 * 		return future;
+		 * 	}
+		 * }
+		 * 
+		 * </pre>
+		 */
+
 		ExecutorService exec = Executors.newCachedThreadPool();
 		exec.submit(() -> {
 			Thread.sleep(500);

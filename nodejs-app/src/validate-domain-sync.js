@@ -1,8 +1,9 @@
 // synchronous Form:
+const readline = require('readline');
 const http = require('http');
 const fs = require('fs');
 
-const arr = fs.readFileSync('files/domains_list.txt').toString().split("\n")
+const arr = fs.readFileSync('./domains_list.txt').toString().split("\n")
 	.filter(e => e.trim().length > 0);
 
 const start = new Date()
