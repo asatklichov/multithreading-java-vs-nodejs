@@ -9,22 +9,27 @@ classDiagram
     Game "1" o-- "*" Bet
     Bet "1" o-- "1" Player
 
-class Game {
+class Guitar {
    note "One game round"
 }
 
-class SimulationRun {
+class FindGuitarTester {
+   note "One game round"
+}
+
+class Inventory {
+   note "One game round"
+}
+
+enum Type {
    note "Sequence of games with random generator created at the very beginning"
 }
 
-class Player {
-   note "Player bets on game based on the strategy"
+enum Wood {
+   note "Sequence of games with random generator created at the very beginning"
 }
 
-class Strategy {
-   note "How to bet"
+enum Wood {
+   note "Sequence of games with random generator created at the very beginning"
 }
-
-class Bet {
-  note "Interface/abstract class - Define odds (red, black, ), resolve win and lost"
-}
+ 
