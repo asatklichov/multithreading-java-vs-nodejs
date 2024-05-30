@@ -1,1 +1,30 @@
 
+classDiagram
+    Bet <|-- RedBet
+    Bet <|-- BlackBet
+    Bet <|-- EvenBet
+    SimulationRun "1" o-- "1" Game
+    SimulationRun "1" o-- "*" Player
+    Player "1" o-- "1" Strategy
+    Game "1" o-- "*" Bet
+    Bet "1" o-- "1" Player
+
+class Game {
+   note "One game round"
+}
+
+class SimulationRun {
+   note "Sequence of games with random generator created at the very beginning"
+}
+
+class Player {
+   note "Player bets on game based on the strategy"
+}
+
+class Strategy {
+   note "How to bet"
+}
+
+class Bet {
+  note "Interface/abstract class - Define odds (red, black, ), resolve win and lost"
+}
