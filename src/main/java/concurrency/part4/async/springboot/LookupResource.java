@@ -1,4 +1,4 @@
-package concurrency.part3.completablefuture.springboot.asyncmethod;
+package concurrency.part4.async.springboot;
 
 import java.util.Date;
 import java.util.List;
@@ -38,14 +38,14 @@ public class LookupResource {
 	public List<User> findAllUsers(@RequestParam List<String> userNames) {
 
 		long start = System.currentTimeMillis();
-		log.info("Time start: " + new Date(System.currentTimeMillis()));
+		//log.info("Time start: " + new Date(System.currentTimeMillis()));
 		List<User> users = lookupService.findAllByUserNames(userNames);
 
 		if (users == null || users.isEmpty()) {
 			throw new UserNotFoundException();
 		}
 
-		log.info("Elapsed time: " + (System.currentTimeMillis() - start));
+		//log.info("Elapsed time: " + (System.currentTimeMillis() - start));
 		return users;
 
 	}
@@ -55,7 +55,7 @@ public class LookupResource {
 	public List<User> findAllUsersAsynch(@RequestParam List<String> userNames) throws InterruptedException {
 
 		long start = System.currentTimeMillis();
-		log.info("Time start: " + new Date(System.currentTimeMillis()));
+		//log.info("Time start: " + new Date(System.currentTimeMillis()));
 
 		// CompletableFuture<List<User>>
 
@@ -65,7 +65,7 @@ public class LookupResource {
 	}
 
 	private static Function<Throwable, ResponseEntity<? extends List<User>>> handleGetCarFailure = throwable -> {
-		log.error("Failed to read records: {}", throwable);
+		//log.error("Failed to read records: {}", throwable);
 		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 	};
 
@@ -80,10 +80,10 @@ public class LookupResource {
 	public String getAllUsers(@RequestParam List<String> userNames, Model model) {
 
 		long start = System.currentTimeMillis();
-		log.info("Time start: " + new Date(System.currentTimeMillis()));
+		//log.info("Time start: " + new Date(System.currentTimeMillis()));
 		List<User> users = lookupService.findAllByUserNames(userNames);
 
-		log.info("Elapsed time: " + (System.currentTimeMillis() - start));
+		//log.info("Elapsed time: " + (System.currentTimeMillis() - start));
 
 		model.addAttribute("users", users);
 
@@ -101,14 +101,14 @@ public class LookupResource {
 			@RequestParam(name = "userName", required = false, defaultValue = "asatklichov") String userName) {
 
 		long start = System.currentTimeMillis();
-		log.info("Time start: " + new Date(System.currentTimeMillis()));
+		//log.info("Time start: " + new Date(System.currentTimeMillis()));
 		List<User> users = lookupService.findAllByUserNames(List.of(userName));
 
 		if (users == null || users.isEmpty()) {
 			throw new UserNotFoundException();
 		}
 
-		log.info("Elapsed time: " + (System.currentTimeMillis() - start));
+		//log.info("Elapsed time: " + (System.currentTimeMillis() - start));
 		return users.get(0);
 
 	}

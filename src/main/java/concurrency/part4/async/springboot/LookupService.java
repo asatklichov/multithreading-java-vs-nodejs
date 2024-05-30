@@ -1,4 +1,4 @@
-package concurrency.part3.completablefuture.springboot.asyncmethod;
+package concurrency.part4.async.springboot;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +39,8 @@ public class LookupService {
 	 */
 	@Async
 	public CompletableFuture<User> findUser(String userName) throws InterruptedException {
-		log.info("Looking up " + userName);
+		
+		//log.info("Looking up " + userName);
 		User user = restTemplate.getForObject(String.format(URL, userName), User.class);
 		// delay to demon
 		// Thread.sleep(3000L);

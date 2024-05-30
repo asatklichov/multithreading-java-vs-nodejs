@@ -1,4 +1,4 @@
-package concurrency.part3.completablefuture.springboot.asyncmethod;
+package concurrency.part4.async.springboot;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -1,8 +1,8 @@
 package concurrency.part2.concurrent.api;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+//
+//import static org.junit.Assert.assertEquals;
+//import static org.junit.Assert.assertFalse;
+//import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
 import java.util.concurrent.BrokenBarrierException;
@@ -11,7 +11,7 @@ import java.util.concurrent.CyclicBarrier;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import org.junit.jupiter.api.Test;
+//import org.junit.jupiter.api.Test;
 
 public class Barrier_LatchDemo {
 
@@ -119,7 +119,7 @@ class Decrementer implements Runnable {
  */
 class Barrier_Latch_Reusability {
 
-	@Test
+	//@Test
 	public void whenCountDownLatch_thenCorrect() throws IOException, InterruptedException {
 
 		CyclicBarrier cyclicBarrier = new CyclicBarrier(2);
@@ -133,12 +133,12 @@ class Barrier_Latch_Reusability {
 		});
 		t.start();
 
-		assertFalse(cyclicBarrier.isBroken());
-		assertEquals(1, cyclicBarrier.getNumberWaiting());
+		//assertFalse(cyclicBarrier.isBroken());
+		//assertEquals(1, cyclicBarrier.getNumberWaiting());
 
 	}
 
-	@Test
+	//@Test
 	public void whenCountDownLatch_thenCorrect2() throws IOException, InterruptedException {
 
 		CountDownLatch countDownLatch = new CountDownLatch(7);
@@ -153,10 +153,10 @@ class Barrier_Latch_Reusability {
 			});
 		}
 		es.shutdown();
-		assertTrue(3 < 6);
+		//assertTrue(3 < 6);
 	}
 
-	@Test
+	//@Test
 	public void whenCyclicBarrier_thenCorrect() throws IOException, InterruptedException {
 
 		CyclicBarrier cyclicBarrier = new CyclicBarrier(7);
@@ -176,7 +176,7 @@ class Barrier_Latch_Reusability {
 		}
 		es.shutdown();
 
-		assertTrue(9 > 7);
+		//assertTrue(9 > 7);
 	}
 
 }

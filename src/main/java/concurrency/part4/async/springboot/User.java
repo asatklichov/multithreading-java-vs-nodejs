@@ -1,4 +1,4 @@
-package concurrency.part3.completablefuture.springboot.asyncmethod;
+package concurrency.part4.async.springboot;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 

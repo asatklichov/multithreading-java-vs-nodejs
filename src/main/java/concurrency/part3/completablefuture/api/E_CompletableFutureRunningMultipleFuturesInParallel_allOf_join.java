@@ -5,8 +5,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
-import concurrency.part3.completablefuture.springboot.asyncmethod.User;
+ 
 
 /**
  * https://www.baeldung.com/java-completablefuture
@@ -94,8 +93,8 @@ public class E_CompletableFutureRunningMultipleFuturesInParallel_allOf_join {
 				.split(",");
 		for (int i = 0; i < names.length; i++) {
 			User user = new User();
-			user.setName((names[i].toUpperCase()));
-			user.setUrl("");
+			//user.setName((names[i].toUpperCase()));
+			//user.setUrl("");
 			completableFutures[i] = CompletableFuture.completedFuture(user);
 		}
 

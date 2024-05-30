@@ -6,35 +6,52 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.3.3.RELEASE</version>
+		<version>3.3.0</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>multithreading.in.practice</groupId>
-	<artifactId>multithreading-java-vs-nodejs</artifactId>
+	<groupId>multithreading-java-vs-nodejs</groupId>
+	<artifactId>multithreading.java.vs.nodejs</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>multithreading-java-vs-nodejs</name>
-	<description>Demo project for Spring Boot</description>
-
+	<packaging>war</packaging>
+	<name>multithreading.java.vs.nodejs</name>
+	<description>Demo for Java concurrency vs Nodejs</description>
 	<properties>
-		<java.version>17</java.version>
-		<junit-jupiter.version>5.6.0</junit-jupiter.version>
+		<java.version>21</java.version>
+		<junit.jupiter.version>5.10.2</junit.jupiter.version>
 		<junit.platform.version>1.6.0</junit.platform.version>
-	</properties>
 
+
+	</properties>
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-
-		<!-- Lombok and alternatives  -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-webflux</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<scope>runtime</scope>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<scope>runtime</scope>
+		</dependency>
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<optional>true</optional>
 		</dependency>
-
-
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-tomcat</artifactId>
+			<scope>provided</scope>
+		</dependency>
 		<dependency>
 			<groupId>io.reactivex.rxjava2</groupId>
 			<artifactId>rxjava</artifactId>
@@ -50,11 +67,6 @@
 			<artifactId>akka-stream_2.12</artifactId>
 			<version>2.5.16</version>
 		</dependency>
-		<!-- <dependency> <groupId>junit</groupId>
-		<artifactId>junit</artifactId> 
-			<version>4.12</version> </dependency> -->
-
-		<!-- self try -->
 		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
@@ -65,7 +77,6 @@
 			<artifactId>commons-collections4</artifactId>
 			<version>4.1</version>
 		</dependency>
-
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-collections4</artifactId>
@@ -75,48 +86,41 @@
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
 			<version>3.9</version>
-		</dependency>
-
+		</dependency> 
+		
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
-			<exclusions>
-				<exclusion>
-					<groupId>org.junit.vintage</groupId>
-					<artifactId>junit-vintage-engine</artifactId>
-				</exclusion>
-			</exclusions>
 		</dependency>
-
-		<!-- <dependency> <groupId>org.junit.jupiter</groupId>
-		<artifactId>junit-jupiter-engine</artifactId>
-		<version>${junit-jupiter.version}</version> <scope>test</scope>
-		</dependency> 
-			<dependency> <groupId>org.junit.jupiter</groupId>
-		<artifactId>junit-jupiter-params</artifactId>
-		<version>${junit-jupiter.version}</version> <scope>test</scope>
-		</dependency> 
-			<dependency> <groupId>org.junit.platform</groupId>
-		<artifactId>junit-platform-runner</artifactId>
-		<version>${junit.platform.version}</version> <scope>test</scope>
-		</dependency> -->
+		<dependency>
+			<groupId>io.projectreactor</groupId>
+			<artifactId>reactor-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.junit</groupId>
+			<artifactId>junit-bom</artifactId>
+			<version>${junit.jupiter.version}</version>
+			<type>pom</type>
+			<scope>import</scope>
+		</dependency>
 
 	</dependencies>
 
 	<build>
 		<plugins>
 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<configuration>
-					<source>${java.version}</source>
-					<target>${java.version}</target>
-				</configuration>
-			</plugin>
-			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<excludes>
+						<exclude>
+							<groupId>org.projectlombok</groupId>
+							<artifactId>lombok</artifactId>
+						</exclude>
+					</excludes>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
