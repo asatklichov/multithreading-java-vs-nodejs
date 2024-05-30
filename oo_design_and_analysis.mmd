@@ -1,13 +1,7 @@
-
 classDiagram
-    Bet <|-- RedBet
-    Bet <|-- BlackBet
-    Bet <|-- EvenBet
-    SimulationRun "1" o-- "1" Game
-    SimulationRun "1" o-- "*" Player
-    Player "1" o-- "1" Strategy
-    Game "1" o-- "*" Bet
-    Bet "1" o-- "1" Player
+    Inventory <|-- Guitar
+    Guitar "1" o-- "1" Inventory
+    Guitar "1" o-- "*" Type 
 
 class Guitar {
    note "One game round"
@@ -32,4 +26,7 @@ enum Wood {
 enum Wood {
    note "Sequence of games with random generator created at the very beginning"
 }
- 
+
+
+
+
