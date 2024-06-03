@@ -1,29 +1,18 @@
 // Asynchronous Form:
-const readline = require('readline');
-const http = require('http');
 const fs = require('fs');
-
-let myInterface = readline.createInterface({
-	input: fs.createReadStream('./domains_list.txt')
-});
-
-const start = new Date()
-let lineno = 0;
-myInterface.on('line', function(line) {
-	http.get(line, (resp) => {
-		val = line.trim()
-		const result = 200 === resp.statusCode ? val + " access OK" : val + " access Failed"
-		console.log(result + " " + lineno);
-		 let x = Math.floor(Math.random() * 10) + 1;
-		heavySum(x); 
-		if (++lineno == 99) {
-			printElapseTime(start);
-		}
-	}).on("error", (err) => {
-		console.log("Error: " + err.message);
-	});
-});
-
+const readline = require('readline');
+const read_stream = fs.createReadStream("./domains_list.txt");
+const rl = readline.createInterface({
+    input: read_stream
+}); 
+rl.on('line', function(line){	
+    console.log(line);
+	let x = Math.floor(Math.random() * 10) + 1;
+	heavySum(x);
+})
+.on('end', function(){
+      rl.close();
+})
 
 function printElapseTime(start) {
 	var end = new Date() - start
