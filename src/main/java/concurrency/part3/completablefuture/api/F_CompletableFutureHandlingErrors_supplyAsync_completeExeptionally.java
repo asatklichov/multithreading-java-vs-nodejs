@@ -44,7 +44,7 @@ public class F_CompletableFutureHandlingErrors_supplyAsync_completeExeptionally 
 			// do something with the final result
 		});
 
-		// exceptionally() calback
+		// exceptionally() callback
 		/**
 		 * 
 		 * 

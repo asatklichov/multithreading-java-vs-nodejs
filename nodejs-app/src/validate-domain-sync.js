@@ -9,19 +9,26 @@ const arr = fs.readFileSync('./domains_list.txt').toString().split("\n")
 const start = new Date()
 let lineno = 0;
 arr.forEach((line) => {
-	http.get(line, (resp) => {
+/*	http.get(line, (resp) => {
 		const val = line.trim();
 		const result = 200 === resp.statusCode ? val + " access OK" : val + " access Failed"
 		console.log(result + " " + lineno);
-		/*let x = Math.floor(Math.random() * 10) + 1;
-		heavySum(x);*/
+		let x = Math.floor(Math.random() * 10) + 1;
+		heavySum(x);
 		if (++lineno == 98) {
 			printElapseTime(start);
 		}
 	}).on("error", (err) => {
 		console.log("Error: " + err.message);
-	});
-
+	});*/
+	console.log(line);
+	
+	let s = Math.floor(Math.random() * 10) + 1;
+	let sum = (Math.floor(Math.random() * 10) + s) * 1000;
+	for (let i = 0; i < 2147483647; i++) {
+		sum += i;
+	};
+	console.log(sum);
 
 });
 
@@ -39,10 +46,6 @@ function printElapseTime(start) {
 }
 
 
-const heavySum = (s) => {
-	let sum = (Math.floor(Math.random() * 10) + s) * 1000;
-	for (let i = 0; i < 2147483647; i++) {
-		sum += i;
-	};
-	console.log(sum);
-};
+ 
+
+

@@ -32,17 +32,19 @@ public class B_CompletableFutureWihEncapsulatedComputationLogic_runAsync_supplyA
 		 * does not produce any output.
 		 * 
 		 * So in a nutshell, runAsync() is used when you want to run a task
-		 * asynchronously and do not need to produce any result, while  supplyAsync() is
-		 * used when you want to run a task asynchronously and produce a result which
-		 * can be used to complete the returned CompletableFuture instance.
-		 * The supplyAsync() method also accepts an Executor as an optional argument,
-		 * this allows you to specify the Executor on which the task should be executed
-		 * and thus allowing you to control the thread pool on which the task is run.
+		 * asynchronously and do not need to produce any result,
+		 * 
+		 * while  supplyAsync() is used when you want to run a task asynchronously and
+		 * produce a result which can be used to complete the
+		 * returned CompletableFuture instance. The supplyAsync() method also accepts an
+		 * Executor as an optional argument, this allows you to specify the Executor on
+		 * which the task should be executed and thus allowing you to control the thread
+		 * pool on which the task is run.
 		 * 
 		 */
 		Runnable r = () -> System.out.println("Hello");// ForkJoinPool.commonPool();
 		CompletableFuture<Void> runAsync = CompletableFuture.runAsync(r);// default Fork/Join
-		CompletableFuture<Void> runAsync2 = CompletableFuture.runAsync(r, Executors.newCachedThreadPool());
+		CompletableFuture<Void> runAsync2 = CompletableFuture.runAsync(r, Executors.newSingleThreadExecutor());
 		System.out.println(runAsync.get() + " " + runAsync2.get());
 		System.out.println();
 

@@ -36,16 +36,6 @@ public class C_CompletableFutureProcessingResultsAttachCallbacks_thenApply_thenA
 		 * to a function. The thenApply method does exactly that; it accepts a Function
 		 * instance, uses it to process the result, and returns a Future that holds a
 		 * value returned by a function:
-		 */
-		/*
-		 * The thenCompose method, together with thenApply, implement basic building
-		 * blocks of the monadic pattern. They closely relate to the map and flatMap
-		 * methods of Stream and Optional classes also available in Java 8.
-		 * 
-		 * Both methods receive a function and apply it to the computation result, but
-		 * the thenCompose (flatMap) method receives a function that returns another
-		 * object of the same type. This functional structure allows composing the
-		 * instances of these classes as building blocks.
 		 * 
 		 * You can also write a sequence of transformations on the CompletableFuture by
 		 * attaching a series of thenApply() callback methods. The result of one
@@ -54,10 +44,9 @@ public class C_CompletableFutureProcessingResultsAttachCallbacks_thenApply_thenA
 		CompletableFuture<String> future = completableFuture.thenApply(s -> s + " World")
 				.thenApply(s -> s + " of Physics, Sep. Nukus 1994 ");
 
-		System.out.println("Hello World".equalsIgnoreCase(future.get()));
+		System.out.println(future.get().contains("Hello World"));
 		System.out.println(future.get());
 		System.out.println();
-
 
 		/**
 		 * If we don't need to return a value down the Future chain, we can use an
@@ -83,6 +72,13 @@ public class C_CompletableFutureProcessingResultsAttachCallbacks_thenApply_thenA
 
 		CompletableFuture<Void> future3 = completableFuture.thenRun(() -> System.out.println("Computation finished."));
 		System.out.println(future3.get());
+
+		CompletableFuture
+				.runAsync(() -> System.out
+						.println("\nBut be careful when chaining with Runnable. NULL value is provided"))
+				.thenAccept(val -> {
+					System.out.println(val);					
+				});
 
 	}
 

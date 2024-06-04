@@ -104,7 +104,7 @@ class CompleteAndObtrudeValueDemo { //CompletableFutureWithSupplier
 
 		Supplier<String> supplier = () -> {
 			try {
-				Thread.sleep(1000);
+				Thread.sleep(2000);
 			} catch (InterruptedException e) {
 			}
 			return Thread.currentThread().getName();
@@ -114,12 +114,13 @@ class CompleteAndObtrudeValueDemo { //CompletableFutureWithSupplier
 		supplier = () -> Thread.currentThread().getName();
 
 		CompletableFuture<String> completableFuture = CompletableFuture.supplyAsync(supplier, executor);
+		Thread.sleep(500);//without this sometimes completableFuture not hurry to run - unpredictable, see: CompletableFutureNotRun  
 
 		System.out.println("\n ---- complete() demo ----");
-		boolean completedOk = completableFuture.complete("complete: oran uzyn - too long!");
-		if (completedOk) {
+		boolean completedOk = completableFuture.complete("complete: t0o long!");
+		//if (completedOk) {
 			System.out.println("completed? = " + completedOk + ", isDone()=" + completableFuture.isDone());
-		}
+		//}
 		/**
 		 * The join() method doesn't throw checked exceptions.
 		 * 
@@ -151,7 +152,7 @@ class CompleteAndObtrudeValueDemo { //CompletableFutureWithSupplier
 		 * 
 		 */
 		System.out.println("\n ---- obtrudeValue() demo ----");
-		completableFuture.obtrudeValue("obtrudeValue: oran uzyn - too long!");// void
+		completableFuture.obtrudeValue("obtrudeValue: toooo long!");// void
 		// Returns true if completed in any fashion: normally,exceptionally, or via
 		// cancellation
 		System.out.println("isDone()=" + completableFuture.isDone());
@@ -194,7 +195,7 @@ class CompleteExceptionallyDemo {
 		CompletableFuture<String> complete = new CompletableFuture<String>();
 		// complete and then complete exceptionally
 		complete.complete("I am done");
-		complete.completeExceptionally(new IllegalSelectorException()); // no affet here
+		complete.completeExceptionally(new IllegalSelectorException()); // no affect here
 		System.out.println(complete.get());
 
 		// or complete with exceptionally
@@ -250,9 +251,10 @@ public class _CompletableFutureDemo {
 
 		// or complete with exceptionally
 		notCompletedF.completeExceptionally(new IllegalSelectorException()); // "complete not completed one"
-		// System.out.println(notCompletedF.get());
+		//System.out.println(notCompletedF.get()); //Caused by: java.nio.channels.IllegalSelectorException
 
 		Instant start = Instant.now();
+		System.out.println("Processing started ...");
 		// create CompletableFuture, supplyAsyn runs in ForkJoinPool by default, but you
 		// can change it
 		CompletableFuture<Long> futureResult = CompletableFuture.supplyAsync(() -> {
@@ -260,7 +262,7 @@ public class _CompletableFutureDemo {
 		});
 
 		// continue with other work
-		System.out.println("Processing something else ...");
+		System.out.println("Do not wait, do something else until result is available ... thenAccept executed once ResponseFuture completed");
 
 		// now I need the result of sum (use get or join)
 		// futureResult.join();
@@ -303,7 +305,7 @@ public class _CompletableFutureDemo {
 			System.err.println("Err: " + e);
 		}
 
-		// applyToEither - once I have two results ... aply to aither
+		// applyToEither - once I have two results ... apply to either
 
 		// runAsync
 		// thenRun
@@ -311,7 +313,7 @@ public class _CompletableFutureDemo {
 		// getNow - return immediately
 
 		// If we already know the result of a computation
-		// copleteFuture
+		// completeFuture
 
 		// runAsync
 		// supplyAsyc - returns value, but not take param
@@ -325,7 +327,9 @@ public class _CompletableFutureDemo {
 	public static long heavySum() {
 		long sum = 0;
 		for (int i = 0; i < Integer.MAX_VALUE; i++) {
-			sum += i;
+			for (int j = 0; j < 6; j++) {
+				sum += ++j;
+			}
 		}
 		System.out.println("Sum = " + sum);
 		return sum;

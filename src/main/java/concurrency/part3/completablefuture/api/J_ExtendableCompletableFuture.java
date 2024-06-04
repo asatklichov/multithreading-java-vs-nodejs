@@ -28,7 +28,7 @@ public class J_ExtendableCompletableFuture {
 
 		CompletableFuture<String> name2 = CustomCompletableFuture.supplyAsync(() -> "DELL 5680 with Backpack");
 
-		nameLength = name.thenApplyAsync(value -> {
+		nameLength = name2.thenApplyAsync(value -> {
 			printCurrentThread(); // will print "Custom-Single-Thread"
 			return value.length();
 		});

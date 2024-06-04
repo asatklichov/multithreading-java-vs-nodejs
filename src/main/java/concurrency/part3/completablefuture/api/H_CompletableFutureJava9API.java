@@ -71,8 +71,8 @@ public class H_CompletableFutureJava9API {
 
 		CompletableFuture<String> completableFuture2 = CompletableFuture.supplyAsync(() -> "Hello",
 				Executors.newCachedThreadPool());// ForkJoinPool.commonPool();
-		defaultExecutor = completableFuture2.defaultExecutor();
-		System.out.println(defaultExecutor);
+		Executor defaultExecutor2 = completableFuture2.defaultExecutor();
+		System.out.println(defaultExecutor2);
 		System.out.println();
 
 		// Method newIncompleteFuture()

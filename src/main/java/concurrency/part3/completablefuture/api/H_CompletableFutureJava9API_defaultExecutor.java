@@ -1,8 +1,5 @@
 package concurrency.part3.completablefuture.api;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 import java.util.concurrent.ExecutionException;
@@ -93,6 +90,25 @@ public class H_CompletableFutureJava9API_defaultExecutor {
 		defaultExecutor = completableFuture2.defaultExecutor();
 		System.out.println(defaultExecutor);
 		System.out.println();
+		/**
+		 * https://stackoverflow.com/questions/14301780/what-is-level-of-parallelism-in-the-java-forkjoinpool
+		 * 
+		 * 
+		 * 
+		 * I was studying the oracle docs about the Fork/Join framework when i came
+		 * across this constructor of ForkJoinPool : ForkJoinPool(int parallelism)
+		 * 
+		 * *
+		 * 
+		 * @param parallelism the parallelism level. For default value, use
+		 *                    {@link java.lang.Runtime#availableProcessors}
+		 * 
+		 *                    <pre>
+		*java.util.concurrent.ForkJoinPool@5b2133b1[Running, parallelism = 15, size = 1, active = 1, running = 0, steals = 0, tasks = 0, submissions = 1]
+		java.util.concurrent.ThreadPoolExecutor@4eec7777[Running, pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0]
+		 * 
+		 *                    </pre>
+		 */
 
 	}
 }
@@ -131,12 +147,10 @@ class MyCompletableFuture<T> extends CompletableFuture<T> {
 				new LinkedBlockingQueue<Runnable>());
 		return customThreadPool;
 	}
-	
-	public Executor defaultExecutor2() { 
+
+	public Executor defaultExecutor2() {
 		return CompletableFuture.delayedExecutor(1, TimeUnit.SECONDS, Executors.newCachedThreadPool());
 	}
-	
-	
 
 	@Override
 	public CompletableFuture<T> orTimeout(long timeout, TimeUnit unit) {

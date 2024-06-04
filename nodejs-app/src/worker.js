@@ -9,6 +9,7 @@ parentPort.postMessage(
 
 function heavySum(a) {
 	let sum = (Math.floor(Math.random() * 10) + a) * 1000;
+	console.log('a = '+a);
 	for (let i = 0; i < 2147483647; i++) {
 		sum += i;
 	};

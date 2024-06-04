@@ -6,6 +6,30 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
+class CompleteCompletableFuture {
+
+	public static void main(String[] args) {
+
+		// empty CF
+		CompletableFuture<Void> cf = new CompletableFuture<>();
+
+		Runnable task = () -> {
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+			}
+			// complete CF - can be helpful later to deal with complex chain of async-tasks
+			cf.complete(null);			
+			//see also: CompletableFuture<String> completeAsync = new CompletableFuture().completeAsync(() -> "CompleteAsync");
+			
+		};
+		CompletableFuture.runAsync(task);
+
+		Void nil = cf.join(); // not blocked anymore
+		System.out.println("done");
+	}
+}
+
 /**
  * https://www.baeldung.com/java-completablefuture
  * 
@@ -32,18 +56,21 @@ public class A_CompletableFutureAsSimpleFuture_completedFuture_complete_get {
 		System.out.println("Use the get method to block the current thread until result is provided");
 		String result = completableFuture.get();
 		System.out.println(result);
-		System.out.println("Hellooo".equalsIgnoreCase(result));
+		System.out.println(result.startsWith("Hellooo"));
 
 		/**
 		 * If we already know the result of a computation, we can use the static
 		 * completedFuture method with an argument that represents a result of this
 		 * computation. Consequently, the get method of the Future will never block,
 		 * immediately returning this result instead:
+		 * 
+		 * Returns a new CompletableFuture that is already completed with the given
+		 * value
 		 */
 		Future<String> completableFuture2 = CompletableFuture.completedFuture("Hello");
 		// NEVER BLOCKED
 		System.out.println(
-				"\nNEVER blocks - immediately returning this result instead, If we already know (via completedFuture()) the result of a computation in advance");
+				"\nget() NEVER blocks here - immediately returning this result instead, If we already know (via completedFuture()) the result of a computation in advance");
 		String result2 = completableFuture2.get();
 		System.out.println("Hello".equalsIgnoreCase(result2));
 
@@ -102,7 +129,7 @@ public class A_CompletableFutureAsSimpleFuture_completedFuture_complete_get {
 		ExecutorService exec = Executors.newCachedThreadPool();
 		exec.submit(() -> {
 			Thread.sleep(500);
-			completableFuture.complete("Hellooo");
+			completableFuture.complete("Hellooo - I am completed in other task");
 			return null;
 		});
 		exec.shutdown();
@@ -137,6 +164,10 @@ class GetNowDemo {
 
 		String valueToReturn = "Result not yet available";
 
+		/**
+		 * Returns the result value (or throws any encountered exception)if completed,
+		 * else returns the given valueIfAbsent.
+		 */
 		String value = stringCompletableFuture.getNow(valueToReturn);
 
 		sleep(1000);
