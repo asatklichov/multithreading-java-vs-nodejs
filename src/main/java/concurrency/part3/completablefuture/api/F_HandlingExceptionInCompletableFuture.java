@@ -79,8 +79,8 @@ class YesExceptionExample {
 		CompletableFuture<List<Long>> supply = CompletableFuture.supplyAsync(supplyIDs);
 
 		// chain and compose
-		// CompletableFuture<List<Long>> exception = supply.exceptionally(e ->
-		// List.of());  
+		 CompletableFuture<List<Long>> exception = supply.exceptionally(e ->
+		 List.of());  
 		// CompletableFuture<List<User>> fetch = exception.thenApply(fetchUsers);
 		CompletableFuture<List<User>> fetch = supply.thenApply(fetchUsers);
 		CompletableFuture<Void> display = fetch.thenAccept(displayer);

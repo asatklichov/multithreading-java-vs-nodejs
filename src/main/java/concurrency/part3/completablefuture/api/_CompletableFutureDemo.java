@@ -111,7 +111,7 @@ class CompleteAndObtrudeValueDemo { //CompletableFutureWithSupplier
 		};
 
 		// try above, disabling below line
-		supplier = () -> Thread.currentThread().getName();
+		//supplier = () -> Thread.currentThread().getName();
 
 		CompletableFuture<String> completableFuture = CompletableFuture.supplyAsync(supplier, executor);
 		Thread.sleep(500);//without this sometimes completableFuture not hurry to run - unpredictable, see: CompletableFutureNotRun  
