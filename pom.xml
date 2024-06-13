@@ -19,8 +19,7 @@
 		<java.version>21</java.version>
 		<junit.jupiter.version>5.10.2</junit.jupiter.version>
 		<junit.platform.version>1.6.0</junit.platform.version>
-
-
+		<vertx.version>4.5.8</vertx.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -52,6 +51,12 @@
 			<artifactId>spring-boot-starter-tomcat</artifactId>
 			<scope>provided</scope>
 		</dependency>
+		<!--<dependency>
+			<groupId>io.vertx</groupId>
+			<artifactId>vertx-core</artifactId>
+			<version>4.5.8</version>
+		</dependency>-->
+
 		<dependency>
 			<groupId>io.reactivex.rxjava2</groupId>
 			<artifactId>rxjava</artifactId>
@@ -86,8 +91,8 @@
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
 			<version>3.9</version>
-		</dependency> 
-		
+		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
@@ -107,6 +112,7 @@
 		</dependency>
 
 	</dependencies>
+
 
 	<build>
 		<plugins>
