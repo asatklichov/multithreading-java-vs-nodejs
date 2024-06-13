@@ -28,7 +28,7 @@ import java.util.Map;
 class FileDownload {
 
 	public static void main(String[] args) throws IOException, InterruptedException {
-		var url = "https://www.7-zip.org/a/7z1806-x64.exe";
+		var url = "https://www.7-zip.org/a/7z2406-x64.exe";
 
 		var client = HttpClient.newBuilder().build();
 		var request = HttpRequest.newBuilder().GET().uri(URI.create(url)).build();
