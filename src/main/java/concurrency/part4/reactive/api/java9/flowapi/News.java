@@ -4,16 +4,13 @@ import java.time.LocalDate;
 
 public class News {
 
-	private String headline;
-	private LocalDate date;
+	String headline;
 
-	public News(String headline2, LocalDate now) {
-		this.headline = headline2;
-		this.date = now;
-	}
+	LocalDate date;
 
-	public static News create(String headline) {
-		return new News(headline, LocalDate.now());
+	public News(String headline, LocalDate date) {
+		this.headline = headline;
+		this.date = date;
 	}
 
 	public String getHeadline() {
@@ -24,5 +21,8 @@ public class News {
 		return date;
 	}
 
-	// getter, setter, constructor omitted
+	public static News create(String string) {
+		return new News(string, LocalDate.now());
+	}
+
 }
