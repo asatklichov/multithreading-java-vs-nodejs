@@ -10,6 +10,14 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
+ * 
+ * It is really the multiplexing feature of HTTP/2 that allows us to forget
+ * about resource bundling. For each resource, the server sends a special
+ * request, known as a push promise to the client.
+ * 
+ * Push promises received, if any, are handled by the given PushPromiseHandler.
+ * A null valued PushPromiseHandler rejects any push promises.
+ * 
  * HTTP/2 Server Push is a new way to send resources from a server to the
  * client. Traditionally a browser requests an HTML page parses the code and
  * sends additional requests for all the referenced resources on the page (JS,
@@ -26,31 +34,26 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * as the third argument to the send() or sendAsync() method.
  *
  */
-public class O_ServerPush {
-	
+public class P_ServerPush {
+
 	public static void main(String[] args) {
-		
-		HttpRequest request = HttpRequest.newBuilder()
-                .GET()
-                .uri(URI.create("https://localhost:8443/indexWithPush"))
-                .build();
 
-    var asyncRequests = new CopyOnWriteArrayList<CompletableFuture<Void>>();
+		HttpRequest request = HttpRequest.newBuilder().GET().uri(URI.create("https://localhost:8443/indexWithPush"))
+				.build();
 
-    PushPromiseHandler<byte[]> pph = (initial, pushRequest, acceptor) -> {
-      CompletableFuture<Void> cf = acceptor.apply(BodyHandlers.ofByteArray())
-          .thenAccept(response -> {
-            System.out.println("Got pushed resource: " + response.uri());
-            System.out.println("Body: " + response.body());
-          });
-      asyncRequests.add(cf);
-    };
+		var asyncRequests = new CopyOnWriteArrayList<CompletableFuture<Void>>();
 
-    HttpClient httpClient = HttpClient.newHttpClient();
-    httpClient.sendAsync(request, BodyHandlers.ofByteArray(), pph)
-          .thenApply(HttpResponse::body)
-          .thenAccept(System.out::println)
-          .join();
+		PushPromiseHandler<byte[]> pph = (initial, pushRequest, acceptor) -> {
+			CompletableFuture<Void> cf = acceptor.apply(BodyHandlers.ofByteArray()).thenAccept(response -> {
+				System.out.println("Got pushed resource: " + response.uri());
+				System.out.println("Body: " + response.body());
+			});
+			asyncRequests.add(cf);
+		};
+
+		HttpClient httpClient = HttpClient.newHttpClient();
+		httpClient.sendAsync(request, BodyHandlers.ofByteArray(), pph).thenApply(HttpResponse::body)
+				.thenAccept(System.out::println).join();
 	}
 
 }

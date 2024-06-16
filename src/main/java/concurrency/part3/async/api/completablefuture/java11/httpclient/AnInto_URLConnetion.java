@@ -5,10 +5,83 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
+
+class URLConnectionDemo {
+	public static void main(String[] args) {
+		URL url = null;
+		try {
+			url = new URL("http://sahet.net");
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		}
+
+		HttpURLConnection urlConnection = null;//URLConnection urlConnection
+		try {
+			urlConnection = (HttpURLConnection) url.openConnection();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		InputStream input = null;
+		try {
+			input = urlConnection.getInputStream();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		int data = 0;
+		try {
+			data = input.read();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		while (data != -1) {
+			System.out.print((char) data);
+			try {
+				data = input.read();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		try {
+			input.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		System.out.println("/nHTTP GET and POST");
+		/**
+		 * By default the URLConnection sends an HTTP GET request to the webserver. If
+		 * you want to send an HTTP POST request instead, call the
+		 * URLConnection.setDoOutput(true) method, like this:
+		 */
+		try {
+			url = new URL("https://seznam.cz");
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		}
+
+		try {
+			urlConnection = (HttpURLConnection) url.openConnection();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		urlConnection.setDoOutput(true);// POST method
+		/*
+		 * Using this OutputStream you can write any data you want in the body of the
+		 * HTTP request. Remember to URL encode it (search Google for an explanation of
+		 * URL encoding).
+		 */
+
+	}
+
+}
+
+
 
 //https://docs.oracle.com/javase/tutorial/networking/index.html
 public class AnInto_URLConnetion {
@@ -112,76 +185,6 @@ class URLReader {
 				System.out.println(inputLine);
 		in.close();
 	}
-}
-
-class URLConnectionDemo {
-	public static void main(String[] args) {
-		URL url = null;
-		try {
-			url = new URL("http://sahet.net");
-		} catch (MalformedURLException e) {
-			e.printStackTrace();
-		}
-
-		URLConnection urlConnection = null;
-		try {
-			urlConnection = url.openConnection();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		InputStream input = null;
-		try {
-			input = urlConnection.getInputStream();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		int data = 0;
-		try {
-			data = input.read();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		while (data != -1) {
-			System.out.print((char) data);
-			try {
-				data = input.read();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-		try {
-			input.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		System.out.println("/nHTTP GET and POST");
-		/**
-		 * By default the URLConnection sends an HTTP GET request to the webserver. If
-		 * you want to send an HTTP POST request instead, call the
-		 * URLConnection.setDoOutput(true) method, like this:
-		 */
-		try {
-			url = new URL("https://seznam.cz");
-		} catch (MalformedURLException e) {
-			e.printStackTrace();
-		}
-
-		try {
-			urlConnection = url.openConnection();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		urlConnection.setDoOutput(true);// POST method
-		/*
-		 * Using this OutputStream you can write any data you want in the body of the
-		 * HTTP request. Remember to URL encode it (search Google for an explanation of
-		 * URL encoding).
-		 */
-
-	}
-
 }
 
 class URLConnectionReader {

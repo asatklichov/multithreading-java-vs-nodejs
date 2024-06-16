@@ -60,7 +60,7 @@ import java.util.concurrent.TimeUnit;
  * WebSocket client. Not something you should do in a real application if you
  * are writing your application in a non-blocking fashion.
  */
-public class P_WebSockets {
+public class O_WebSockets {
 
 	public static void main(String[] args) throws InterruptedException {
 		Listener wsListener = new Listener() {

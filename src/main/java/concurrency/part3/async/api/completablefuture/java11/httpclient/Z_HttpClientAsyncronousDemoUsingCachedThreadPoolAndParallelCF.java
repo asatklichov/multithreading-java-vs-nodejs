@@ -49,9 +49,6 @@ public class Z_HttpClientAsyncronousDemoUsingCachedThreadPoolAndParallelCF {
 
 		httpClient = HttpClient.newHttpClient();
 
-		List<CompletableFuture<String>> completableFutureStringListResponse = Files.lines(Path.of(DOMAINS_TXT2))
-				.map(Z_HttpClientAsyncronousDemoUsingCachedThreadPoolAndParallelCF::validateLink).collect(Collectors.toList());
-
 		/*
 		 * By default Async tasks run via CompletableFuture using ForkJoin pool -
 		 * Runtime.getRuntime().availableProcessors() threads
@@ -59,7 +56,8 @@ public class Z_HttpClientAsyncronousDemoUsingCachedThreadPoolAndParallelCF {
 		System.out.println(
 				"[custom] Async tasks run via CompletableFuture using Executors.newFixedThreadPool(5) - to run heavySum() parallely on different thread");
 
-		for (CompletableFuture<String> completableFuture : completableFutureStringListResponse) {
+		for (CompletableFuture<String> completableFuture : Files.lines(Path.of(DOMAINS_TXT2))
+				.map(Z_HttpClientAsyncronousDemoUsingCachedThreadPoolAndParallelCF::validateLink).collect(Collectors.toList())) {
 			completableFuture.thenAcceptAsync(response -> {
 				long s = (long) (Math.random() * 10 + 1);
 				Random generator = new Random(s);

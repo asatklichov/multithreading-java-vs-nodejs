@@ -8,7 +8,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 import java.util.concurrent.CountDownLatch;
 
-public class P_WebSockets2 {
+public class O_WebSockets2 {
 
 	public static void main(String... args) throws Exception {
 
@@ -18,9 +18,17 @@ public class P_WebSockets2 {
 		CompletableFuture<WebSocket> wsFuture = HttpClient.newHttpClient().newWebSocketBuilder()
 				.connectTimeout(Duration.ofSeconds(3)) // 3 seconds
 				// public WS endpoint echo-server, to test - ws://echo.websocket.org
+				/**
+				 * WebSocket Echo Server We run a free very simple endpoint server with support
+				 * for websockets and server-sent events (SSE) so that you can test your
+				 * websocket and SSE clients easily.
+				 * 
+				 * https://websocket.org/tools/websocket-echo-server/
+				 */
+
 				.buildAsync(URI.create("ws://echo.websocket.org"), new EchoListener(receiveLatch));
 
-		// and send 5 messages to echo server  
+		// and send 5 messages to echo server
 		// and then get 5 messages back
 		wsFuture.thenAccept(webSocket -> {
 			webSocket.request(msgCount);
@@ -28,8 +36,8 @@ public class P_WebSockets2 {
 				webSocket.sendText("Message " + i, true);
 		});
 
-		//blocking call - be sure server not terminate before getting messages 
-		//countdown counts to back to 5
+		// blocking call - be sure server not terminate before getting messages
+		// countdown counts to back to 5
 		receiveLatch.await();
 	}
 

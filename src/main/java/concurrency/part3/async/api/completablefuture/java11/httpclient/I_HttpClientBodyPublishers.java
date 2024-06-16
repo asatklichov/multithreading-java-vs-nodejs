@@ -53,7 +53,7 @@ public class I_HttpClientBodyPublishers {
 		 */
 
 		HttpRequest httpRequest = HttpRequest.newBuilder(URI.create("http://sahet.net"))
-				.POST(BodyPublishers.ofString("some body infor form")).build();
+				.POST(BodyPublishers.ofString("some body information form")).build();
 		//.POST(ofFile(Paths.get("src/test/resources/data.txt"))).build();
 
 		System.out.println("-----------------------------");

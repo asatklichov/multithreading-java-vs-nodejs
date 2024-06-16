@@ -25,7 +25,7 @@ public class H_HttpClientConfigDemo {
 		httpClient = HttpClient.newBuilder()
 				.followRedirects(Redirect.NORMAL)
 				.connectTimeout(Duration.ofSeconds(5))
-				//.priority(200) //Sets the default priority for any HTTP/2 requests sent from thisclient. The value provided must be between 1 and 256(inclusive).
+				//.priority(200) //Sets the default priority for any HTTP/2 requests sent from this client. The value provided must be between 1 and 256(inclusive).
 				.executor(Executors.newFixedThreadPool(5)).build();
 
 		List<CompletableFuture<String>> completableFutureStringListResponse = Files

@@ -15,8 +15,7 @@ class HttpClientSendSync {
 
 		Instant start = Instant.now();
 		var httpClient = HttpClient.newHttpClient();
-		var httpRequest = HttpRequest.newBuilder(URI.create("https://www.baeldung.com/java-flight-recorder-monitoring"))
-				.build();
+		var httpRequest = HttpRequest.newBuilder(URI.create("http://sahet.net")).build();
 		HttpResponse<String> httpResponse = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
 		System.out.println(httpResponse.body());
 
@@ -30,29 +29,12 @@ class HttpClientSendAsync {
 
 		Instant start = Instant.now();
 		var httpClient = HttpClient.newHttpClient();
-		var httpRequest = HttpRequest.newBuilder().uri(URI.create("https://www.baeldung.com/java-flight-recorder-monitoring"))
+		var httpRequest = HttpRequest.newBuilder().uri(URI.create("http://sahet.net"))// https://www.baeldung.com/java-flight-recorder-monitoring
 				.build();
-		httpClient.sendAsync(httpRequest, HttpResponse.BodyHandlers.ofString())
-		.thenApply(HttpResponse::body)
-		.thenAccept(System.out::println).join();
+		httpClient.sendAsync(httpRequest, HttpResponse.BodyHandlers.ofString()).thenApply(HttpResponse::body)
+				.thenAccept(System.out::println).join();
 
 		printElapsedTime(start);
-
-	}
-}
-
-class HttpClientSendAsync2 {
-	public static void main(String[] args) {
-
-		var client = HttpClient.newHttpClient();
-		var request = HttpRequest.newBuilder().uri(URI.create("https://www.baeldung.com/java-flight-recorder-monitoring")).build();
-		
-		var request2Way = HttpRequest.newBuilder().
-				uri(URI.create("https://www.baeldung.com/java-flight-recorder-monitoring")).build();
-
-		client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
-				.thenApply(HttpResponse::body)
-				.thenAccept(System.out::println).join();
 
 	}
 }
