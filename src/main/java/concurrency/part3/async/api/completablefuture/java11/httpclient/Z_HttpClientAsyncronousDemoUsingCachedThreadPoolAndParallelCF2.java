@@ -65,6 +65,7 @@ public class Z_HttpClientAsyncronousDemoUsingCachedThreadPoolAndParallelCF2 {
 		}
 
 		printElapsedTime(start);
+		Thread.sleep(2000);
 		System.out.println(
 				"Run this async tasks in parallel with HttpClientAsyncronousInPrallelDemo, and compare result");
 	}
@@ -82,7 +83,7 @@ public class Z_HttpClientAsyncronousDemoUsingCachedThreadPoolAndParallelCF2 {
 				 * completeExceptionally and then handled by 3-methods….
 				 * 
 				 */
-				.exceptionally(e -> "Error occured once accessing to " + link + ", reson is: " + e.getMessage());
+				.exceptionally(e -> "Error occured once accessing to " + link + ", reasonis: " + e.getMessage());
 
 	}
 

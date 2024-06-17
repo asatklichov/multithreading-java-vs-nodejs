@@ -17,7 +17,7 @@ import java.util.Random;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
-public class Z_HttpClientAsyncronousDemoUsingCachedThreadPool{
+public class Z_HttpClientAsyncronousDemoUsingCachedThreadPool {
 
 	private static HttpClient httpClient;
 
@@ -55,8 +55,6 @@ public class Z_HttpClientAsyncronousDemoUsingCachedThreadPool{
 		});
 
 		printElapsedTime(start);
-		System.out.println(
-				"Run this async tasks in parallel with HttpClientAsyncronousInPrallelDemo, and compare result");
 	}
 
 	private static CompletableFuture<String> validateLink(String link) {
@@ -72,7 +70,7 @@ public class Z_HttpClientAsyncronousDemoUsingCachedThreadPool{
 				 * completeExceptionally and then handled by 3-methods….
 				 * 
 				 */
-				.exceptionally(e -> "Error occured once accessing to " + link + ", reson is: " + e.getMessage());
+				.exceptionally(e -> "Error occured once accessing to " + link + ", reasonis: " + e.getMessage());
 
 	}
 

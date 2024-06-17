@@ -21,7 +21,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
 
-public class Z_HttpClientAsyncronousInPrallelDemoUsingFixedThreadPoolWithParallelCF2 {
+public class Z_HttpClientAsyncronousDemoUsingFixedThreadPoolWithParallelCF2 {
 
 	private static HttpClient httpClient;
 
@@ -74,7 +74,7 @@ public class Z_HttpClientAsyncronousInPrallelDemoUsingFixedThreadPoolWithParalle
 				.executor(Executors.newFixedThreadPool(5)).build();
 
 		List<CompletableFuture<String>> completableFutureStringListResponse = Files.lines(Path.of(DOMAINS_TXT2))
-				.map(Z_HttpClientAsyncronousInPrallelDemoUsingFixedThreadPoolWithParallelCF2::validateLink)
+				.map(Z_HttpClientAsyncronousDemoUsingFixedThreadPoolWithParallelCF2::validateLink)
 				.collect(Collectors.toList());
 
 	 
@@ -104,7 +104,7 @@ public class Z_HttpClientAsyncronousInPrallelDemoUsingFixedThreadPoolWithParalle
 		return httpClient.sendAsync(httpRequest, HttpResponse.BodyHandlers.discarding())
 				.thenApply(
 						asynResult -> 200 == asynResult.statusCode() ? link + " access OK  " : link + " access Failed")
-				.exceptionally(e -> " Error occured " + "once accessing to " + link + ", reson is: " + e.getMessage());
+				.exceptionally(e -> " Error occured " + "once accessing to " + link + ", reasonis: " + e.getMessage());
 
 	}
 

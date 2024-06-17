@@ -47,7 +47,7 @@ public class H_HttpClientConfigDemo {
 		return httpClient.sendAsync(httpRequest, HttpResponse.BodyHandlers.discarding())
 				.thenApply(
 						asynResult -> 200 == asynResult.statusCode() ? link + " access OK  " : link + " access Failed")
-				.exceptionally(e -> " Error occured " + "once accessing to " + link + ", reson is: " + e.getMessage());
+				.exceptionally(e -> " Error occured " + "once accessing to " + link + ", reasonis: " + e.getMessage());
 
 	}
 

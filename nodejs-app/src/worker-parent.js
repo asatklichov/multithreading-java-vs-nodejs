@@ -12,6 +12,8 @@ function runService(workerData) {
 				reject(new Error(
 					`Stopped the Worker Thread with the exit code: ${code}`));
 		})
+
+		console.log('Parent starts .. ');
 	})
 }
 

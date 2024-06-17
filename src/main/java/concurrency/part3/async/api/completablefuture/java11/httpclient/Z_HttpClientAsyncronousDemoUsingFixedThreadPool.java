@@ -20,7 +20,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
 
-public class Z_HttpClientAsyncronousInPrallelDemoUsingFixedThreadPool {
+public class Z_HttpClientAsyncronousDemoUsingFixedThreadPool {
 
 	private static HttpClient httpClient;
 
@@ -72,7 +72,7 @@ public class Z_HttpClientAsyncronousInPrallelDemoUsingFixedThreadPool {
 				.executor(Executors.newFixedThreadPool(5)).build();
 
 		List<CompletableFuture<String>> completableFutureStringListResponse = Files.lines(Path.of(DOMAINS_TXT2))
-				.map(Z_HttpClientAsyncronousInPrallelDemoUsingFixedThreadPool::validateLink).collect(Collectors.toList());
+				.map(Z_HttpClientAsyncronousDemoUsingFixedThreadPool::validateLink).collect(Collectors.toList());
 
 		// completableFutureStringListResponse.stream().map(CompletableFuture::join).forEach(System.out::println);
 		// disable not to enable CPU intensive calc
@@ -103,7 +103,7 @@ public class Z_HttpClientAsyncronousInPrallelDemoUsingFixedThreadPool {
 		return httpClient.sendAsync(httpRequest, HttpResponse.BodyHandlers.discarding())
 				.thenApply(
 						asynResult -> 200 == asynResult.statusCode() ? link + " access OK  " : link + " access Failed")
-				.exceptionally(e -> " Error occured " + "once accessing to " + link + ", reson is: " + e.getMessage());
+				.exceptionally(e -> " Error occured " + "once accessing to " + link + ", reasonis: " + e.getMessage());
 
 	}
 

@@ -10,7 +10,7 @@ public class Java9SubmissionPublisherDemo {
 	// https://www.baeldung.com/rxjava-vs-java-flow-api
 	public static void main(String[] args) throws InterruptedException, IOException {
 
-		// SubmissionPublisher not for prod, Use Flowable
+		// SubmissionPublisher not for production, Use RxJava Flowable
 		SubmissionPublisher<Integer> feed = new SubmissionPublisher<Integer>();
 		feed.subscribe(new Flow.Subscriber<Integer>() {
 

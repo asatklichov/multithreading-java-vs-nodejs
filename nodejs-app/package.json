@@ -42,6 +42,7 @@
 		"flatted": "^3.0.5",
 		"github": "^14.0.0",
 		"got": "^10.7.0",
+		"node-worker-threads-pool": "^1.5.1",
 		"p-time": "^2.1.0",
 		"passport": "^0.7.0",
 		"passport-github": "^1.1.0",
