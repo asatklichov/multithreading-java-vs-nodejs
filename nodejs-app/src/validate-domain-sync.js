@@ -3,7 +3,7 @@ const readline = require('readline');
 const http = require('http');
 const fs = require('fs');
 
-const arr = fs.readFileSync('./domains_list.txt').toString().split("\n")
+const arr = fs.readFileSync('./domains_list500.txt').toString().split("\n")
 	.filter(e => e.trim().length > 0);
 
 const start = new Date()
@@ -21,7 +21,7 @@ arr.forEach((line) => {
 	}).on("error", (err) => {
 		console.log("Error: " + err.message);
 	});*/
-	console.log(line);
+	console.log(++lineno + ": " +line); 
 	
 	let s = Math.floor(Math.random() * 10) + 1;
 	let sum = (Math.floor(Math.random() * 10) + s) * 1000;

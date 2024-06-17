@@ -11,7 +11,7 @@ const pool = new StaticPool({
   workerData: 'workerData!'
 });
 
-const arr = fs.readFileSync('./domains_list.txt').toString().split("\n")
+const arr = fs.readFileSync('./domains_list500.txt').toString().split("\n")
 	.filter(e => e.trim().length > 0);
 
 const start = new Date()
