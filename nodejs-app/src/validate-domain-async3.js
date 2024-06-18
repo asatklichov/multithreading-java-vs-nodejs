@@ -17,7 +17,7 @@ myInterface.on('line', function(line) {
 			const result = 200 == statusCode ? val + " access OK" : val + " access Failed"
 			console.log(result + " " + lineno);
 			let x = Math.floor(Math.random() * 10) + 1;
-			//heavySum(x);
+			heavySum(x);
 			if (++lineno == 99) {
 				printElapseTime(start);
 			}

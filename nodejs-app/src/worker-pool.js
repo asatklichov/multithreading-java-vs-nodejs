@@ -2,6 +2,8 @@
  
 // Access the workerData by requiring it.
 const { parentPort, workerData } = require('worker_threads');
+ 
+
 
 // Something you shouldn"t run in main thread
 // since it will block.
@@ -24,6 +26,7 @@ parentPort.on('message', (param) => {
   const result = heavySum(param);
 
   // Access the workerData.
+   
   console.log('workerData is', workerData);
 
   // return the result to main thread.
