@@ -1,7 +1,14 @@
 package concurrency.part3.async.api.completablefuture.java11.httpclient;
 
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
 import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.net.http.HttpClient;
 import java.net.http.HttpClient.Version;
 import java.net.http.HttpRequest;
@@ -17,6 +24,105 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.stream.Collectors;
 
+class oldWayOfSendingMultipleRequest {
+
+	/**
+	 * Multiple requests to a REST server using multiple threads. So, multiple HTTP
+	 * requests to the same server via changing the parameter.
+	 * 
+	 * With HTTP2 no new connection is created every time. See below
+	 * 
+	 * 
+	 * @param args
+	 * @throws IOException
+	 * @throws URISyntaxException 
+	 */
+	public static void main(String[] args) throws IOException, URISyntaxException {
+		String[] params = { "param1", "param2", "param3", "paramSomeBigNumber" }; // as many
+
+		for (int i = 0; i < params.length; i++) {
+
+			String targetURL = "http://some.server.addr?a=" + params[i];
+
+			HttpURLConnection connection = null;
+
+			URL url = new URL(targetURL);
+			connection = (HttpURLConnection) url.openConnection();
+			connection.setRequestMethod("GET");
+
+			// Send request
+			DataOutputStream wr = new DataOutputStream(connection.getOutputStream());
+			String urlParameters = null; // todo
+			wr.writeBytes(urlParameters);
+			wr.close();
+
+			// Get Response
+			InputStream is = connection.getInputStream();
+			BufferedReader rd = new BufferedReader(new InputStreamReader(is));
+
+			// Do some stuff with this specific http response
+
+			///////////// JAVA 11 way //////////
+			/**
+			 * With Java 11's HttpClient, this is actually very simple to achieve; all you
+			 * need is the following snippet:
+			 */
+			var client = HttpClient.newBuilder().version(HttpClient.Version.HTTP_2).build();
+			for (var param : params) {
+				targetURL = "http://some.server.addr?a=" + param;
+				var request = HttpRequest.newBuilder().GET().uri(new URI(targetURL)).build();
+				client.sendAsync(request, HttpResponse.BodyHandlers.ofString()).whenComplete((response, exception) -> {
+					// Handle response/exception here
+				});
+			}
+
+		}
+	}
+
+}
+
+/**
+ * The Java 11 HttpClient has an internal connection pool. By default, it is
+ * unlimited in size.
+ * 
+ * 
+ * So let’s enable Jetty’s or Tomcat's debug logging by creating a
+ * jetty-logging.properties in our classpath:
+ * 
+ * org.eclipse.jetty.util.log.class=org.eclipse.jetty.util.log.StrErrLog
+ * org.eclipse.jetty.LEVEL=DEBUG jetty.logs=logs
+ * 
+ * When a new connection is created, Jetty logs a “New HTTP Connection” message:
+ * 
+ * let’s validate that the HttpClient really does make use of an internal
+ * connection pool. If there’s a connection pool in use, we’ll only see a single
+ * “New HTTP Connection” message.
+ * 
+ * The JDK 11 ConnectionPool checks the jdk.httpclient.connectionPoolSize system
+ * property when initializing and defaults to 0 (unlimited).
+ * 
+ * 
+ * See: Java Networking properties
+ * https://docs.oracle.com/en/java/javase/17/core/java-networking.html#GUID-E6C82625-7C02-4AB3-B15D-0DF8A249CD73
+ * 
+ * 
+ * https://www.baeldung.com/java-httpclient-connection-management
+ */
+class ConnectionManagement {
+	public static void main(String[] args) {
+		// suppose you have a END-Server
+		int serverPort = 1019; // server.port()
+		HttpRequest getRequest = HttpRequest.newBuilder().uri(create("http://localhost:" + serverPort + "/first"))
+				.build();
+
+	}
+
+	private static URI create(String string) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+}
+
 class MultipleRequests {
 	public static void main(String[] args) {
 
@@ -24,9 +130,7 @@ class MultipleRequests {
 
 		var client = HttpClient.newHttpClient();
 
-		List<HttpRequest> requests = paths.stream()
-				.map(path -> "https://localhost:8443" + path)
-				.map(URI::create)
+		List<HttpRequest> requests = paths.stream().map(path -> "https://localhost:8443" + path).map(URI::create)
 				.map(uri -> HttpRequest.newBuilder(uri).build()).collect(Collectors.toList());
 
 		CompletableFuture<?>[] responses = requests.stream()
