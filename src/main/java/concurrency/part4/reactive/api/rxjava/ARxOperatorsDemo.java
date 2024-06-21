@@ -45,7 +45,8 @@ public class ARxOperatorsDemo {
 		 * framework code or our event handling code
 		 * 
 		 */
-		Observable<String> workdays = Observable.fromArray("Monday", "Tuesday", "Wednesday", "Thursday", "Friday");
+		Observable<String> workdays = Observable
+				.fromArray("Monday", "Tuesday", "Wednesday", "Thursday", "Friday");
 		workdays.subscribe(day -> System.out.println(day), // OnNext
 				error -> System.out.println("Error: " + error), // OnError , Throwable::printStackTrace,
 				() -> System.out.println("Stream completed.")); // OnCompleted
@@ -79,7 +80,8 @@ public class ARxOperatorsDemo {
 		 * it:
 		 */
 		Observable<Integer> sourceInts = Observable.just(1, 2, 3, 4, 5);
-		sourceInts.map(x -> 10 * x).subscribe(n -> System.out.println("Value: " + n),
+		sourceInts.map(x -> 10 * x)
+		.subscribe(n -> System.out.println("Value: " + n),
 				error -> System.out.println("Error: " + error), () -> System.out.println("Stream completed."));
 
 		System.out.println();

@@ -65,12 +65,23 @@ public class G_HandlingExceptionsInReactorTest {
 		 * in a stream one by one. The difference is that Reactor provides the handle
 		 * operator with an output sink, allowing us to apply more complicated
 		 * transformations.
+		 * 
+		 * Unlike the map operator, the handle operator receives a functional consumer,
+		 * called once for each element. This consumer has two parameters: an element
+		 * coming from upstream and a SynchronousSink that builds an output to be sent
+		 * downstream.
+		 * 
+		 * Notice that an invocation of the error method will cancel the subscription to
+		 * the upstream and invoke the onError method on the downstream. Such
+		 * collaboration of error and onError is the standard way to handle Exceptions
+		 * in reactive streams.
 		 */
 		StepVerifier.create(outFlux).expectNext(1).expectError(NumberFormatException.class).verify();
 	}
 
 	@Test
 	public void handleErrorInFlatMapMethodTest() {
+		// 3. Handling Exceptions in the flatMap Operator
 		Function<String, Publisher<Integer>> mapper = input -> {
 			if (input.matches("\\D")) {
 				return Mono.error(new NumberFormatException());
@@ -87,6 +98,10 @@ public class G_HandlingExceptionsInReactorTest {
 		 * operator transforms input elements into Publishers, then flattens the
 		 * Publishers into a new stream. We can take advantage of these Publishers to
 		 * signify an erroneous state.
+		 * 
+		 * Notice the only difference between handle and flatMap regarding error
+		 * handling is that the handle operator calls the error method on a sink, while
+		 * flatMap calls it on a Publisher.
 		 */
 		StepVerifier.create(outFlux).expectNext(1).expectError(NumberFormatException.class).verify();
 	}
