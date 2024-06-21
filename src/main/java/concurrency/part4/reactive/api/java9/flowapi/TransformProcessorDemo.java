@@ -1,11 +1,8 @@
 package concurrency.part4.reactive.api.java9.flowapi;
 
-import static org.junit.Assert.assertThat;
-
 import java.util.List;
 import java.util.concurrent.Flow;
 import java.util.concurrent.SubmissionPublisher;
-import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 
 public class TransformProcessorDemo {
@@ -23,12 +20,13 @@ public class TransformProcessorDemo {
 		transformProcessor.subscribe(subscriber);
 		items.forEach(publisher::submit);
 		publisher.close();
-		
+
 		subscriber.consumedElements.forEach(System.out::println);
 
 		// then
-		//await().atMost(1000, TimeUnit.MILLISECONDS)
-		//		.until(() -> assertThat(subscriber.consumedElements).containsExactlyElementsOf(expectedResult));
+		// await().atMost(1000, TimeUnit.MILLISECONDS)
+		// .until(() ->
+		// assertThat(subscriber.consumedElements).containsExactlyElementsOf(expectedResult));
 	}
 }
 
