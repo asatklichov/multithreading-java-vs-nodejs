@@ -1,4 +1,4 @@
-package concurrency.part4.reactive.api.spring.webflux;
+package concurrency.part4.reactive.api.spring.reactor.core;
 
 import java.time.Duration;
 

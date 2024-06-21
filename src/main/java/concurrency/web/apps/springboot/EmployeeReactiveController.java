@@ -12,6 +12,9 @@ import io.reactivex.Observable;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+/**
+ * See also functional programming model {@link EmployeeRouterFunctionalRequestHandlerController} 
+ */
 @RestController
 @RequestMapping("/employees")
 public class EmployeeReactiveController {
