@@ -6,8 +6,17 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.stream.IntStream;
 
-public class A_MillionFactorPlatformThreads {
+public class A_MillionThreadsFactor {
+
+}
+
+class MillionFactorPlatformThreads {
 	public static void main(String[] args) throws InterruptedException {
 		List<Thread> threads = new ArrayList<>();
 		Instant start = Instant.now();
@@ -46,3 +55,34 @@ public class A_MillionFactorPlatformThreads {
 	}
 
 }
+
+class MillionFactorVirtualThreads {
+	public static void main(String[] args) throws InterruptedException {
+		int numTasks = 1000000;// million
+		Instant start = Instant.now();
+		List<Thread> threads = new ArrayList<>();
+		for (int i = 0; i < numTasks; i++) {
+			Thread thread = Thread.startVirtualThread(() -> {
+				try {
+					// Virtual threads do not have a thread name by default.
+					System.out.println(Thread.currentThread().getName() + " is sleeping");
+					Thread.sleep(Duration.ofSeconds(10));
+				} catch (InterruptedException e) {
+				}
+			});
+			threads.add(thread);
+		}
+		for (Thread thread : threads) {
+			thread.join();
+		}
+
+		printElapsedTime(start);/**
+								 * <pre>
+								*Elapsed time: 66793 ms
+								 * </pre>
+								 */
+
+	}
+
+}
+

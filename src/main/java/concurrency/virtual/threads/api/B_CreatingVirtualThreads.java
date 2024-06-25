@@ -15,7 +15,7 @@ public class B_CreatingVirtualThreads {
 					+ ", which is a DAEMON thread? " + Thread.currentThread().isDaemon());
 		};
 
-		// PLatform thread by DEFAULT is not a DAEMON thread
+		// PLatform thread by DEFAULT is not a DAEMON thread, you can change it
 		Thread thread1 = new Thread(task);
 		thread1.start();
 		thread1.join();
@@ -30,16 +30,23 @@ public class B_CreatingVirtualThreads {
 		thread3.join();
 
 		//// Virtual threads do not have a name by default, also it is DAEMON by default
+		// you can not change it
 		Thread thread4 = Thread.startVirtualThread(task);
 		thread4.join();
 
 		System.out.println();
-		System.out.println("Creating Virtual Threads using Executor - see how it is lightweight");
+		System.out.println(
+				"Creating Virtual Threads using Executor - see how it is possible to create 1 million lightweight VTs");
 		var set = ConcurrentHashMap.<String>newKeySet();
 		task = () -> set.add(Thread.currentThread().toString());
 
-		int N_TASKS = 1000000; // 1 million
+		int N_TASKS = 1_000_000; // 1 million
 		Instant start = Instant.now();
+		// create VTs on demand, and let them die after task execution
+		/*
+		 * Creates an Executor that starts a new virtual Thread for each task.The number
+		 * of threads created by the Executor is unbounded.
+		 */
 		try (var es1 = Executors.newVirtualThreadPerTaskExecutor()) {
 			for (int index = 0; index < N_TASKS; index++) {
 				es1.submit(task);
