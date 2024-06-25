@@ -15,6 +15,7 @@ public class A_MillionFactorVirtualThreads {
 		for (int i = 0; i < numTasks; i++) {
 			Thread thread = Thread.startVirtualThread(() -> {
 				try {
+					//Virtual threads do not have a thread name by default.
 					System.out.println(Thread.currentThread().getName() + " is sleeping");
 					Thread.sleep(Duration.ofSeconds(10));
 				} catch (InterruptedException e) {

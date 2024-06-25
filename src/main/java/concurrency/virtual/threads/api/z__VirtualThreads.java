@@ -1,6 +1,6 @@
 package concurrency.virtual.threads.api;
 
-public class __VirtualThreads {
+public class z__VirtualThreads {
 
 	/**
 	 * https://jenkov.com/tutorials/java-concurrency/java-virtual-threads.html

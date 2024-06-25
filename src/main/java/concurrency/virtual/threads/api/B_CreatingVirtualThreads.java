@@ -1,5 +1,8 @@
 package concurrency.virtual.threads.api;
 
+import static concurrency.part3.async.api.completablefuture.java11.httpclient.Util.printElapsedTime;
+
+import java.time.Instant;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executors;
 
@@ -8,14 +11,16 @@ public class B_CreatingVirtualThreads {
 	public static void main(String[] args) throws InterruptedException {
 
 		Runnable task = () -> {
-			System.out.println("I am running in the thread " + Thread.currentThread().getName());
-			System.out.println("I am running in daemon thread? " + Thread.currentThread().isDaemon());
+			System.out.println("I am TASK running in " + Thread.currentThread().getName()
+					+ ", which is a DAEMON thread? " + Thread.currentThread().isDaemon());
 		};
 
+		// PLatform thread by DEFAULT is not a DAEMON thread
 		Thread thread1 = new Thread(task);
 		thread1.start();
 		thread1.join();
 
+		// set Platform thread as DAEMON
 		Thread thread2 = Thread.ofPlatform().daemon().name("Platform thread 2").unstarted(task);
 		thread2.start();
 		thread2.join();
@@ -24,21 +29,17 @@ public class B_CreatingVirtualThreads {
 		thread3.start();
 		thread3.join();
 
+		//// Virtual threads do not have a name by default, also it is DAEMON by default
 		Thread thread4 = Thread.startVirtualThread(task);
 		thread4.join();
 
-	}
-}
-
-class B_CreatingVirtualThreadsUsingExecutorService {
-
-	public static void main(String[] args) {
-
+		System.out.println();
+		System.out.println("Creating Virtual Threads using Executor - see how it is lightweight");
 		var set = ConcurrentHashMap.<String>newKeySet();
-		Runnable task = () -> set.add(Thread.currentThread().toString());
+		task = () -> set.add(Thread.currentThread().toString());
 
-		int N_TASKS = 2000;
-
+		int N_TASKS = 1000000; // 1 million
+		Instant start = Instant.now();
 		try (var es1 = Executors.newVirtualThreadPerTaskExecutor()) {
 			for (int index = 0; index < N_TASKS; index++) {
 				es1.submit(task);
@@ -46,5 +47,6 @@ class B_CreatingVirtualThreadsUsingExecutorService {
 		}
 
 		System.out.println("# threads used = " + set.size());
+		printElapsedTime(start);
 	}
 }
