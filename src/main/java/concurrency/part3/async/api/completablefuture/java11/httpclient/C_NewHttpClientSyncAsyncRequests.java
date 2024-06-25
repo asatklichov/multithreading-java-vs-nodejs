@@ -15,10 +15,15 @@ class HttpClientSendSync {
 
 		Instant start = Instant.now();
 		var httpClient = HttpClient.newHttpClient();
-		var httpRequest = HttpRequest.newBuilder(URI.create("http://sahet.net")).build();
-		HttpResponse<String> httpResponse = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
-		System.out.println(httpResponse.body());
-
+		var httpRequest = HttpRequest.newBuilder(
+				URI.create("http://sahet.net")).build();
+		
+		var httpResponse = httpClient.send(httpRequest, 
+				HttpResponse.BodyHandlers.ofString());
+		
+		if(httpResponse.statusCode() == 200) {
+			System.out.println(httpResponse.body());
+		}
 		printElapsedTime(start);
 	}
 

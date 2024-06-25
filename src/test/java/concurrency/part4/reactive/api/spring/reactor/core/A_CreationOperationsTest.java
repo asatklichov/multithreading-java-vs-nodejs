@@ -8,8 +8,8 @@ import java.util.stream.Stream;
 import org.junit.jupiter.api.Test;
 
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
-
 
 public class A_CreationOperationsTest {
 
@@ -34,13 +34,8 @@ public class A_CreationOperationsTest {
 		 * applies assertions against the data
 		 * 
 		 */
-		StepVerifier.create(fruitFlux)
-		.expectNext("Apple")
-		.expectNext("Orange")
-		.expectNext("Grape")
-		.expectNext("Banana")
-		.expectNext("Strawberry")
-		.verifyComplete();
+		StepVerifier.create(fruitFlux).expectNext("Apple").expectNext("Orange").expectNext("Grape").expectNext("Banana")
+				.expectNext("Strawberry").verifyComplete();
 	}
 
 	@Test
@@ -49,13 +44,8 @@ public class A_CreationOperationsTest {
 
 		Flux<String> fruitFlux = Flux.fromArray(fruits);
 
-		StepVerifier.create(fruitFlux)
-		.expectNext("Apple")
-		.expectNext("Orange")
-		.expectNext("Grape")
-		.expectNext("Banana")
-		.expectNext("Strawberry")
-		.verifyComplete();
+		StepVerifier.create(fruitFlux).expectNext("Apple").expectNext("Orange").expectNext("Grape").expectNext("Banana")
+				.expectNext("Strawberry").verifyComplete();
 	}
 
 	@Test
@@ -74,13 +64,8 @@ public class A_CreationOperationsTest {
 		 */
 		Flux<String> fruitFlux = Flux.fromIterable(fruitList);
 
-		StepVerifier.create(fruitFlux)
-		.expectNext("Apple")
-		.expectNext("Orange")
-		.expectNext("Grape")
-		.expectNext("Banana")
-		.expectNext("Strawberry")
-		.verifyComplete();
+		StepVerifier.create(fruitFlux).expectNext("Apple").expectNext("Orange").expectNext("Grape").expectNext("Banana")
+				.expectNext("Strawberry").verifyComplete();
 	}
 
 	@Test
@@ -89,14 +74,9 @@ public class A_CreationOperationsTest {
 
 		Flux<String> fruitFlux = Flux.fromStream(fruitStream);
 
-		StepVerifier.create(fruitFlux)
-		.expectNext("Apple")
-		.expectNext("Orange")
-		.expectNext("Grape")
-		.expectNext("Banana")
-		.expectNext("Strawberry")
-		.verifyComplete();
-	} 
+		StepVerifier.create(fruitFlux).expectNext("Apple").expectNext("Orange").expectNext("Grape").expectNext("Banana")
+				.expectNext("Strawberry").verifyComplete();
+	}
 
 	@Test
 	public void rangeTest() {
@@ -105,17 +85,10 @@ public class A_CreationOperationsTest {
 		 */
 		Flux<Integer> intervalFlux = Flux.range(3, 7);
 
-		StepVerifier.create(intervalFlux)
-		.expectNext(3)
-		.expectNext(4)
-		.expectNext(5)
-		.expectNext(6)
-		.expectNext(7)
-		.expectNext(8)
-		.expectNext(9)
-		.verifyComplete();
+		StepVerifier.create(intervalFlux).expectNext(3).expectNext(4).expectNext(5).expectNext(6).expectNext(7)
+				.expectNext(8).expectNext(9).verifyComplete();
 	}
-	
+
 	@Test
 	public void intervalTest() {
 		/**
@@ -127,16 +100,12 @@ public class A_CreationOperationsTest {
 		 * increments on each successive item.
 		 * 
 		 * interval() isn’t given a maximum value, potentially can run forever, that is
-		 * why take() operation is used to limit the results to the first N (five) entries.
+		 * why take() operation is used to limit the results to the first N (five)
+		 * entries.
 		 */
 		Flux<Long> intervalFlux = Flux.interval(Duration.ofSeconds(1)).take(5);
 
-		StepVerifier.create(intervalFlux)
-		.expectNext(0L)
-		.expectNext(1L)
-		.expectNext(2L)
-		.expectNext(3L)
-		.expectNext(4L)
-		.verifyComplete();
-	}
+		StepVerifier.create(intervalFlux).expectNext(0L).expectNext(1L).expectNext(2L).expectNext(3L).expectNext(4L)
+				.verifyComplete();
+	} 
 }
