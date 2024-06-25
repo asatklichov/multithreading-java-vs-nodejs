@@ -15,7 +15,10 @@
 	<packaging>war</packaging>
 	<name>multithreading.java.vs.nodejs</name>
 	<description>Demo for Java concurrency vs Nodejs</description>
-	<properties>
+	<properties>		
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>21</java.version>
 		<junit.jupiter.version>5.10.2</junit.jupiter.version>
 		<junit.platform.version>1.6.0</junit.platform.version>
