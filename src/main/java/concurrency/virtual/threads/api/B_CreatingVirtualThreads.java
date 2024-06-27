@@ -55,5 +55,26 @@ public class B_CreatingVirtualThreads {
 
 		System.out.println("# threads used = " + set.size());
 		printElapsedTime(start);
+		System.out.println();
+
+		task = () -> System.out.println("27.6 Euro 24, Thread: " + Thread.currentThread());
+
+		var thread = Thread.ofVirtual().name("My virtual Euro24 thread").unstarted(task);
+
+		System.out.println("As you see, Virtual Thread is executet on top of Platform Thread (/CARRIER Thread)");
+		/**
+		 * 27.6 Euro 24, Thread: VirtualThread[#1000061,My virtual Euro24
+		 * thread]/runnable@ForkJoinPool-1-worker-15
+		 */
+		thread.start();
+		thread.join();
+
+		/**
+		 * 27.6 Euro 24, Thread:
+		 * VirtualThread[#1000062]/runnable@ForkJoinPool-1-worker-15
+		 */
+		try (var es = Executors.newVirtualThreadPerTaskExecutor()) {//has no name by default
+			es.submit(task);
+		}
 	}
 }
