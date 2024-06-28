@@ -59,5 +59,5 @@ Also you can change the parameters or input file accordingly.
 - Async: multithreading-java-vs-nodejs\nodejs-app\src>node validate-domain-async3.js
 - Async Axios: multithreading-java-vs-nodejs\nodejs-app\src>node validate-domain-axios.js
 - Async Got: multithreading-java-vs-nodejs\nodejs-app\src>node validate-domain-got.js
-- Worker: multithreading-java-vs-nodejs\nodejs-app\src>node worker-parent.js
-- Worker-thread-pool: multithreading-java-vs-nodejs\nodejs-app\src>node worker-parent.js
+- Worker thread app: multithreading-java-vs-nodejs\nodejs-app\src>node worker-parent.js
+- Worker-thread-pool app: multithreading-java-vs-nodejs\nodejs-app\src>node worker-parent-pool.js
