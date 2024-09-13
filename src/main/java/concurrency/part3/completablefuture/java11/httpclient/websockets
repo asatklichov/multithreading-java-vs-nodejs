@@ -1,0 +1,63 @@
+
+https://golb.hplar.ch/2019/01/java-11-http-client.html
+
+ * https://dzone.com/articles/java-11-standardized-http-client-api
+
+package features.in.java11.httpclient;
+
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpClient.Builder;
+import java.net.http.WebSocket;
+import java.net.http.WebSocket.Listener;
+import java.util.concurrent.CompletionStage;
+import java.util.concurrent.Executor;
+
+/**
+ * 
+ * 
+ * The HTTP client also supports the WebSocket protocol, which is used in
+ * real-time web applications to provide client-server communication with low
+ * message overhead. Below is an example of how to use an HttpClient to create a
+ * WebSocket that connects to a URI, sends messages for one second, and then
+ * closes its output. The API also makes use of asynchronous calls that return
+ * CompletableFuture:
+ * 
+ * 
+ * https://www.baeldung.com/websockets-api-java-spring-client
+ * See for spring: https://www.baeldung.com/async-http-client-websockets
+ *
+ */
+public class WebSockets {
+
+	public static void main(String[] args) throws InterruptedException {
+		Executor executor = null; //TBD
+		HttpClient httpClient = HttpClient.newBuilder().executor(executor ).build();
+		Builder webSocketBuilder = (Builder) httpClient.newWebSocketBuilder();
+		WebSocket webSocket = ((java.net.http.WebSocket.Builder) webSocketBuilder).buildAsync(URI.create("wss://echo.websocket.org"), new WebSocket.Listener() {
+		    @Override
+		    public void onOpen(WebSocket webSocket) {
+		        //logger.info("CONNECTED");
+		        webSocket.sendText("This is a message", true);
+		        Listener.super.onOpen(webSocket);
+		    }
+		    @Override
+		    public CompletionStage<?> onText(WebSocket webSocket, CharSequence data, boolean last) {
+		        //logger.info("onText received with data " + data);
+		        if(!webSocket.isOutputClosed()) {
+		            webSocket.sendText("This is a message", true);
+		        }
+		        return Listener.super.onText(webSocket, data, last);
+		    }
+		    @Override
+		    public CompletionStage<?> onClose(WebSocket webSocket, int statusCode, String reason) {
+		        //logger.info("Closed with status " + statusCode + ", reason: " + reason);
+		        //executor.shutdown();
+		        return Listener.super.onClose(webSocket, statusCode, reason);
+		    }
+		}).join();
+		//logger.info("WebSocket created");
+		Thread.sleep(1000);
+		//webSocket.sendClose(WebSocket.NORMAL_CLOSURE, "ok").thenRun(() -> //logger.info("Sent close"));
+	}
+}
